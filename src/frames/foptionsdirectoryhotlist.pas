@@ -364,6 +364,9 @@ var
 begin
   DestinationNode:=tvDirectoryHotlist.GetNodeAt(X, Y);
 
+  if DestinationNode=nil then
+    DestinationNode:=tvDirectoryHotlist.Items[tvDirectoryHotlist.Items.Count - 1];
+
   if tvDirectoryHotlist.SelectionCount>0 then
   begin
     //If we move toward the end, we place the moved item *after* the destination.
