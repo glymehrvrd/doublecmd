@@ -47,6 +47,9 @@ uses
   uOperationsManager, uFileSourceOperation, uDrivesList, uTerminal, DCClassesUtf8,
   DCXmlConfig, uDrive, uDriveWatcher, uDCVersion, uMainCommands, uFormCommands,
   uOperationsPanel, KASToolItems, uKASToolItemsExtended, uCmdLineParams
+  {$IFDEF UNIX}
+  , BaseUnix
+  {$ENDIF}
   {$IF DEFINED(LCLQT)}
   , Qt4, QtWidgets
   {$ELSEIF DEFINED(LCLGTK2)}
@@ -2328,8 +2331,20 @@ begin
 {$ENDIF}
 end;
 
+{$IFDEF UNIX}
+// catch unix signals
+procedure dosig(sig: cint); cdecl;
+begin
+  frmMain.Close;
+end;
+{$ENDIF}
+
 constructor TfrmMain.Create(TheOwner: TComponent);
 begin
+  {$IFDEF UNIX}
+  FpSignal(SIGINT, @dosig);
+  FpSignal(SIGTerm, @dosig);
+  {$ENDIF}
   FMainSplitterPos := 50.0;
   inherited Create(TheOwner);
   FCommands := TMainCommands.Create(Self, actionLst);
