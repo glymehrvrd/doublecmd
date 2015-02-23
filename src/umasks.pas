@@ -185,6 +185,9 @@ begin
     S := UTF8Decode(UTF8LowerCase(AValue));
   end;
 
+  // Allow space to match any.
+  S := StringReplace(S, ' ', '*', [rfReplaceAll]);
+
   I := 1;
   while I <= Length(S) do
   begin
