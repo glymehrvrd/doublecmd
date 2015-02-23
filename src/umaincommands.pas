@@ -2289,8 +2289,8 @@ begin
 
               { compare single selected files in both panels }
 
-              AddItem(ActiveSelectedFiles[0]);
-              AddItem(NotActiveSelectedFiles[0]);
+              AddItem(FrameLeft.CloneSelectedOrActiveFiles[0]);
+              AddItem(FrameRight.CloneSelectedOrActiveFiles[0]);
             end
             else
             begin
