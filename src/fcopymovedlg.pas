@@ -47,6 +47,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormPaint(Sender: TObject);
     procedure frmCopyDlgShow(Sender: TObject);
     procedure mnuNewQueueClick(Sender: TObject);
     procedure mnuQueueNumberClick(Sender: TObject);
@@ -65,7 +66,6 @@ type
     procedure TabsSelector(Sender: TObject);
     procedure TabsSelectorMouseDown(Sender: TObject; Button: TMouseButton;
                                     Shift: TShiftState; X, Y: Integer);
-    procedure RemoveConstraints(Data: PtrInt);
     procedure ShowOptions(bShow: Boolean);
     procedure UpdateSize;
 
@@ -146,12 +146,6 @@ procedure TfrmCopyDlg.TabsSelectorMouseDown(Sender: TObject; Button: TMouseButto
                                             Shift: TShiftState; X, Y: Integer);
 begin
   edtDst.Text := noteb[(Sender as TButton).tag].CurrentPath;
-end;
-
-procedure TfrmCopyDlg.RemoveConstraints(Data: PtrInt);
-begin
-  AutoSize := False;
-  Constraints.MinWidth := 0;
 end;
 
 function TfrmCopyDlg.ShowTabsSelector: integer;
@@ -245,8 +239,6 @@ begin
 
   edtDst.SelectAll;
   edtDst.SetFocus;
-
-  Application.QueueAsyncCall(@RemoveConstraints, 0);
 end;
 
 procedure TfrmCopyDlg.mnuNewQueueClick(Sender: TObject);
@@ -304,6 +296,13 @@ begin
   {$ENDIF}
 end;
 
+procedure TfrmCopyDlg.FormPaint(Sender: TObject);
+begin
+  OnPaint := nil;
+  AutoSize := False;
+  Constraints.MinWidth := 0;
+end;
+
 procedure TfrmCopyDlg.btnCreateSpecialQueueClick(Sender: TObject);
 begin
   btnCreateSpecialQueue.PopupMenu.PopUp;
@@ -316,7 +315,13 @@ end;
 
 procedure TfrmCopyDlg.btnOptionsClick(Sender: TObject);
 begin
+  Constraints.MinWidth := Width;
   ShowOptions(not pnlOptions.Visible);
+  btnOptions.Enabled := not btnOptions.Enabled;
+  ClientWidth := pnlOptions.Width + ChildSizing.LeftRightSpacing * 2;
+  pnlOptions.Anchors := pnlOptions.Anchors + [akRight];
+  MoveToDefaultPosition;
+  Constraints.MinWidth := 0;
 end;
 
 procedure TfrmCopyDlg.btnSaveOptionsClick(Sender: TObject);

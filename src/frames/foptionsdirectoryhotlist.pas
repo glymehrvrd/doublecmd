@@ -362,10 +362,10 @@ var
   Index:longint;
   DestinationNode:TTreeNode;
 begin
-  DestinationNode:=tvDirectoryHotlist.GetNodeAt(X, Y);
+  DestinationNode:= tvDirectoryHotlist.GetNodeAt(X, Y);
 
-  if DestinationNode=nil then
-    DestinationNode:=tvDirectoryHotlist.Items[tvDirectoryHotlist.Items.Count - 1];
+  if DestinationNode= nil then
+    DestinationNode:= tvDirectoryHotlist.Items[tvDirectoryHotlist.Items.Count - 1];
 
   if tvDirectoryHotlist.SelectionCount>0 then
   begin

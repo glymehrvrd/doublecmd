@@ -317,7 +317,7 @@ uses Forms, Controls, Dialogs, Clipbrd, strutils, LCLProc, HelpIntfs, StringHash
      fViewOperations, uVfsModule, uMultiListFileSource, uExceptions,
      DCOSUtils, DCStrUtils, DCBasicTypes, uFileSourceCopyOperation, fSyncDirsDlg,
      uHotDir, DCXmlConfig, dmCommonData, fOptionsFrame, foptionsDirectoryHotlist,
-     fOptionsToolbar, fMainCommandsDlg
+     fOptionsToolbar, fMainCommandsDlg, uConnectionManager
      {$IFDEF COLUMNSFILEVIEW_VTV}
      , uColumnsFileViewVtv
      {$ENDIF}
@@ -3511,7 +3511,7 @@ begin
   if Length(Params)=1 then
   begin
     if (not GetParamValue(Params[0], 'activepath', WantedPath)) AND (not GetParamValue(Params[0], 'inactivepath', WantedPath)) AND (not GetParamValue(Params[0], 'leftpath', WantedPath)) AND (not GetParamValue(Params[0], 'rightpath', WantedPath)) then
-      ChooseFileSource(frmMain.ActiveFrame, RemoveQuotation(Params[0]));
+      ChooseFileSource(frmMain.ActiveFrame, RemoveQuotation(ReplaceEnvVars(Params[0])));
   end;
 end;
 
@@ -3545,21 +3545,12 @@ end;
 
 procedure TMainCommands.cm_NetworkConnect(const Params: array of string);
 begin
-  {
-  ShowConnectionManager(frmMain.ActiveFrame);
-  }
+  DoOpenVirtualFileSystemList(frmMain.ActiveFrame);
 end;
 
 procedure TMainCommands.cm_NetworkDisconnect(const Params: array of string);
 begin
-  {
-  if frmMain.ActiveFrame.FileSource.IsClass(TWfxPluginFileSource) then
-  with frmMain.ActiveFrame.FileSource as IWfxPluginFileSource do
-  begin
-    if param <> EmptyStr then
-      WfxModule.WfxNetworkCloseConnection(param);
-  end;
-  }
+  CloseNetworkConnection();
 end;
 
 procedure TMainCommands.cm_HorizontalFilePanels(const Params: array of string);

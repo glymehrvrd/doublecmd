@@ -19,6 +19,7 @@ object frmCopyDlg: TfrmCopyDlg
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
+  OnPaint = FormPaint
   OnShow = frmCopyDlgShow
   Position = poScreenCenter
   LCLVersion = '1.2.4.0'
@@ -32,7 +33,6 @@ object frmCopyDlg: TfrmCopyDlg
     Top = 8
     Width = 596
     Anchors = [akTop, akLeft, akRight]
-    AutoSize = False
     BorderSpacing.Left = 8
     BorderSpacing.Top = 8
     BorderSpacing.Right = 8
@@ -251,7 +251,6 @@ object frmCopyDlg: TfrmCopyDlg
     Height = 39
     Top = 114
     Width = 596
-    Anchors = [akTop, akLeft, akRight]
     AutoSize = True
     BorderSpacing.Top = 4
     BevelOuter = bvNone

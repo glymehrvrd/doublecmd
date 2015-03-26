@@ -3,12 +3,12 @@
    -------------------------------------------------------------------------
    WFX plugin for working with Common Internet File System (CIFS)
 
-   Copyright (C) 2011-2014 Alexander Koblov (alexx2000@mail.ru)
+   Copyright (C) 2011-2015 Alexander Koblov (alexx2000@mail.ru)
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Lesser General Public
    License as published by the Free Software Foundation; either
-   version 3 of the License, or (at your option) any later version.
+   version 2.1 of the License, or (at your option) any later version.
 
    This library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,7 +17,7 @@
 
    You should have received a copy of the GNU Lesser General Public
    License along with this library; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 }
 
 unit SmbFunc;
@@ -63,7 +63,7 @@ var
 implementation
 
 uses
-  Unix, BaseUnix, UnixType, StrUtils, SmbAuthDlg, libsmbclient;
+  Unix, BaseUnix, UnixType, StrUtils, URIParser, SmbAuthDlg, libsmbclient;
 
 const
   SMB_BUFFER_SIZE = 524288;
@@ -101,6 +101,12 @@ begin
   FileTime:= Int64(mtime) * 10000000 + 116444736000000000;
   Result.dwLowDateTime:= (FileTime and $FFFF);
   Result.dwHighDateTime:= (FileTime shr $20);
+end;
+
+function URIEncode(Path: String): String;
+begin
+  Result:= FileNameToURI(Path);
+  Result:= 'smb:/' + Copy(Result, 8, MaxInt);
 end;
 
 procedure WriteError(const FuncName: String);
@@ -168,11 +174,11 @@ begin
       Inc(C);
   end;
   if (C < 2) then
-    Result:= 'smb:/' + Result
+    Result:= URIEncode(Result)
   else
     begin
       I:= PosEx(PathDelim, Result, 2);
-      Result:= 'smb:/' + Copy(Result, I, MaxInt);
+      Result:= URIEncode(Copy(Result, I, MaxInt));
     end;
 end;
 
