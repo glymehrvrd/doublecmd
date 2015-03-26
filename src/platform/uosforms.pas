@@ -96,7 +96,7 @@ procedure ShowDriveContextMenu(Parent: TWinControl; ADrive: PDrive; X, Y : Integ
 }
 function ShowOpenIconDialog(Owner: TCustomControl; var sFileName : String) : Boolean;
 
-{$IF DEFINED(LINUX)}
+{$IF DEFINED(UNIX) AND NOT DEFINED(DARWIN)}
 {en
    Show open with dialog
    @param(FileList List of files to open with)
@@ -107,7 +107,7 @@ procedure ShowOpenWithDialog(const FileList: TStringList);
 implementation
 
 uses
-  ExtDlgs, LCLProc, uShellContextMenu
+  ExtDlgs, LCLProc, uShellContextMenu, uConnectionManager
   {$IF DEFINED(MSWINDOWS)}
   , Menus, Graphics, ComObj, fMain, DCOSUtils, uOSUtils, uFileSystemFileSource
   , uTotalCommander, InterfaceBase, FileUtil, Windows, ShlObj, uShlObjAdditional
@@ -121,7 +121,7 @@ uses
     {$ELSE}
     , MacOSAll
     {$ENDIF}
-    {$IFDEF LINUX}
+    {$IF NOT DEFINED(DARWIN)}
     , fOpenWith, uKde
     {$ENDIF}
   {$ENDIF};
@@ -437,22 +437,30 @@ var
   aFile: TFile;
   Files: TFiles;
 begin
-  aFile := TFileSystemFileSource.CreateFile(EmptyStr);
-  aFile.FullPath := ADrive^.Path;
-  aFile.Attributes := faFolder;
-  Files:= TFiles.Create(EmptyStr); // free in ShowContextMenu
-  Files.Add(aFile);
-  ShowContextMenu(Parent, Files, X, Y, False, CloseEvent);
+  if ADrive.DriveType = dtVirtual then
+    ShowVirtualDriveMenu(ADrive, X, Y, CloseEvent)
+  else begin
+    aFile := TFileSystemFileSource.CreateFile(EmptyStr);
+    aFile.FullPath := ADrive^.Path;
+    aFile.Attributes := faFolder;
+    Files:= TFiles.Create(EmptyStr); // free in ShowContextMenu
+    Files.Add(aFile);
+    ShowContextMenu(Parent, Files, X, Y, False, CloseEvent);
+  end;
 end;
 {$ELSE}
 begin
-  // Free previous created menu
-  FreeThenNil(ShellContextMenu);
-  // Create new context menu
-  ShellContextMenu:= TShellContextMenu.Create(nil, ADrive);
-  ShellContextMenu.OnClose := CloseEvent;
-  // show context menu
-  ShellContextMenu.PopUp(X, Y);
+  if ADrive.DriveType = dtVirtual then
+    ShowVirtualDriveMenu(ADrive, X, Y, CloseEvent)
+  else begin
+    // Free previous created menu
+    FreeThenNil(ShellContextMenu);
+    // Create new context menu
+    ShellContextMenu:= TShellContextMenu.Create(nil, ADrive);
+    ShellContextMenu.OnClose := CloseEvent;
+    // show context menu
+    ShellContextMenu.PopUp(X, Y);
+  end;
 end;
 {$ENDIF}
 
@@ -547,7 +555,7 @@ begin
     FreeAndNil(opdDialog);
 end;
 
-{$IF DEFINED(LINUX)}
+{$IF DEFINED(UNIX) AND NOT DEFINED(DARWIN)}
 procedure ShowOpenWithDialog(const FileList: TStringList);
 begin
   if not (UseKde and uKde.ShowOpenWithDialog(FileList)) then begin

@@ -36,6 +36,7 @@ type
     procedure SetGridVertLine(const AValue: Boolean);
 
   protected
+    function SelectCell(aCol, aRow: Integer): Boolean; override;
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
     procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X,Y: Integer); override;
     procedure MouseMove(Shift: TShiftState; X, Y: Integer); override;
@@ -321,6 +322,7 @@ begin
   begin
     NewSorting := Sorting;
     SortFunctions := Column.GetColumnFunctions;
+    if Length(SortFunctions) = 0 then Exit;
     ShiftState := GetKeyShiftStateEx;
     if [ssShift, ssCtrl] * ShiftState = [] then
     begin
@@ -1688,6 +1690,17 @@ begin
     Options := Options + [goVertLine]
   else
     Options := Options - [goVertLine];
+end;
+
+function TDrawGridEx.SelectCell(aCol, aRow: Integer): Boolean;
+begin
+  Result:= inherited SelectCell(aCol, aRow);
+  // ScrollToCell hangs when Width = 0
+  if Width = 0 then
+  begin
+    Result:= False;
+    SetColRow(aCol, aRow);
+  end;
 end;
 
 function TDrawGridEx.GetVisibleRows: TRange;
