@@ -107,7 +107,7 @@ type
    // 7. So command is "cm_SrcOpenDrives", so keep writing "cm_SrcOpenDrives" and not "cm_srcopendrives" for example.
    // 8. The only single place to have lowercases is for the icon name which will be "cm_srcopendrives" but it's the only one case.
    // 9. Give an appropriate "caption" name for the command, so for our example "Open drive list"
-   // 10. Set the "GroupIndex" to the same number as the other command of the same category.
+   // 10. Set the "Tag" to the same number as the other command of the same category.
    // 11. In the "uMainCommands", for the type "TMainCommands", add the code for the command.
    // 12. The command name must start with "cm_" and ends with the same name as what we added for the "act".
    // 13. So with our example we add "cm_SrcOpenDrives".
@@ -265,6 +265,7 @@ type
    procedure cm_RenameOnly(const Params: array of string);
    procedure cm_RunTerm(const Params: array of string);
    procedure cm_ShowCmdLineHistory(const Params: array of string);
+   procedure cm_ToggleFullscreenConsole(const Params: array of string);
    procedure cm_CalculateSpace(const Params: array of string);
    procedure cm_CountDirContent(const Params: array of string);
    procedure cm_SetFileProperties(const Params: array of string);
@@ -2990,6 +2991,18 @@ begin
       edtCommand.SetFocus;
       if edtCommand.Items.Count>0 then
         edtCommand.DroppedDown:=True;
+    end;
+  end;
+end;
+
+procedure TMainCommands.cm_ToggleFullscreenConsole(const Params: array of string);
+begin
+  with frmMain do
+  begin
+    ToggleFullscreenConsole;
+    if IsCommandLineVisible then
+    begin
+      edtCommand.SetFocus;
     end;
   end;
 end;

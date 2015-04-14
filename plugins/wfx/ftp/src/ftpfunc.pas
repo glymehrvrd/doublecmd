@@ -3,7 +3,7 @@
    -------------------------------------------------------------------------
    Wfx plugin for working with File Transfer Protocol
 
-   Copyright (C) 2009-2012  Koblov Alexander (Alexx2000@mail.ru)
+   Copyright (C) 2009-2015 Alexander Koblov (alexx2000@mail.ru)
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Lesser General Public
@@ -50,6 +50,8 @@ type
   { TFTPSendEx }
 
   TFTPSendEx = class(TFTPSend)
+  protected
+    function Connect: Boolean; override;
   public
     procedure FTPStatus(Sender: TObject; Response: Boolean; const Value: String);
     function NetworkError(): Boolean;
@@ -327,22 +329,21 @@ end;
 
 function AddQuickConnection(const Connection: TConnection): Boolean;
 var
+  Text: PAnsiChar;
   Temp: AnsiString;
 begin
   Result:= False;
   SetLength(Temp, MAX_PATH);
-  Temp[1]:= #0;
-  if RequestProc(PluginNumber, RT_URL, nil, nil, PAnsiChar(Temp), MAX_PATH) then
+  Text:= PAnsiChar(Temp); Text[0]:= #0;
+  if RequestProc(PluginNumber, RT_URL, nil, nil, Text, MAX_PATH) then
   begin
-    Connection.Host := Temp;
-    Temp[1]:= #0;
-    if RequestProc(PluginNumber, RT_TargetDir, nil, nil, PAnsiChar(Temp), MAX_PATH) then
+    Connection.Host := Text; Text[0]:= #0;
+    if RequestProc(PluginNumber, RT_TargetDir, nil, nil, Text, MAX_PATH) then
     begin
-      Connection.Path := Temp;
-      Temp[1]:= #0;
-      if RequestProc(PluginNumber, RT_UserName, nil, nil, PAnsiChar(Temp), MAX_PATH) then
+      Connection.Path := Text; Text[0]:= #0;
+      if RequestProc(PluginNumber, RT_UserName, nil, nil, Text, MAX_PATH) then
       begin
-        Connection.UserName := Temp;
+        Connection.UserName := Text;
         Result:= True;
       end;
     end;
@@ -351,26 +352,26 @@ end;
 
 function QuickConnection: Boolean;
 var
-  I: Integer;
-  Connection: TConnection;
+  Index: Integer;
   FtpSend: TFTPSendEx;
+  Connection: TConnection;
 begin
-  Result:= False;
-  Connection := TConnection.Create;
-  if AddQuickConnection(Connection) then
+  Result:= ActiveConnectionList.IndexOf(cQuickConnection) >= 0;
+  if not Result then
+  begin
+    Connection := TConnection.Create;
+    if AddQuickConnection(Connection) then
     begin
       if ShowPasswordDialog(Connection.Password) then
       begin
-        Connection.ConnectionName:= Connection.Host;
-
-        I:= ConnectionList.AddObject(Connection.ConnectionName, Connection);
+        Connection.ConnectionName:= cQuickConnection;
+        Index:= ConnectionList.AddObject(Connection.ConnectionName, Connection);
         Result:= FtpConnect(Connection.ConnectionName, FtpSend);
-        ConnectionList.Delete(I);
+        ConnectionList.Delete(Index);
       end;
     end;
-
-  if not Result then
     Connection.Free;
+  end;
 end;
 
 function AddConnection: Integer;
@@ -398,11 +399,10 @@ begin
     end
   else
     begin
-      SetLength(Temp, MAX_PATH);
-      Temp[1]:= #0;
+      SetLength(Temp, MAX_PATH); Temp[1]:= #0;
       if RequestProc(PluginNumber, RT_Other, nil, nil, PAnsiChar(Temp), MAX_PATH) then
       begin
-        gConnection.ConnectionName := Temp;
+        gConnection.ConnectionName := PAnsiChar(Temp);
         if AddQuickConnection(gConnection) then
         begin
           Result:= ConnectionList.AddObject(gConnection.ConnectionName, gConnection);
@@ -717,7 +717,8 @@ begin
         Result:= FS_FILE_NOTFOUND
       else
         begin
-          TConnection(ConnectionList.Objects[I]).ConnectionName:= ExtractFileName(NewName);
+          ConnectionList[I]:= RepairConnectionName(NewName + 1);
+          TConnection(ConnectionList.Objects[I]).ConnectionName:= ConnectionList[I];
           WriteConnectionList;
           Result:= FS_FILE_OK;
         end;
@@ -995,8 +996,14 @@ end;
 
 { TFTPSendEx }
 
+function TFTPSendEx.Connect: Boolean;
+begin
+  Result:= inherited Connect;
+  if Result then LogProc(PluginNumber, MSGTYPE_CONNECT, nil);
+end;
+
 procedure TFTPSendEx.FTPStatus(Sender: TObject; Response: Boolean;
-  const Value: string);
+  const Value: String);
 begin
   LogProc(PluginNumber, msgtype_details, PAnsiChar(Value));
   if FSock.LastError <> 0 then

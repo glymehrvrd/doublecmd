@@ -41,7 +41,7 @@ interface
 
 uses
   Graphics, Forms, Menus, Controls, StdCtrls, ExtCtrls, ActnList,
-  Buttons, SysUtils, Classes, SynEdit, LCLType, ComCtrls,
+  Buttons, SysUtils, Classes, SynEdit, LCLType, ComCtrls, LResources,
   KASToolBar, KASComboBox, uCmdBox, uFilePanelSelect, uBriefFileView,
   uFileView, uColumnsFileView, uFileSource, uFileViewNotebook, uFile,
   uOperationsManager, uFileSourceOperation, uDrivesList, uTerminal, DCClassesUtf8,
@@ -97,6 +97,7 @@ type
     actCopyPathOfFilesToClip: TAction;
     actCopyPathNoSepOfFilesToClip: TAction;
     actDoAnyCmCommand: TAction;
+    actToggleFullscreenConsole: TAction;
     actSrcOpenDrives: TAction;
     actRightReverseOrder: TAction;
     actLeftReverseOrder: TAction;
@@ -452,6 +453,7 @@ type
     MainTrayIcon: TTrayIcon;
 
     procedure actExecute(Sender: TObject);
+    procedure FormKeyUp( Sender: TObject; var Key: Word; Shift: TShiftState) ;
     function MainToolBarToolItemShortcutsHint(ToolItem: TKASNormalItem): String;
     procedure mnuAllOperStartClick(Sender: TObject);
     procedure mnuAllOperStopClick(Sender: TObject);
@@ -587,6 +589,7 @@ type
     // for dragging buttons and etc
     NumberOfMoveButton, NumberOfNewMoveButton: integer;
     Draging : boolean;
+    FUpdateDiskCount: Boolean;
 
     procedure CheckCommandLine(ShiftEx: TShiftState; var Key: Word);
     function ExecuteCommandFromEdit(sCmd: String; bRunInTerm: Boolean): Boolean;
@@ -628,6 +631,7 @@ type
     procedure ToolbarExecuteProgram(ToolItem: TKASToolItem);
     procedure LeftDriveBarExecuteDrive(ToolItem: TKASToolItem);
     procedure RightDriveBarExecuteDrive(ToolItem: TKASToolItem);
+    procedure SetDragCursor(Shift: TShiftState);
 
   public
     constructor Create(TheOwner: TComponent); override;
@@ -706,6 +710,7 @@ type
     procedure UpdatePrompt;
     procedure UpdateFreeSpace(Panel: TFilePanelSelect);
     procedure ReLoadTabs(ANoteBook: TFileViewNotebook);
+    procedure ToggleFullscreenConsole;
 
     {en
        This function is called from various points to handle dropping files
@@ -1593,6 +1598,12 @@ end;
 
 procedure TfrmMain.FormWindowStateChange(Sender: TObject);
 begin
+  if FUpdateDiskCount and (WindowState <> wsMinimized) then
+  begin
+    UpdateDiskCount;
+    FUpdateDiskCount:= False;
+  end;
+
   if WindowState = wsMinimized then
   begin  // Minimized
     MainToolBar.Top:= 0; // restore toolbar position
@@ -2333,6 +2344,10 @@ begin
   FMainSplitterPos := 50.0;
   inherited Create(TheOwner);
   FCommands := TMainCommands.Create(Self, actionLst);
+
+  Screen.Cursors[crArrowCopy] := LoadCursorFromLazarusResource('ArrowCopy');
+  Screen.Cursors[crArrowMove] := LoadCursorFromLazarusResource('ArrowMove');
+  Screen.Cursors[crArrowLink] := LoadCursorFromLazarusResource('ArrowLink');
 end;
 
 procedure TfrmMain.UpdateActionIcons();
@@ -3263,12 +3278,27 @@ begin
   end;
 end;
 
+procedure TfrmMain.SetDragCursor(Shift: TShiftState);
+begin
+  FrameLeft.SetDragCursor(Shift);
+  FrameRight.SetDragCursor(Shift);
+end;
+
+procedure TfrmMain.FormKeyUp( Sender: TObject; var Key: Word;
+  Shift: TShiftState) ;
+begin
+  SetDragCursor(Shift);
+end;
+
+
 procedure TfrmMain.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
   ShiftEx : TShiftState;
   CmdText : UTF8String;
 begin
+  SetDragCursor(Shift);
+
   // Either left or right panel has to be focused.
   if not FrameLeft.Focused and
      not FrameRight.Focused then
@@ -4099,6 +4129,7 @@ begin
         cmdConsole.Align:= alClient;
         cmdConsole.AutoFollow:= True;
         cmdConsole.LineCount:= 256;
+        FontOptionsToFont(gFonts[dcfConsole], cmdConsole.Font);
       end;
       if not Assigned(Cons) then
         begin
@@ -4121,6 +4152,18 @@ begin
 
   nbConsole.Visible:= gTermWindow;
   ConsoleSplitter.Visible:= gTermWindow;
+end;
+
+procedure TfrmMain.ToggleFullscreenConsole;
+begin
+  if  nbConsole.Height < (nbConsole.Height + pnlNotebooks.Height) then
+    begin
+      nbConsole.Height := nbConsole.Height + pnlNotebooks.Height;
+    end
+  else
+    begin
+      nbConsole.Height := 0;
+    end;
 end;
 
 procedure TfrmMain.ToolbarExecuteCommand(ToolItem: TKASToolItem);
@@ -4288,16 +4331,12 @@ begin
 
     (*Tool Bar*)
     MainToolBar.Visible:= gButtonBar;
-    if gButtonBar then
-      begin
-        MainToolBar.Flat:= gToolBarFlat;
-        MainToolBar.GlyphSize:= gToolBarIconSize;
-        MainToolBar.SetButtonSize(gToolBarButtonSize, gToolBarButtonSize);
-
-        MainToolBar.ChangePath:= gpExePath;
-        MainToolBar.EnvVar:= '%commander_path%';
-        LoadMainToolbar;
-      end;
+    MainToolBar.Flat:= gToolBarFlat;
+    MainToolBar.GlyphSize:= gToolBarIconSize;
+    MainToolBar.SetButtonSize(gToolBarButtonSize, gToolBarButtonSize);
+    MainToolBar.ChangePath:= gpExePath;
+    MainToolBar.EnvVar:= '%commander_path%';
+    LoadMainToolbar;
 
     btnLeftDrive.Visible := gDrivesListButton;
     btnLeftDrive.Flat := gInterfaceFlat;
@@ -5396,6 +5435,7 @@ begin
        mbCompareFileNames(ExtractRootDir(OtherFileView.CurrentPath), ExcludeTrailingPathDelimiter(Drive^.Path)) and
        not mbCompareFileNames(OtherFileView.CurrentPath, aFileView.CurrentPath) and not gGoToRoot then
     begin
+      FoundPath:= True;
       SetFileSystemPath(aFileView, OtherFileView.CurrentPath);
     end
     // Open latest path from history for chosen drive
@@ -5440,7 +5480,14 @@ end;
 
 procedure TfrmMain.OnDriveWatcherEvent(EventType: TDriveWatcherEvent; const ADrive: PDrive);
 begin
-  UpdateDiskCount;
+  // Update disk panel does not work correctly when main
+  // window is minimized. So set FUpdateDiskCount flag instead
+  // and update disk count later in WindowStateChange event
+  if WindowState = wsMinimized then
+    FUpdateDiskCount:= True
+  else begin
+    UpdateDiskCount;
+  end;
 
   if (EventType = dweDriveRemoved) and Assigned(ADrive) then
   begin
@@ -5476,6 +5523,7 @@ end;
 {$ENDIF}
 
 initialization
+  {$I DragCursors.lrs}
   TFormCommands.RegisterCommandsForm(TfrmMain, HotkeysCategory, @rsHotkeyCategoryMain);
 
 end.

@@ -2967,6 +2967,10 @@ msgstr ""
 msgid "Thumbnails View"
 msgstr ""
 
+#: tfrmmain.acttogglefullscreenconsole.caption
+msgid "Toggle fullscreen mode console"
+msgstr ""
+
 #: tfrmmain.acttransferleft.caption
 msgid "Transfer dir under cursor to left window"
 msgstr "커서가 위치한 폴더를 왼쪽 창으로 전송"
@@ -5520,6 +5524,12 @@ msgctxt "TFRMOPTIONSFILETYPESCOLORS.LBLCATEGORYNAME.CAPTION"
 msgid "Category &name:"
 msgstr "카테고리 이름:"
 
+#: tfrmoptionsfonts.btnselconsolefnt.caption
+#, fuzzy
+msgctxt "tfrmoptionsfonts.btnselconsolefnt.caption"
+msgid "..."
+msgstr "..."
+
 #: tfrmoptionsfonts.btnseleditfnt.caption
 #, fuzzy
 msgctxt "TFRMOPTIONSFONTS.BTNSELEDITFNT.CAPTION"
@@ -5549,6 +5559,10 @@ msgstr "..."
 msgctxt "TFRMOPTIONSFONTS.BTNSELVIEWFNT.CAPTION"
 msgid "..."
 msgstr "..."
+
+#: tfrmoptionsfonts.lblconsolefont.caption
+msgid "&Console font"
+msgstr ""
 
 #: tfrmoptionsfonts.lbleditorfont.caption
 #, fuzzy
@@ -6722,7 +6736,7 @@ msgstr ""
 
 #: tfrmoptionstoolbar.miimportdcbaraddmenucurrent.caption
 msgctxt "tfrmoptionstoolbar.miimportdcbaraddmenucurrent.caption"
-msgid "to add to a new toobar to current toolbar"
+msgid "to add to a new toolbar to current toolbar"
 msgstr ""
 
 #: tfrmoptionstoolbar.miimportdcbaraddmenutop.caption

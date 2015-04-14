@@ -77,7 +77,7 @@ type
   TExternalToolsOptions = array[TExternalTool] of TExternalToolOptions;
   TResultingFramePositionAfterCompare = (rfpacActiveOnLeft, rfpacLeftOnLeft);
 
-  TDCFont = (dcfMain, dcfViewer, dcfEditor, dcfLog, dcfViewerBook);
+  TDCFont = (dcfMain, dcfViewer, dcfEditor, dcfLog, dcfViewerBook, dcfConsole);
   TDCFontOptions = record
     Name: String;
     Size: Integer;
@@ -103,9 +103,11 @@ type
 
   tDuplicatedRename = (drLegacyWithCopy, drLikeWindows7, drLikeTC);
 
+  TBriefViewMode = (bvmFixedWidth, bvmFixedCount, bvmAutoSize);
+
 const
   { Default hotkey list version number }
-  hkVersion     = 21;
+  hkVersion     = 22;
 
   // Previously existing names if reused must check for ConfigVersion >= X.
   // History:
@@ -235,6 +237,11 @@ var
   gHighlightUpdatedFiles: Boolean;
   gLastUsedPacker: String;
   gLastDoAnyCommand: String;
+
+  { Brief view page }
+  gBriefViewFixedWidth: Integer;
+  gBriefViewFixedCount: Integer;
+  gBriefViewMode: TBriefViewMode;
   gBriefViewFileExtAligned: Boolean;
 
   { Tools page }
@@ -400,6 +407,10 @@ var
   gSyncDirsFileMask: string;
 
   gUseShellForFileOperations: Boolean;
+
+  crArrowCopy: Integer = 1;
+  crArrowMove: Integer = 2;
+  crArrowLink: Integer = 3;
 
   { TotalCommander Import/Export }
   {$IFDEF MSWINDOWS}
@@ -730,6 +741,7 @@ begin
       AddIfNotExists(['Alt+Down'],'cm_DirHistory',['Ctrl+H'],[]); //Historic backward support reason...
       AddIfNotExists(['Ctrl+L'],[],'cm_CalculateSpace');
       AddIfNotExists(['Ctrl+M'],[],'cm_MultiRename');
+      AddIfNotExists(['Ctrl+O'],[],'cm_ToggleFullscreenConsole');
       AddIfNotExists(['Ctrl+P'],[],'cm_AddPathToCmdLine');
       AddIfNotExists(['Ctrl+Q'],[],'cm_QuickView');
       AddIfNotExists(['Ctrl+S'],[],'cm_QuickSearch');
@@ -1095,6 +1107,11 @@ begin
   gHighlightUpdatedFiles := True;
   gDriveBlackList := '';
   gDriveBlackListUnmounted := False;
+
+  { Brief view page }
+  gBriefViewFixedCount := 2;
+  gBriefViewFixedWidth := 100;
+  gBriefViewMode := bvmAutoSize;
   gBriefViewFileExtAligned := False;
 
   { Tools page }
@@ -1121,6 +1138,9 @@ begin
   gFonts[dcfViewerBook].Name := 'default';
   gFonts[dcfViewerBook].Size := 16;
   gFonts[dcfViewerBook].Style := [fsBold];
+  gFonts[dcfConsole].Name := MonoSpaceFont;
+  gFonts[dcfConsole].Size := 12;
+  gFonts[dcfConsole].Style := [];
 
   { Colors page }
   gForeColor := clWindowText;
@@ -2135,6 +2155,7 @@ begin
     GetDCFont(gConfig.FindNode(Root, 'Fonts/Viewer'), gFonts[dcfViewer]);
     GetDCFont(gConfig.FindNode(Root, 'Fonts/Log'), gFonts[dcfLog]);
     GetDCFont(gConfig.FindNode(Root, 'Fonts/ViewerBook'), gFonts[dcfViewerBook]);
+    GetDCFont(gConfig.FindNode(Root, 'Fonts/Console'), gFonts[dcfConsole]);
 
     { Colors page }
     Node := Root.FindNode('Colors');
@@ -2569,6 +2590,7 @@ begin
     SetDCFont(gConfig.FindNode(Root, 'Fonts/Viewer', True), gFonts[dcfViewer]);
     SetDCFont(gConfig.FindNode(Root, 'Fonts/Log', True), gFonts[dcfLog]);
     SetDCFont(gConfig.FindNode(Root, 'Fonts/ViewerBook', True), gFonts[dcfViewerBook]);
+    SetDCFont(gConfig.FindNode(Root, 'Fonts/Console', True), gFonts[dcfConsole]);
 
     { Colors page }
     Node := FindNode(Root, 'Colors', True);
