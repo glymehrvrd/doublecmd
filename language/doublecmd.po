@@ -2702,6 +2702,10 @@ msgstr ""
 msgid "Thumbnails View"
 msgstr ""
 
+#: tfrmmain.acttogglefullscreenconsole.caption
+msgid "Toggle fullscreen mode console"
+msgstr ""
+
 #: tfrmmain.acttransferleft.caption
 msgid "Transfer dir under cursor to left window"
 msgstr ""
@@ -4934,6 +4938,11 @@ msgctxt "TFRMOPTIONSFILETYPESCOLORS.LBLCATEGORYNAME.CAPTION"
 msgid "Category &name:"
 msgstr ""
 
+#: tfrmoptionsfonts.btnselconsolefnt.caption
+msgctxt "TFRMOPTIONSFONTS.BTNSELCONSOLEFNT.CAPTION"
+msgid "..."
+msgstr ""
+
 #: tfrmoptionsfonts.btnseleditfnt.caption
 msgctxt "TFRMOPTIONSFONTS.BTNSELEDITFNT.CAPTION"
 msgid "..."
@@ -4957,6 +4966,10 @@ msgstr ""
 #: tfrmoptionsfonts.btnselviewfnt.caption
 msgctxt "TFRMOPTIONSFONTS.BTNSELVIEWFNT.CAPTION"
 msgid "..."
+msgstr ""
+
+#: tfrmoptionsfonts.lblconsolefont.caption
+msgid "&Console font"
 msgstr ""
 
 #: tfrmoptionsfonts.lbleditorfont.caption

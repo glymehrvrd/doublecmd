@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: Double Commander 0.5.5 alpha\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-01-17 23:08+0300\n"
-"PO-Revision-Date: 2014-03-20 18:45+0300\n"
-"Last-Translator: Adrian <raziel_theripper@yahoo.com>\n"
-"Language-Team: csdacdas\n"
+"PO-Revision-Date: 2015-04-08 14:51-0700\n"
+"Last-Translator: Maximilian Machedon <maximilian.machedon@gmail.com>\n"
+"Language-Team: \n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);;\n"
 "X-Generator: Virtaal 0.7.1\n"
-"X-Native-Language: Român\n"
+"X-Native-Language: Română\n"
 
 #: fsyncdirsdlg.rscomparingpercent
 msgid "Comparing... %d%% (ESC to cancel)"
@@ -20,9 +20,7 @@ msgstr "Se compară...%d%% (ESC pentru a renunța)"
 
 #: fsyncdirsdlg.rsfilesfound
 msgid "Files found: %d  (Identical: %d, Different: %d, Unique left: %d, Unique right: %d)"
-msgstr ""
-"Fișiere găsite: %d (Identice: %d, Diferite: %d,\n"
-"Unice la stânga: %d, Unice la dreapta: %d)\n"
+msgstr "Fișiere găsite: %d (Identice: %d, Diferite: %d, Unice la stânga: %d, Unice la dreapta: %d)"
 
 #: fsyncdirsdlg.rslefttorightcopy
 msgid "Left to Right: Copy %d files, total size: %d bytes"
@@ -2713,6 +2711,10 @@ msgstr "Miniaturi"
 msgid "Thumbnails View"
 msgstr "Vizualizare în miniatură"
 
+#: tfrmmain.acttogglefullscreenconsole.caption
+msgid "Toggle fullscreen mode console"
+msgstr ""
+
 #: tfrmmain.acttransferleft.caption
 msgid "Transfer dir under cursor to left window"
 msgstr "Transferă dosarul de sub cursor spre fereastra din stânga"
@@ -4945,6 +4947,12 @@ msgctxt "TFRMOPTIONSFILETYPESCOLORS.LBLCATEGORYNAME.CAPTION"
 msgid "Category &name:"
 msgstr "&Nume categorie: "
 
+#: tfrmoptionsfonts.btnselconsolefnt.caption
+#, fuzzy
+msgctxt "tfrmoptionsfonts.btnselconsolefnt.caption"
+msgid "..."
+msgstr "..."
+
 #: tfrmoptionsfonts.btnseleditfnt.caption
 msgctxt "TFRMOPTIONSFONTS.BTNSELEDITFNT.CAPTION"
 msgid "..."
@@ -4969,6 +4977,10 @@ msgstr "..."
 msgctxt "TFRMOPTIONSFONTS.BTNSELVIEWFNT.CAPTION"
 msgid "..."
 msgstr "..."
+
+#: tfrmoptionsfonts.lblconsolefont.caption
+msgid "&Console font"
+msgstr ""
 
 #: tfrmoptionsfonts.lbleditorfont.caption
 msgctxt "TFRMOPTIONSFONTS.LBLEDITORFONT.CAPTION"
@@ -5926,7 +5938,7 @@ msgstr ""
 
 #: tfrmoptionstoolbar.miimportdcbaraddmenucurrent.caption
 msgctxt "tfrmoptionstoolbar.miimportdcbaraddmenucurrent.caption"
-msgid "to add to a new toobar to current toolbar"
+msgid "to add to a new toolbar to current toolbar"
 msgstr ""
 
 #: tfrmoptionstoolbar.miimportdcbaraddmenutop.caption
@@ -10080,4 +10092,3 @@ msgstr ""
 #: ulng.rszeroreplacement
 msgid "No replacement took place."
 msgstr ""
-
