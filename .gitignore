@@ -61,7 +61,7 @@ __history/
 
 units/
 *.bak
-.svn/
+# .svn/
 
 components/*/lib/
 plugins/**/lib/
