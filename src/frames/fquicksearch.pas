@@ -194,6 +194,7 @@ begin
   else
   begin
     Options.LastSearchMode:=Self.Mode;
+    Options.Direction:=qsdNone;
     case Self.Mode of
       qsSearch:
         if Assigned(Self.OnChangeSearch) then
