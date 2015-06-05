@@ -8,7 +8,7 @@
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Lesser General Public
    License as published by the Free Software Foundation; either
-   version 3 of the License, or (at your option) any later version.
+   version 2.1 of the License, or (at your option) any later version.
 
    This library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,7 +17,7 @@
 
    You should have received a copy of the GNU Lesser General Public
    License along with this library; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 }
 
 unit FtpFunc;
@@ -32,30 +32,6 @@ uses
   WfxPlugin, FtpSend, Extension;
 
 type
-
-  { TFTPListRecEx }
-
-  TFTPListRecEx = class(TFTPListRec)
-  public
-    procedure Assign(Value: TFTPListRec); override;
-  end;
-
-  { TFTPListEx }
-
-  TFTPListEx = class(TFTPList)
-  public
-    procedure Assign(Value: TFTPList); override;
-  end;
-
-  { TFTPSendEx }
-
-  TFTPSendEx = class(TFTPSend)
-  protected
-    function Connect: Boolean; override;
-  public
-    procedure FTPStatus(Sender: TObject; Response: Boolean; const Value: String);
-    function NetworkError(): Boolean;
-  end;
 
   TConnection = class
   public
@@ -111,32 +87,36 @@ var
   gStartupInfo: TExtensionStartupInfo;
   gConnection: TConnection;
 
+var
+  LogProc: TLogProc;
+  CryptProc: TCryptProc;
+  PluginNumber: Integer;
+  CryptoNumber: Integer;
+  RequestProc: TRequestProc;
+  ProgressProc: TProgressProc;
+
 implementation
 
 uses
-  IniFiles, StrUtils, FtpUtils, FtpConfDlg, syncobjs, ssl_openssl;
+  IniFiles, StrUtils, FtpAdv, FtpUtils, FtpConfDlg, syncobjs, ssl_openssl;
 
 var
   ActiveConnectionList, ConnectionList: TStringList;
   IniFile: TIniFile;
-  ProgressProc: TProgressProc;
-  LogProc: TLogProc;
-  RequestProc: TRequestProc;
-  PluginNumber: Integer;
-  CryptProc: TCryptProc;
-  CryptoNumber: Integer;
   HasDialogAPI: Boolean = False;
   ListLock: TCriticalSection;
 
 const
   cAddConnection = '<Add connection>';
   cQuickConnection = '<Quick connection>';
+  FS_COPYFLAGS_FORCE = FS_COPYFLAGS_OVERWRITE or FS_COPYFLAGS_RESUME;
   RootList: array [0 .. 1] of AnsiString = (cAddConnection, cQuickConnection);
 
 type
   TListRec = record
     Path: AnsiString;
     Index: Integer;
+    FtpSend: TFTPSendEx;
     FtpList: TFTPListEx;
   end;
   PListRec = ^TListRec;
@@ -243,7 +223,7 @@ begin
       while sTemp <> EmptyStr do
         FtpSend.FTPCommand(Copy2SymbDel(sTemp, ';'));
       if Length(Connection.Path) > 0 then
-        FtpSend.ChangeWorkingDir(Connection.Path);
+        FtpSend.ChangeWorkingDir(FtpSend.ClientToServer(Connection.Path));
       Result := True;
     end;
    
@@ -288,7 +268,6 @@ begin
       begin
         Connection := TConnection(ConnectionList.Objects[I]);
         FtpSend := TFTPSendEx.Create;
-        FtpSend.OnStatus:= FtpSend.FTPStatus;
         FtpSend.TargetHost := Connection.Host;
         FtpSend.PassiveMode:= Connection.PassiveMode;
         FtpSend.AutoTLS:= Connection.AutoTLS;
@@ -501,6 +480,9 @@ begin
   sConnName := ExtractConnectionName(sPath);
   RemotePath := ExtractRemoteFileName(sPath);
   Result:= FtpConnect(sConnName, FtpSend);
+  if Result then begin
+    RemotePath:= FtpSend.ClientToServer(RemotePath);
+  end;
 end;
 
 function LocalFindNext(Hdl: THandle; var FindData: TWin32FindData): Boolean;
@@ -543,7 +525,7 @@ begin
       if I < FtpList.Count then
       begin
         FillChar(FindData, SizeOf(FindData), 0);
-        StrPCopy(FindData.cFileName, FtpList.Items[I].FileName);
+        StrPCopy(FindData.cFileName, FtpSend.ServerToClient(FtpList.Items[I].FileName));
         FindData.dwFileAttributes := FindData.dwFileAttributes or FILE_ATTRIBUTE_UNIX_MODE;
         if FtpList.Items[I].Directory then
           FindData.dwFileAttributes := FindData.dwFileAttributes or FILE_ATTRIBUTE_DIRECTORY
@@ -568,8 +550,6 @@ begin
   LogProc := pLogProc;
   RequestProc := pRequestProc;
   PluginNumber := PluginNr;
-  ActiveConnectionList := TStringList.Create;
-  ConnectionList := TStringList.Create;
 
   Result := 0;
 end;
@@ -597,13 +577,14 @@ begin
       try
         if GetConnectionByPath(IncludeTrailingPathDelimiter(Path), FtpSend, sPath) then
         begin
+          ListRec.FtpSend := FtpSend;
           // Get directory listing
           if FtpSend.List(sPath, False) then
           begin
             if FtpSend.FtpList.Count > 0 then
             begin
-              ListRec.FtpList:= TFTPListEx.Create;
               // Save file list
+              ListRec.FtpList:= TFTPListEx.Create;
               ListRec.FtpList.Assign(FtpSend.FtpList);
               Result := THandle(ListRec);
               RemoteFindNext(Result, FindData);
@@ -659,7 +640,8 @@ begin
               Result := FS_EXEC_OK
             else
               begin
-                sFileName:= SetDirSeparators(RemoteName + FtpSend.GetCurrentDir);
+                sFileName := FtpSend.ServerToClient(FtpSend.GetCurrentDir);
+                sFileName := SetDirSeparators(RemoteName + sFileName);
                 StrPLCopy(RemoteName, sFileName, MAX_PATH);
                 Result := FS_EXEC_SYMLINK;
               end;
@@ -692,11 +674,13 @@ begin
       end;
     end
   else if Verb = 'properties' then
-    if (ExtractFileDir(RemoteName) = PathDelim) and (RemoteName[1] <> '<') then // connection
+    begin
+      if (ExtractFileDir(RemoteName) = PathDelim) and not (RemoteName[1] in [#0, '<']) then // connection
       begin
         EditConnection(RemoteName + 1);
-        Result:= FS_EXEC_OK;
       end;
+      Result:= FS_EXEC_OK;
+    end;
 end;
 
 function FsRenMovFile(OldName, NewName: PAnsiChar; Move, OverWrite: BOOL;
@@ -726,6 +710,7 @@ begin
   else if GetConnectionByPath(OldName, FtpSend, sOldName) then
     begin
       sNewName := ExtractRemoteFileName(NewName);
+      sNewName := FtpSend.ClientToServer(sNewName);
       ProgressProc(PluginNumber, OldName, NewName, 0);
       if FtpSend.RenameFile(sOldName, sNewName) then
         begin
@@ -738,58 +723,60 @@ end;
 function FsGetFile(RemoteName, LocalName: PAnsiChar; CopyFlags: Integer;
   RemoteInfo: pRemoteInfo): Integer; dcpcall;
 var
-  sFileName: AnsiString;
+  FileSize: Int64;
   FtpSend: TFTPSendEx;
+  sFileName: AnsiString;
 begin
   Result := FS_FILE_READERROR;
   if GetConnectionByPath(RemoteName, FtpSend, sFileName) then
-  begin
+  try
+    if FileExists(LocalName) and (CopyFlags and FS_COPYFLAGS_FORCE = 0) then
+    begin
+      if not FtpSend.CanResume then Exit(FS_FILE_EXISTS);
+      Exit(FS_FILE_EXISTSRESUMEALLOWED);
+    end;
     FtpSend.DataStream.Clear;
+    FtpSend.DirectFileName := LocalName;
+    Int64Rec(FileSize).Lo := RemoteInfo^.SizeLow;
+    Int64Rec(FileSize).Hi := RemoteInfo^.SizeHigh;
     ProgressProc(PluginNumber, RemoteName, LocalName, 0);
-    if FtpSend.RetrieveFile(sFileName, (CopyFlags and FS_COPYFLAGS_RESUME) <> 0) then
-      try
-        FtpSend.DataStream.SaveToFile(LocalName);
-        ProgressProc(PluginNumber, RemoteName, LocalName, 100);
-        Result := FS_FILE_OK;
-      except
-        on EFCreateError do
-          Result := FS_FILE_WRITEERROR;
-        on EWriteError do
-          Result := FS_FILE_WRITEERROR;
-      end;
+    if FtpSend.RetrieveFile(sFileName, FileSize, (CopyFlags and FS_COPYFLAGS_RESUME) <> 0) then
+    begin
+      ProgressProc(PluginNumber, RemoteName, LocalName, 100);
+      Result := FS_FILE_OK;
+    end;
+  except
+    on EUserAbort do Result := FS_FILE_USERABORT;
+    on EFOpenError do Result := FS_FILE_READERROR;
+    else Result := FS_FILE_WRITEERROR;
   end;
 end;
 
-function FsPutFile(LocalName, RemoteName: PAnsiChar; CopyFlags: Integer)
-  : Integer; dcpcall;
+function FsPutFile(LocalName, RemoteName: PAnsiChar; CopyFlags: Integer): Integer; dcpcall;
 var
-  sFileName: AnsiString;
   FtpSend: TFTPSendEx;
+  sFileName: AnsiString;
 begin
   Result := FS_FILE_WRITEERROR;
   if GetConnectionByPath(RemoteName, FtpSend, sFileName) then
-  begin
-    FtpSend.DataStream.Clear;
-    try
-      ProgressProc(PluginNumber, LocalName, RemoteName, 0);
-      FtpSend.DataStream.LoadFromFile(LocalName);
-    except
-      on EFOpenError do
-      begin
-        Result := FS_FILE_NOTFOUND;
-        Exit;
-      end;
-      on EReadError do
-      begin
-        Result := FS_FILE_READERROR;
-        Exit;
-      end;
+  try
+    if (CopyFlags and FS_COPYFLAGS_FORCE = 0) and (FtpSend.FileSize(sFileName) >= 0) then
+    begin
+      if not FtpSend.CanResume then Exit(FS_FILE_EXISTS);
+      Exit(FS_FILE_EXISTSRESUMEALLOWED);
     end;
+    FtpSend.DataStream.Clear;
+    FtpSend.DirectFileName := LocalName;
+    ProgressProc(PluginNumber, LocalName, RemoteName, 0);
     if FtpSend.StoreFile(sFileName, (CopyFlags and FS_COPYFLAGS_RESUME) <> 0) then
-      begin
-        ProgressProc(PluginNumber, LocalName, RemoteName, 100);
-        Result := FS_FILE_OK;
-      end;
+    begin
+      ProgressProc(PluginNumber, LocalName, RemoteName, 100);
+      Result := FS_FILE_OK;
+    end;
+  except
+    on EReadError do Result := FS_FILE_READERROR;
+    on EUserAbort do Result := FS_FILE_USERABORT;
+    else Result := FS_FILE_WRITEERROR;
   end;
 end;
 
@@ -855,8 +842,10 @@ end;
 
 procedure FsSetDefaultParams(dps: pFsDefaultParamStruct); dcpcall;
 begin
+  ConnectionList := TStringList.Create;
+  ActiveConnectionList := TStringList.Create;
   IniFile := TIniFile.Create(dps.DefaultIniName);
-  IniFile.WriteDateTime('FTP', 'Test', Now);
+  // IniFile.WriteDateTime('FTP', 'Test', Now);
   ReadConnectionList;
 end;
 
@@ -965,54 +954,6 @@ var
 begin
   Password:= EmptyStr;
   Result:= CryptFunc(FS_CRYPT_DELETE_PASSWORD, ConnectionName, Password) = FS_FILE_OK;
-end;
-
-{ TFTPListRecEx }
-
-procedure TFTPListRecEx.Assign(Value: TFTPListRec);
-begin
-  inherited Assign(Value);
-  Permission:= Value.Permission;
-end;
-
-{ TFTPListEx }
-
-procedure TFTPListEx.Assign(Value: TFTPList);
-var
-  flr: TFTPListRecEx;
-  n: integer;
-begin
-  Clear;
-  for n := 0 to Value.Count - 1 do
-  begin
-    flr := TFTPListRecEx.Create;
-    flr.Assign(Value[n]);
-    Flist.Add(flr);
-  end;
-  Lines.Assign(Value.Lines);
-  Masks.Assign(Value.Masks);
-  UnparsedLines.Assign(Value.UnparsedLines);
-end;
-
-{ TFTPSendEx }
-
-function TFTPSendEx.Connect: Boolean;
-begin
-  Result:= inherited Connect;
-  if Result then LogProc(PluginNumber, MSGTYPE_CONNECT, nil);
-end;
-
-procedure TFTPSendEx.FTPStatus(Sender: TObject; Response: Boolean;
-  const Value: String);
-begin
-  LogProc(PluginNumber, msgtype_details, PAnsiChar(Value));
-  if FSock.LastError <> 0 then
-    LogProc(PluginNumber, msgtype_details, PAnsiChar('Network error: '+FSock.LastErrorDesc));
-end;
-
-function TFTPSendEx.NetworkError: Boolean;
-begin
-  Result := FSock.CanRead(0);
 end;
 
 initialization

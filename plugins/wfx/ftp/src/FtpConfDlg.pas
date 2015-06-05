@@ -1,14 +1,14 @@
 {
    Double commander
    -------------------------------------------------------------------------
-   WFX plugin for working with File Transfer Protocol
+   Wfx plugin for working with File Transfer Protocol
 
-   Copyright (C) 2009-2012  Koblov Alexander (Alexx2000@mail.ru)
+   Copyright (C) 2009-2015 Alexander Koblov (alexx2000@mail.ru)
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Lesser General Public
    License as published by the Free Software Foundation; either
-   version 3 of the License, or (at your option) any later version.
+   version 2.1 of the License, or (at your option) any later version.
 
    This library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,7 +17,7 @@
 
    You should have received a copy of the GNU Lesser General Public
    License along with this library; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 }
 
 unit FtpConfDlg;
@@ -37,7 +37,7 @@ function ShowFtpConfDlg: Boolean;
 implementation
 
 uses
-  FtpFunc, FtpUtils, blcksock, ssl_openssl_lib;
+  LazUTF8, FtpFunc, FtpUtils, blcksock, ssl_openssl_lib;
 
 function DlgProc (pDlg: PtrUInt; DlgItemName: PAnsiChar; Msg, wParam, lParam: PtrInt): PtrInt; dcpcall;
 var
@@ -73,7 +73,7 @@ begin
               Data:= PtrInt(PAnsiChar(Text));
               SendDlgMsg(pDlg, 'edtPassword', DM_SETTEXT, Data, 0);
             end;
-          Text:= gConnection.Path;
+          Text:= SysToUTF8(gConnection.Path);
           Data:= PtrInt(PAnsiChar(Text));
           SendDlgMsg(pDlg, 'edtRemoteDir', DM_SETTEXT, Data, 0);
           Text:= gConnection.InitCommands;
@@ -119,6 +119,9 @@ begin
             Text:= 'anonymous';
             Data:= PtrInt(PAnsiChar(Text));
             SendDlgMsg(pDlg, 'edtUserName', DM_SETTEXT, Data, 0);
+            Text:= 'anonymous@example.org';
+            Data:= PtrInt(PAnsiChar(Text));
+            SendDlgMsg(pDlg, 'edtPassword', DM_SETTEXT, Data, 0);
           end
         else if DlgItemName = 'btnChangePassword' then
           begin
@@ -152,7 +155,7 @@ begin
             gConnection.MasterPassword:= Boolean(Data);
             Data:= SendDlgMsg(pDlg, 'edtRemoteDir', DM_GETTEXT, 0, 0);
             Text:= PAnsiChar(Data);
-            gConnection.Path:= Text;
+            gConnection.Path:= UTF8ToSys(Text);
             Data:= SendDlgMsg(pDlg, 'edtInitCommands', DM_GETTEXT, 0, 0);
             Text:= PAnsiChar(Data);
             gConnection.InitCommands:= Text;

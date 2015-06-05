@@ -4250,6 +4250,10 @@ msgstr "Hier können ein oder mehrere Laufwerke oder Mount_Points angegeben werd
 msgid "Drives &blacklist"
 msgstr "A&usschlussliste für Laufwerke"
 
+#: tfrmoptionsbriefview.gbcolumns.caption
+msgid "Columns size"
+msgstr ""
+
 #: tfrmoptionsbriefview.gbshowfileext.caption
 msgid "Show file extensions"
 msgstr "Zeige Dateiendungen"
@@ -4261,6 +4265,18 @@ msgstr "Ausgerichtet (mit TAB)"
 #: tfrmoptionsbriefview.rbdirectly.caption
 msgid "di&rectly after filename"
 msgstr "Unmittelbar hinter dem Dateinamen"
+
+#: tfrmoptionsbriefview.rbuseautosize.caption
+msgid "Auto"
+msgstr ""
+
+#: tfrmoptionsbriefview.rbusefixedcount.caption
+msgid "Fixed columns count"
+msgstr ""
+
+#: tfrmoptionsbriefview.rbusefixedwidth.caption
+msgid "Fixed columns width"
+msgstr ""
 
 #: tfrmoptionscolumnsview.cbcuttexttocolwidth.caption
 #, fuzzy
@@ -10858,7 +10874,7 @@ msgstr "&Dateien;Ve&rzeichnisse;Dateien u&nd Verzeichnisse"
 #, fuzzy
 #| msgid "&Hide filter panel when not focused"
 msgid "&Hide filter panel when not focused;Keep saving setting modifications for next session"
-msgstr "Verstecke Filterpanel wenn es nicht ausgewä&hlt ist"
+msgstr "Verstecke Filterpanel wenn es nicht ausgewä&hlt ist;Halten Sie Einstellung zu speichern Änderungen für die nächste Sitzung"
 
 #: ulng.rsoptsortcasesens
 msgid "not case sensitive;according to locale settings (aAbBcC);first upper then lower case (ABCabc)"

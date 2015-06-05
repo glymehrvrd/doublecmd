@@ -372,8 +372,8 @@ end;
 
 procedure TfrmSyncDirsDlg.btnSynchronizeClick(Sender: TObject);
 var
-  ConfirmOverwrites: Boolean;
   OperationType: TFileSourceOperationType;
+  FileExistsOption: TFileSourceOperationOptionFileExists;
 
   function CopyFiles(src, dst: IFileSource; fs: TFiles; Dest: string): Boolean;
   var
@@ -383,12 +383,7 @@ var
     begin
       Fs.Path:= fs[0].Path;
       // Create destination directory
-      with Dst.CreateCreateDirectoryOperation(PathDelim, Dest) do
-      try
-        Execute;
-      finally
-        Free;
-      end;
+      Dst.CreateDirectory(Dest);
       // Determine operation type
       case OperationType of
         fsoCopy:
@@ -415,14 +410,12 @@ var
                            Dest) as TFileSourceCopyOperation;
           end;
       end;
+      Operation.FileExistsOption := FileExistsOption;
       Operation.AddUserInterface(FFileSourceOperationMessageBoxesUI);
-      if ConfirmOverwrites then
-        Operation.FileExistsOption := fsoofeNone
-      else
-        Operation.FileExistsOption := fsoofeOverwrite;
       try
         Operation.Execute;
         Result := Operation.Result = fsorFinished;
+        FileExistsOption := Operation.FileExistsOption;
       finally
         Operation.Free;
       end;
@@ -481,7 +474,11 @@ begin
       Format(rsRightToLeftCopy, [CopyLeftCount, CopyLeftSize]);
     if ShowModal = mrOk then
     begin
-      ConfirmOverwrites := chkConfirmOverwrites.Checked;
+      if chkConfirmOverwrites.Checked then
+        FileExistsOption := fsoofeNone
+      else begin
+        FileExistsOption := fsoofeOverwrite;
+      end;
       CopyLeft := chkRightToLeft.Checked;
       CopyRight := chkLeftToRight.Checked;
 
