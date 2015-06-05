@@ -4,6 +4,7 @@
    Base class for file views which have a main control with a list of files.
 
    Copyright (C) 2012  Przemyslaw Nagay (cobines@gmail.com)
+   Copyright (C) 2015  Alexander Koblov (alexx2000@mail.ru)
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -169,7 +170,7 @@ uses
   LCLIntf, LCLProc, Forms, Dialogs,
   fMain, uShowMsg, uLng, uFileProperty, uFileSource, uFileSourceOperationTypes,
   uGlobs, uInfoToolTip, uDisplayFile, uFileSystemFileSource, uFileSourceUtil,
-  uArchiveFileSourceUtil;
+  uArchiveFileSourceUtil, uFormCommands;
 
 type
   TControlHandlersHack = class(TWinControl)
@@ -187,14 +188,26 @@ procedure TFileViewWithMainCtrl.cm_ContextMenu(const Params: array of string);
 var
   Rect: TRect;
   Point: TPoint;
+  UserWishForContextMenu: TUserWishForContextMenu = uwcmComplete;
+  bUserWishJustActionMenu: boolean;
 begin
   if IsLoadingFileList then Exit;
+
+  if Length(Params)>0 then
+  begin
+    GetParamBoolValue(Params[0], 'justactionmenu', bUserWishJustActionMenu);
+    if bUserWishJustActionMenu then
+      UserWishForContextMenu:=uwcmJustDCAction
+    else
+      UserWishForContextMenu:=uwcmComplete;
+  end;
 
   Rect := GetFileRect(GetActiveFileIndex);
   Point.X := Rect.Left + ((Rect.Right - Rect.Left) div 2);
   Point.Y := Rect.Top + ((Rect.Bottom - Rect.Top) div 2);
   Point := MainControl.ClientToScreen(Point);
-  frmMain.Commands.DoContextMenu(Self, Point.X, Point.Y, False);
+  SetCursorPos(Point.X+100, Point.Y+25);
+  frmMain.Commands.DoContextMenu(Self, Point.X, Point.Y, False, UserWishForContextMenu);
 end;
 
 procedure TFileViewWithMainCtrl.CreateDefault(AOwner: TWinControl);
@@ -1261,6 +1274,18 @@ begin
     VK_UP,
     VK_DOWN:
       Key := 0;
+{$ENDIF}
+
+{$IFDEF LCLWIN32}
+    // Workaround for Win32 - right arrow must clear selection at first move.
+    VK_RIGHT:
+      if (Shift = []) and (edtRename.SelLength > 0) then
+      begin
+        Key := edtRename.CaretPos.X;
+        edtRename.SelLength := 0;
+        edtRename.CaretPos := Classes.Point(Key, 0);
+        Key := 0;
+      end;
 {$ENDIF}
   end;
 end;

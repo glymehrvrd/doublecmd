@@ -1788,7 +1788,7 @@ msgstr ""
 #: tfrmfileproperties.lblsymlinkstr.caption
 #| msgid "Symlink:"
 msgid "Symlink to:"
-msgstr "Симв.ссылка"
+msgstr "Симв. ссылка"
 
 #: tfrmfileproperties.lbltype.caption
 msgctxt "TFRMFILEPROPERTIES.LBLTYPE.CAPTION"
@@ -3853,6 +3853,10 @@ msgstr "Введите один или несколько дисков, точе
 msgid "Drives &blacklist"
 msgstr "&Черный список дисков"
 
+#: tfrmoptionsbriefview.gbcolumns.caption
+msgid "Columns size"
+msgstr "Размер колонок"
+
 #: tfrmoptionsbriefview.gbshowfileext.caption
 msgid "Show file extensions"
 msgstr "Показывать расширения файлов"
@@ -3864,6 +3868,18 @@ msgstr "&Выровненными (по Tab)"
 #: tfrmoptionsbriefview.rbdirectly.caption
 msgid "di&rectly after filename"
 msgstr "&Сразу после имени"
+
+#: tfrmoptionsbriefview.rbuseautosize.caption
+msgid "Auto"
+msgstr "Автоматически"
+
+#: tfrmoptionsbriefview.rbusefixedcount.caption
+msgid "Fixed columns count"
+msgstr "Фиксированное число колонок"
+
+#: tfrmoptionsbriefview.rbusefixedwidth.caption
+msgid "Fixed columns width"
+msgstr "Фиксированная ширина колонок"
 
 #: tfrmoptionscolumnsview.cbcuttexttocolwidth.caption
 msgctxt "TFRMOPTIONSCOLUMNSVIEW.CBCUTTEXTTOCOLWIDTH.CAPTION"
@@ -7789,7 +7805,7 @@ msgstr "Всего:"
 
 #: ulng.rsclipboardcontainsinvalidtoolbardata
 msgid "Clipboard doesn't contain any valid toolbar data."
-msgstr "Буфер омена не содержит данных панели инструментов"
+msgstr "Буфер обмена не содержит данных панели инструментов"
 
 #: ulng.rscmdcategorylistinorder
 msgid "All;Active Panel;Left Panel;Right Panel;File Operations;Configuration;Network;Miscellaneous;Parallel Port;Print;Mark;Security;Clipboard;FTP;Navigation;Help;Window;Command Line;Tools;View;User;Tabs;Sorting;Log"
@@ -8900,7 +8916,7 @@ msgstr "Некорректный путь"
 
 #: ulng.rsmsginvalidpathlong
 msgid "Path %s contains forbidden characters."
-msgstr "Путь %s содержит запрещенные симаолы"
+msgstr "Путь %s содержит запрещенные символы"
 
 #: ulng.rsmsginvalidplugin
 msgid "This is not a valid plugin!"
