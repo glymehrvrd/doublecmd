@@ -213,7 +213,9 @@ type
     HashListRight: array of Integer;
     EncodingList: TStringList;
     ScrollLock: LongInt;
+    FShowIdentical: Boolean;
     FCommands: TFormCommands;
+    procedure ShowIdentical;
     procedure Clear(bLeft, bRight: Boolean);
     procedure BuildHashList(bLeft, bRight: Boolean);
     procedure ChooseEncoding(SynDiffEdit: TSynDiffEdit);
@@ -265,6 +267,7 @@ begin
   begin
     edtFileNameLeft.Text:= FileNameLeft;
     edtFileNameRight.Text:= FileNameRight;
+    FShowIdentical:= actAutoCompare.Checked;
     actBinaryCompare.Checked:= not (FileIsText(FileNameLeft) or FileIsText(FileNameRight));
     if actBinaryCompare.Checked then
       actBinaryCompareExecute(actBinaryCompare)
@@ -273,7 +276,7 @@ begin
       OpenFileRight(FileNameRight);
       if actAutoCompare.Checked then actStartCompare.Execute;
     end;
-    ShowOnTop;
+    if actBinaryCompare.Checked or (FShowIdentical = False) then ShowOnTop;
   end;
 end;
 
@@ -347,6 +350,11 @@ begin
       StatusBar.Panels[1].Text := rsDiffModifies + IntToStr(modifies);
       StatusBar.Panels[2].Text := rsDiffAdds + IntToStr(adds);
       StatusBar.Panels[3].Text := rsDiffDeletes + IntToStr(deletes);
+      if FShowIdentical then
+      begin
+        FShowIdentical:= (modifies = 0) and (adds = 0) and (deletes = 0);
+        if FShowIdentical then ShowIdentical;
+      end;
     end;
   finally
     SynDiffEditLeft.FinishCompare;
@@ -500,9 +508,9 @@ procedure TfrmDiffer.actAboutExecute(Sender: TObject);
 begin
   ShowMessage('Internal Differ tool of Double Commander.' + LineEnding + LineEnding +
               'It is inspired by Flavio Etrusco''s Pariter tool.' + LineEnding +
-              'You can find it on: http://sourceforge.net/projects/pariter/' + LineEnding +
+              'You can find it on: http://sourceforge.net/projects/pariter' + LineEnding +
               'It is based on Angus Johnson''s excellent TDiff component.' + LineEnding +
-              'You can find it on: http://www.users.on.net/johnson/delphi/');
+              'You can find it on: http://www.users.on.net/johnson/delphi');
 end;
 
 procedure TfrmDiffer.actEditCopyExecute(Sender: TObject);
@@ -689,12 +697,30 @@ begin
   BinaryCompare:= nil;
   BinaryDiffIndex:= -1;
   StatusBar.Panels[0].Text := EmptyStr;
-  StatusBar.Panels[1].Text := ' Modifies: ' + IntToStr(BinaryDiffList.Count);
+  StatusBar.Panels[1].Text := rsDiffModifies + IntToStr(BinaryDiffList.Count);
   StatusBar.Panels[2].Text := EmptyStr;
   StatusBar.Panels[3].Text := EmptyStr;
   actStartCompare.Enabled := True;
   actCancelCompare.Enabled := False;
   actBinaryCompare.Enabled := True;
+  if FShowIdentical then
+  begin
+    FShowIdentical:= (BinaryDiffList.Count = 0);
+    if FShowIdentical then ShowIdentical;
+  end;
+end;
+
+procedure TfrmDiffer.ShowIdentical;
+var
+  Message: String;
+begin
+  Message:= rsDiffFilesIdentical + LineEnding + LineEnding;
+  Message+= edtFileNameLeft.Text + LineEnding + edtFileNameRight.Text;
+  if MessageDlg(rsToolDiffer, Message, mtWarning, [mbClose, mbCancel], 0, mbClose) = mrClose then
+    Close
+  else begin
+    FShowIdentical:= False;
+  end;
 end;
 
 procedure TfrmDiffer.FormClose(Sender: TObject; var CloseAction: TCloseAction);

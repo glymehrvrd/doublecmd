@@ -3,7 +3,7 @@
     -------------------------------------------------------------------------
     This unit contains platform dependent functions dealing with operating system.
 
-    Copyright (C) 2006-2014  Koblov Alexander (Alexx2000@mail.ru)
+    Copyright (C) 2006-2015 Alexander Koblov (alexx2000@mail.ru)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@ type
   TCopyAttributesOption = (caoCopyAttributes,
                            caoCopyTime,
                            caoCopyOwnership,
+                           caoCopyPermissions,
                            caoRemoveReadOnlyAttr);
   TCopyAttributesOptions = set of TCopyAttributesOption;
 
@@ -180,7 +181,7 @@ implementation
 
 uses
 {$IF DEFINED(MSWINDOWS)}
-  Windows, JwaWinNetWk, DCDateTimeUtils,
+  Windows, JwaWinNetWk, DCDateTimeUtils, DCWindows,
 {$ENDIF}
 {$IF DEFINED(UNIX)}
   {$IF DEFINED(BSD)}
@@ -222,6 +223,9 @@ const
                FILE_SHARE_READ,
                FILE_SHARE_WRITE,
                FILE_SHARE_READ or FILE_SHARE_WRITE or FILE_SHARE_DELETE);
+
+var
+  CurrentDirectory: UTF8String;
 {$ELSEIF DEFINED(UNIX)}
 const
   AccessModes: array[0..2] of LongInt  = (
@@ -328,6 +332,14 @@ begin
     if not (mbFileGetTime(sSrc, ModificationTime, CreationTime, LastAccessTime) and
             mbFileSetTime(sDst, ModificationTime, CreationTime, LastAccessTime)) then
       Include(Result, caoCopyTime);
+  end;
+
+  if caoCopyPermissions in Options then
+  begin
+    if not CopyNtfsPermissions(sSrc, sDst) then
+    begin
+      Include(Result, caoCopyPermissions);
+    end;
   end;
 end;
 {$ELSE}  // *nix
@@ -1071,18 +1083,22 @@ end;
 function mbGetCurrentDir: UTF8String;
 {$IFDEF MSWINDOWS}
 var
-  iSize: Integer;
-  wsDir: WideString;
+  dwSize: DWORD;
+  wsDir: UnicodeString;
 begin
-  Result:= '';
-  iSize:= GetCurrentDirectoryW(0, nil);
-  if iSize > 0 then
-    begin
-      SetLength(wsDir, iSize);
-      GetCurrentDirectoryW(iSize, PWideChar(wsDir));
-      wsDir:= PWideChar(wsDir);
+  if Length(CurrentDirectory) > 0 then
+    Result:= CurrentDirectory
+  else
+  begin
+    dwSize:= GetCurrentDirectoryW(0, nil);
+    if dwSize = 0 then
+      Result:= EmptyStr
+    else begin
+      SetLength(wsDir, dwSize + 1);
+      SetLength(wsDir, GetCurrentDirectoryW(dwSize, PWideChar(wsDir)));
       Result:= UTF8Encode(wsDir);
     end;
+  end;
 end;
 {$ELSE}
 begin
@@ -1094,7 +1110,9 @@ end;
 function mbSetCurrentDir(const NewDir: UTF8String): Boolean;
 {$IFDEF MSWINDOWS}
 var
-  wsNewDir: WideString;
+  Handle: THandle;
+  wsNewDir: UnicodeString;
+  FindData: TWin32FindDataW;
   NetResource: TNetResourceW;
 begin
   // Function WNetAddConnection2W works very slow
@@ -1107,9 +1125,14 @@ begin
     NetResource.lpRemoteName:= PWideChar(wsNewDir);
     WNetAddConnection2W(NetResource, nil, nil, CONNECT_INTERACTIVE);
   end;
-  // MSDN says that the final character must be a backslash ('\').
-  wsNewDir:= wsNewDir + DirectorySeparator;
-  Result:= SetCurrentDirectoryW(PWideChar(wsNewDir));
+  wsNewDir:= wsNewDir + DirectorySeparator + '*';
+  Handle:= FindFirstFileW(PWideChar(wsNewDir), FindData);
+  Result:= (Handle <> INVALID_HANDLE_VALUE);
+  if Result then
+  begin
+    FindClose(Handle);
+    CurrentDirectory:= NewDir;
+  end;
 end;
 {$ELSE}
 begin

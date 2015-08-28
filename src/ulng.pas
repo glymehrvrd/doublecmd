@@ -114,6 +114,7 @@ resourcestring
   rsMsgErrSetAttribute = 'Can not set attributes for "%s"';
   rsMsgErrSetDateTime = 'Can not set date/time for "%s"';
   rsMsgErrSetOwnership = 'Can not set owner/group for "%s"';
+  rsMsgErrSetPermissions = 'Can not set permissions for "%s"';
   rsMsgErrDateNotSupported = 'Date %s is not supported';
   rsMsgErrSaveFile = 'Cannot save file';
   rsMsgErrCanNotConnect = 'Can not connect to server: "%s"';
@@ -149,6 +150,7 @@ resourcestring
   rsMsgUserDidNotSetExtension = '<NO EXT>';
   rsMsgUserDidNotSetName = '<NO NAME>';
   rsMsgProblemExecutingCommand = 'Problem executing command (%s)';
+  rsMsgCouldNotCopyBackward = 'Could not copy backward - do you want to keep the changed file?';
 
   //Hot Dir related
   rsMsgHotDirWhatToDelete = 'Do you want to delete all elements inside the sub-menu [%s]?'+#$0A+'Answering NO will delete only menu delimiters but will keep element inside sub-menu.';
@@ -424,6 +426,7 @@ resourcestring
   rsDiffModifies = ' Modifies: ';
   rsDiffAdds = ' Adds: ';
   rsDiffDeletes = ' Deletes: ';
+  rsDiffFilesIdentical = 'The two files are identical!';
   // Find files dialog
   rsFindSearchFiles = 'Find files';
   rsFindDefineTemplate = 'Define template';
@@ -600,6 +603,7 @@ resourcestring
   rsCmdKindOfSort='Legacy sorted;A-Z sorted';
   rsMsgThisIsNowInClipboard = '"%s" is now in the clipboard';
   rsSimpleWordAll = 'All';
+  rsSimpleWordCommand = 'Command';
   rsSimpleWordCategory = 'Category';
   rsSimpleWordFilename = 'Filename';
   rsSimpleWordParameter = 'Param';

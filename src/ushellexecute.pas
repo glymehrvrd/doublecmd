@@ -272,7 +272,7 @@ var
         if bTrailingDelimiter then
           Result := IncludeTrailingPathDelimiter(Result)
         else
-          Result := ExcludeTrailingPathDelimiter(Result);
+          Result := ExcludeBackPathDelimiter(Result);
       end;
     end;
 
@@ -311,7 +311,7 @@ var
       if bTrailingDelimiter then
         Result := IncludeTrailingPathDelimiter(Result)
       else
-        Result := ExcludeTrailingPathDelimiter(Result);
+        Result := ExcludeBackPathDelimiter(Result);
     end;
 
     if (fmQuote in state.functMod) then
@@ -344,9 +344,8 @@ var
         begin
           if state.files.Count > 0 then
           begin
-            for I := 0 to state.files.Count - 2 do
+            for I := 0 to state.files.Count - 1 do
               FileName += BuildFile(state.files[I]) + LineEndingA;
-            FileName += BuildFile(state.files[state.files.Count - 1]);
           end;
         end;
 
@@ -356,9 +355,8 @@ var
           begin
             FileName += LineEndingA;
 
-            for I := 0 to state.otherfiles.Count - 2 do
+            for I := 0 to state.otherfiles.Count - 1 do
               FileName += BuildFile(state.otherfiles[I]) + LineEndingA;
-            FileName += BuildFile(state.otherfiles[state.files.Count - 1]);
           end;
         end;
 
@@ -1004,7 +1002,6 @@ function ShellExecuteEx(sActionName, sFileName, sActiveDir: string): boolean;
 var
   aFile: TFile;
   sCmd, sParams, sStartPath: string;
-  bShowCommandLinePriorToExecute: boolean;
 begin
   Result := False;
 
@@ -1013,8 +1010,7 @@ begin
   try
     if gExts.GetExtActionCmd(aFile, sActionName, sCmd, sParams, sStartPath) then
     begin
-      sParams := PrepareParameter(sParams, aFile, [], @bShowCommandLinePriorToExecute);
-      Result := ProcessExtCommandFork(sCmd, sParams, sStartPath, nil, bShowCommandLinePriorToExecute);
+      Result := ProcessExtCommandFork(sCmd, sParams, sStartPath, aFile);
     end;
 
     if not Result then

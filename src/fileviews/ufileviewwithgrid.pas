@@ -31,6 +31,7 @@ type
     procedure TopLeftChanged; override;
     function  GetBorderWidth: Integer;
   protected
+    procedure SetColRowCount(Count: Integer);
     procedure DrawLines(aIdx, aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
     procedure PrepareColors(aFile: TDisplayFile; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
     procedure UpdateView; virtual; abstract;
@@ -268,6 +269,19 @@ begin
     Result := 0;
 end;
 
+procedure TFileViewGrid.SetColRowCount(Count: Integer);
+var
+  aCol, aRow: Integer;
+begin
+  if CellToIndex(Col, Row) < 0 then
+  begin
+    FFileView.FUpdatingActiveFile := True;
+    IndexToCell(Count - 1, ACol, ARow);
+    MoveExtend(False, aCol, aRow);
+    FFileView.FUpdatingActiveFile := False;
+  end;
+end;
+
 procedure TFileViewGrid.DrawLines(aIdx, aCol, aRow: Integer; aRect: TRect;
   aState: TGridDrawState);
 begin
@@ -288,28 +302,33 @@ begin
   end;
 end;
 
-procedure TFileViewGrid.PrepareColors(AFile: TDisplayFile; aCol, aRow: Integer;
+procedure TFileViewGrid.PrepareColors(aFile: TDisplayFile; aCol, aRow: Integer;
   aRect: TRect; aState: TGridDrawState);
 var
   TextColor: TColor = clDefault;
   BackgroundColor: TColor;
   IsCursor: Boolean;
+  IsCursorInactive: Boolean;
 begin
   Canvas.Font.Name   := gFonts[dcfMain].Name;
   Canvas.Font.Size   := gFonts[dcfMain].Size;
   Canvas.Font.Style  := gFonts[dcfMain].Style;
 
   IsCursor := (gdSelected in aState) and FFileView.Active and (not gUseFrameCursor);
+  IsCursorInactive := (gdSelected in aState) and (not FFileView.Active) and (not gUseFrameCursor);
   // Set up default background color first.
   if IsCursor then
     BackgroundColor := gCursorColor
   else
     begin
-      // Alternate rows background color.
-      if odd(ARow) then
-        BackgroundColor := gBackColor
+      if IsCursorInactive AND gUseInactiveSelColor then
+        BackgroundColor := gInactiveCursorColor
       else
-        BackgroundColor := gBackColor2;
+        // Alternate rows background color.
+        if odd(ARow) then
+          BackgroundColor := gBackColor
+        else
+          BackgroundColor := gBackColor2;
     end;
 
   // Set text color.
@@ -322,20 +341,26 @@ begin
     if gUseInvertedSelection then
       begin
         //------------------------------------------------------
-        if IsCursor then
+        if IsCursor OR (IsCursorInactive AND gUseInactiveSelColor) then
           begin
             TextColor := InvertColor(gCursorText);
           end
         else
           begin
-            BackgroundColor := gMarkColor;
+            if FFileView.Active OR (not gUseInactiveSelColor) then
+              BackgroundColor := gMarkColor
+            else
+              BackgroundColor := gInactiveMarkColor;
             TextColor := TextColor;
           end;
         //------------------------------------------------------
       end
     else
       begin
-        TextColor := gMarkColor;
+        if FFileView.Active OR (not gUseInactiveSelColor) then
+          TextColor := gMarkColor
+        else
+          TextColor := gInactiveMarkColor;
       end;
   end
   else if IsCursor then
@@ -372,7 +397,8 @@ begin
   RowCount := 1;
   ColCount := 1;
 
-  DefaultColWidth:= 200;
+  DefaultColWidth := 200;
+  BorderStyle := bsNone; // Border no need as grid inside pagectl
 
   Self.Parent := AParent;
 
@@ -421,6 +447,9 @@ end;
 
 procedure TFileViewWithGrid.DisplayFileListChanged;
 begin
+  // Update grid col and row count
+  dgPanel.SetColRowCount(FFiles.Count);
+
   dgPanel.CalculateColRowCount;
   dgPanel.CalculateColumnWidth;
   SetFilesDisplayItems;
@@ -682,6 +711,8 @@ var
   TabHeaderHeight: Integer;
 begin
   inherited DoUpdateView;
+  dgPanel.FocusRectVisible := gUseCursorBorder and not gUseFrameCursor;
+  dgPanel.FocusColor := gCursorBorderColor;
   dgPanel.UpdateView;
   TabHeader.Visible := gTabHeader;
   // Set rows of header.

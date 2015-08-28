@@ -23,6 +23,7 @@
 unit uMyUnix;
 
 {$mode objfpc}{$H+}
+{$packrecords c}
 
 {$IF NOT DEFINED(LINUX)}
 {$DEFINE FPC_USE_LIBC}
@@ -31,7 +32,7 @@ unit uMyUnix;
 interface
 
 uses
-  Classes, SysUtils, BaseUnix, uDrive;
+  Classes, SysUtils, BaseUnix, CTypes, DCBasicTypes, uDrive;
 
 const
   libc = 'c';
@@ -76,17 +77,23 @@ type
   PMountEntry = ^TMountEntry;
 
 type
-  __uid_t = DWORD;
-  __gid_t = DWORD;
   //en Password file entry record
   passwd = record
-    pw_name: PChar;   //en< user name
-    pw_passwd: PChar; //en< user password
-    pw_uid: __uid_t;  //en< user ID
-    pw_gid: __gid_t;  //en< group ID
-    pw_gecos: PChar;  //en< real name
-    pw_dir: PChar;    //en< home directory
-    pw_shell: PChar;  //en< shell program
+    pw_name: PChar;    //en< user name
+    pw_passwd: PChar;  //en< user password
+    pw_uid: uid_t;     //en< user ID
+    pw_gid: gid_t;     //en< group ID
+{$IF DEFINED(BSD)}
+    pw_change: time_t; //en< password change time
+    pw_class: PChar;   //en< user access class
+{$ENDIF}
+    pw_gecos: PChar;   //en< real name
+    pw_dir: PChar;     //en< home directory
+    pw_shell: PChar;   //en< shell program
+{$IF DEFINED(BSD)}
+    pw_expire: time_t; //en< account expiration
+    pw_fields: cint;   //en< internal: fields filled in
+{$ENDIF}
   end;
   TPasswordRecord = passwd;
   PPasswordRecord = ^TPasswordRecord;
@@ -94,7 +101,7 @@ type
   group = record
     gr_name: PChar;   //en< group name
     gr_passwd: PChar; //en< group password
-    gr_gid: __gid_t;  //en< group ID
+    gr_gid: gid_t;    //en< group ID
     gr_mem: ^PChar;   //en< group members
   end;
   TGroupRecord = group;
@@ -128,7 +135,7 @@ function endmntent(stream: PFILE): LongInt; cdecl; external libc name 'endmntent
    @returns(The function returns a pointer to a structure containing the broken-out
             fields of the record in the password database that matches the user ID)
 }
-function getpwuid(uid: __uid_t): PPasswordRecord; cdecl; external libc name 'getpwuid';
+function getpwuid(uid: uid_t): PPasswordRecord; cdecl; external libc name 'getpwuid';
 {en
    Get password file entry
    @param(name User name)
@@ -142,7 +149,7 @@ function getpwnam(const name: PChar): PPasswordRecord; cdecl; external libc name
    @returns(The function returns a pointer to a structure containing the broken-out
             fields of the record in the group database that matches the group ID)
 }
-function getgrgid(gid: __gid_t): PGroupRecord; cdecl; external libc name 'getgrgid';
+function getgrgid(gid: gid_t): PGroupRecord; cdecl; external libc name 'getgrgid';
 {en
    Get group file entry
    @param(name Group name)
@@ -205,6 +212,8 @@ function MountDrive(Drive: PDrive): Boolean;
 function UnmountDrive(Drive: PDrive): Boolean;
 function EjectDrive(Drive: PDrive): Boolean;
 
+function ExecuteCommand(Command: String; Args: TDynamicStringArray; StartPath: String): Boolean;
+
 {$IF DEFINED(BSD)}
 const
   MNT_WAIT = 1; // synchronously wait for I/O to complete
@@ -240,7 +249,7 @@ var
 implementation
 
 uses
-  URIParser, Unix, FileUtil, DCClassesUtf8, DCStrUtils, uDCUtils, DCBasicTypes, uOSUtils
+  URIParser, Unix, FileUtil, DCOSUtils, DCClassesUtf8, DCStrUtils, uDCUtils, uOSUtils
 {$IF (NOT DEFINED(FPC_USE_LIBC)) or (DEFINED(BSD) AND NOT DEFINED(DARWIN))}
   , SysCall
 {$ENDIF}
@@ -344,22 +353,25 @@ end;
 
 function FileIsLinkToFolder(const FileName: UTF8String; out LinkTarget: UTF8String): Boolean;
 var
-  iniDesktop: TIniFileEx = nil;
   StatInfo: BaseUnix.Stat;
+  iniDesktop: TIniFileEx = nil;
 begin
   Result:= False;
   try
     iniDesktop:= TIniFileEx.Create(FileName, fmOpenRead);
-    if iniDesktop.ReadString('Desktop Entry', 'Type', EmptyStr) = 'Link' then
-    begin
-      LinkTarget:= iniDesktop.ReadString('Desktop Entry', 'URL', EmptyStr);
-      if not URIToFilename(LinkTarget, LinkTarget) then Exit;
-      if fpLStat(PAnsiChar(UTF8ToSys(LinkTarget)), StatInfo) <> 0 then Exit;
-      Result:= FPS_ISDIR(StatInfo.st_mode);
-    end;
-  finally
-    if Assigned(iniDesktop) then
+    try
+      if iniDesktop.ReadString('Desktop Entry', 'Type', EmptyStr) = 'Link' then
+      begin
+        LinkTarget:= iniDesktop.ReadString('Desktop Entry', 'URL', EmptyStr);
+        if not URIToFilename(LinkTarget, LinkTarget) then Exit;
+        if fpLStat(PAnsiChar(UTF8ToSys(LinkTarget)), StatInfo) <> 0 then Exit;
+        Result:= FPS_ISDIR(StatInfo.st_mode);
+      end;
+    finally
       FreeAndNil(iniDesktop);
+    end;
+  except
+    // Ignore
   end;
 end;
 
@@ -375,12 +387,15 @@ begin
   if Result and (Info.st_size >= SizeOf(dwSign)) then
   try
     fsExeScr := TFileStreamEx.Create(FileName, fmOpenRead or fmShareDenyNone);
-    dwSign := fsExeScr.ReadDWord;
-    // ELF or #!
-    Result := ((dwSign = NtoBE($7F454C46)) or (Lo(dwSign) = NtoBE($2321)));
-  finally
-    if Assigned(fsExeScr) then
+    try
+      dwSign := fsExeScr.ReadDWord;
+      // ELF or #!
+      Result := ((dwSign = NtoBE($7F454C46)) or (Lo(dwSign) = NtoBE($2321)));
+    finally
       fsExeScr.Free;
+    end;
+  except
+    Result:= False;
   end;
 end;
 
@@ -579,12 +594,94 @@ begin
   Result := fpSystemStatus('eject ' + Drive^.DeviceId) = 0;
 end;
 
-{$IF DEFINED(UNIX) AND NOT DEFINED(DARWIN)}
+type
+  {en
+    Waits for a child process to finish and collects its exit status,
+    causing it to be released by the system (prevents defunct processes).
+
+    Instead of the wait-thread we could just ignore or handle SIGCHLD signal
+    for the process, but this way we don't interfere with the signal handling.
+    The downside is that there's a thread for every child process running.
+
+    Another method is to periodically do a cleanup, for example from OnIdle
+    or OnTimer event. Remember PIDs of spawned child processes and when
+    cleaning call FpWaitpid(PID, nil, WNOHANG) on each PID. Downside is they
+    are not released immediately after the child process finish (may be relevant
+    if we want to display exit status to the user).
+  }
+  TWaitForPidThread = class(TThread)
+  private
+    FPID: TPid;
+  protected
+    procedure Execute; override;
+  public
+    constructor Create(WaitForPid: TPid); overload;
+  end;
+
+  constructor TWaitForPidThread.Create(WaitForPid: TPid);
+  begin
+    inherited Create(True);
+    FPID := WaitForPid;
+    FreeOnTerminate := True;
+  end;
+
+  procedure TWaitForPidThread.Execute;
+  begin
+    while (FpWaitPid(FPID, nil, 0) = -1) and (fpgeterrno() = ESysEINTR) do;
+  end;
+
+function ExecuteCommand(Command: String; Args: TDynamicStringArray; StartPath: String): Boolean;
+var
+  pid : TPid;
+  WaitForPidThread: TWaitForPidThread;
+begin
+  {$IFDEF DARWIN}
+  // If we run application bundle (*.app) then
+  // execute it by 'open -a' command (see 'man open' for details)
+  if StrEnds(Command, '.app') then
+  begin
+    SetLength(Args, Length(Args) + 2);
+    for pid := High(Args) downto Low(Args) + 2 do
+      Args[pid]:= Args[pid - 2];
+    Args[0] := '-a';
+    Args[1] := Command;
+    Command := 'open';
+  end;
+  {$ENDIF}
+
+  pid := fpFork;
+
+  if pid = 0 then
+    begin
+      { Set child current directory }
+      if Length(StartPath) > 0 then fpChdir(StartPath);
+
+      { The child does the actual exec, and then exits }
+      if FpExecLP(Command, Args) = -1 then
+        Writeln(Format('Execute error %d: %s', [fpgeterrno, SysErrorMessage(fpgeterrno)]));
+
+      { If the FpExecLP fails, we return an exitvalue of 127, to let it be known }
+      fpExit(127);
+    end
+  else if pid = -1 then         { Fork failed }
+    begin
+      raise Exception.Create('Fork failed: ' + Command);
+    end
+  else if pid > 0 then          { Parent }
+    begin
+      WaitForPidThread := TWaitForPidThread.Create(pid);
+      WaitForPidThread.Start;
+    end;
+
+  Result := (pid > 0);
+end;
+
+{$IF NOT DEFINED(DARWIN)}
 initialization
   DesktopEnv := GetDesktopEnvironment;
   {$IFDEF LINUX}
-  CheckPMount;
-  CheckUDisksCtl;
+    CheckPMount;
+    CheckUDisksCtl;
   {$ENDIF}
 {$ENDIF}
 

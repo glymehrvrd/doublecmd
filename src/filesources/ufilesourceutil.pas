@@ -115,17 +115,19 @@ begin
               DCDebug('Change directory to ', Operation.ResultString);
               with aFileView do
               begin
-                if (FileSource.IsClass(TFileSystemFileSource)) or
-                   (mbSetCurrentDir(ExcludeTrailingPathDelimiter(Operation.ResultString)) = False) then
-                  begin
-                    // Simply change path
-                    CurrentPath:= Operation.ResultString;
-                  end
-                else
-                  begin
-                    // Get a new filesystem file source
-                    AddFileSource(TFileSystemFileSource.GetFileSource, Operation.ResultString);
-                  end;
+                // If path is URI
+                if Pos('://', Operation.ResultString) > 0 then
+                  ChooseFileSource(aFileView, Operation.ResultString)
+                else if (FileSource.IsClass(TFileSystemFileSource)) or
+                        (mbSetCurrentDir(ExcludeTrailingPathDelimiter(Operation.ResultString)) = False) then
+                begin
+                  // Simply change path
+                  CurrentPath:= Operation.ResultString;
+                end
+                else begin
+                  // Get a new filesystem file source
+                  AddFileSource(TFileSystemFileSource.GetFileSource, Operation.ResultString);
+                end;
               end;
             end;
           end; // case
@@ -240,7 +242,8 @@ begin
   begin
     if not mbCompareFileNames(aFileView.CurrentPath, aFile.Path) then
     begin
-      SetFileSystemPath(aFileView, aFile.Path);
+      if aFileView.FileSource.Properties * [fspDirectAccess, fspLinksToLocalFiles] <> [] then
+        SetFileSystemPath(aFileView, aFile.Path);
     end;
     aFileView.AddFileSource(FileSource, FileSource.GetRootDir);
     Exit(True);

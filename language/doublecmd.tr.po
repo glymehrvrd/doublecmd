@@ -15,6 +15,10 @@ msgstr ""
 msgid "Comparing... %d%% (ESC to cancel)"
 msgstr ""
 
+#: fsyncdirsdlg.rsdeleteright
+msgid "Right: Delete %d file(s)"
+msgstr ""
+
 #: fsyncdirsdlg.rsfilesfound
 msgid "Files found: %d  (Identical: %d, Different: %d, Unique left: %d, Unique right: %d)"
 msgstr ""
@@ -253,6 +257,10 @@ msgstr ""
 
 #: tfilesystemcopymoveoperationoptionsui.cbcopyownership.caption
 msgid "Copy o&wnership"
+msgstr ""
+
+#: tfilesystemcopymoveoperationoptionsui.cbcopypermissions.caption
+msgid "Copy &permissions"
 msgstr ""
 
 #: tfilesystemcopymoveoperationoptionsui.cbcopytime.caption
@@ -616,11 +624,6 @@ msgctxt "TFRMCOPYDLG.BTNCANCEL.CAPTION"
 msgid "&Cancel"
 msgstr "İptal"
 
-#: tfrmcopydlg.btncreatespecialqueue.caption
-msgctxt "tfrmcopydlg.btncreatespecialqueue.caption"
-msgid "..."
-msgstr "..."
-
 #: tfrmcopydlg.btnoptions.caption
 msgid "O&ptions"
 msgstr "Seçenekler"
@@ -635,6 +638,36 @@ msgstr "Bu seçenekleri varsayılan olarak kaydet"
 msgctxt "TFRMCOPYDLG.CAPTION"
 msgid "Copy file(s)"
 msgstr "Dosya(lar)Kopyala"
+
+#: tfrmcopydlg.mnunewqueue.caption
+msgctxt "tfrmcopydlg.mnunewqueue.caption"
+msgid "New queue"
+msgstr ""
+
+#: tfrmcopydlg.mnuqueue1.caption
+msgctxt "tfrmcopydlg.mnuqueue1.caption"
+msgid "Queue 1"
+msgstr ""
+
+#: tfrmcopydlg.mnuqueue2.caption
+msgctxt "tfrmcopydlg.mnuqueue2.caption"
+msgid "Queue 2"
+msgstr ""
+
+#: tfrmcopydlg.mnuqueue3.caption
+msgctxt "tfrmcopydlg.mnuqueue3.caption"
+msgid "Queue 3"
+msgstr ""
+
+#: tfrmcopydlg.mnuqueue4.caption
+msgctxt "tfrmcopydlg.mnuqueue4.caption"
+msgid "Queue 4"
+msgstr ""
+
+#: tfrmcopydlg.mnuqueue5.caption
+msgctxt "tfrmcopydlg.mnuqueue5.caption"
+msgid "Queue 5"
+msgstr ""
 
 #: tfrmdescredit.actsavedescription.caption
 msgid "Save Description"
@@ -4849,6 +4882,11 @@ msgctxt "tfrmoptionsfileassoc.miviewer.caption"
 msgid "Open in Viewer"
 msgstr "Görüntüleyicide açık"
 
+#: tfrmoptionsfileoperations.bvlconfirmations.caption
+msgctxt "tfrmoptionsfileoperations.bvlconfirmations.caption"
+msgid "Show confirmation window for:"
+msgstr ""
+
 #: tfrmoptionsfileoperations.cbcopyconfirmation.caption
 msgid "Cop&y operation"
 msgstr ""
@@ -4893,6 +4931,10 @@ msgstr ""
 msgid "S&kip file operations errors and write them to log window"
 msgstr ""
 
+#: tfrmoptionsfileoperations.dbtextsearch.caption
+msgid "Text search in files"
+msgstr ""
+
 #: tfrmoptionsfileoperations.gbexecutingoperations.caption
 msgid "Executing operations"
 msgstr ""
@@ -4910,12 +4952,17 @@ msgstr ""
 msgid "&Buffer size for file operations (in KB):"
 msgstr ""
 
-#: tfrmoptionsfileoperations.lblconfirmations.caption
-msgid "Show confirmation window for:"
-msgstr ""
-
 #: tfrmoptionsfileoperations.lblprogresskind.caption
 msgid "Show operations progress &initially in"
+msgstr ""
+
+#: tfrmoptionsfileoperations.lblsearchdefaulttemplate.caption
+msgid "Default search template:"
+msgstr ""
+
+#: tfrmoptionsfileoperations.lbltypeofduplicatedrename.caption
+msgctxt "tfrmoptionsfileoperations.lbltypeofduplicatedrename.caption"
+msgid "Duplicated name auto-rename style:"
 msgstr ""
 
 #: tfrmoptionsfileoperations.lblwipepassnumber.caption
@@ -4928,10 +4975,6 @@ msgstr ""
 
 #: tfrmoptionsfileoperations.rbusestreaminsearch.caption
 msgid "&Use stream for search text in files"
-msgstr ""
-
-#: tfrmoptionsfileoperations.rgtypeofduplicatedrename.caption
-msgid "Duplicated name auto-rename style:"
 msgstr ""
 
 #: tfrmoptionsfilepanelscolors.btnbackcolor.caption
@@ -7860,6 +7903,7 @@ msgid "Cancel"
 msgstr "İptal"
 
 #: tfrmviewoperations.mnunewqueue.caption
+msgctxt "tfrmviewoperations.mnunewqueue.caption"
 msgid "New queue"
 msgstr ""
 
@@ -7886,22 +7930,27 @@ msgid "Out of queue"
 msgstr ""
 
 #: tfrmviewoperations.mnuqueue1.caption
+msgctxt "tfrmviewoperations.mnuqueue1.caption"
 msgid "Queue 1"
 msgstr ""
 
 #: tfrmviewoperations.mnuqueue2.caption
+msgctxt "tfrmviewoperations.mnuqueue2.caption"
 msgid "Queue 2"
 msgstr ""
 
 #: tfrmviewoperations.mnuqueue3.caption
+msgctxt "tfrmviewoperations.mnuqueue3.caption"
 msgid "Queue 3"
 msgstr ""
 
 #: tfrmviewoperations.mnuqueue4.caption
+msgctxt "tfrmviewoperations.mnuqueue4.caption"
 msgid "Queue 4"
 msgstr ""
 
 #: tfrmviewoperations.mnuqueue5.caption
+msgctxt "tfrmviewoperations.mnuqueue5.caption"
 msgid "Queue 5"
 msgstr ""
 
@@ -8064,6 +8113,14 @@ msgstr "Genişlik"
 msgid "Customize column"
 msgstr "Sütunları Özelleştir"
 
+#: ulng.rsconfigurationfileassociation
+msgid "Configure file association"
+msgstr ""
+
+#: ulng.rsconfirmexecution
+msgid "Confirming command line and parameters"
+msgstr ""
+
 #: ulng.rscopynametemplate
 msgid "Copy (%d) %s"
 msgstr "Kopyala (%d) %s"
@@ -8106,6 +8163,10 @@ msgstr ""
 
 #: ulng.rsdiffdeletes
 msgid " Deletes: "
+msgstr ""
+
+#: ulng.rsdifffilesidentical
+msgid "The two files are identical!"
 msgstr ""
 
 #: ulng.rsdiffmatches
@@ -8350,6 +8411,26 @@ msgctxt "ulng.rseditsearchreplace"
 msgid "Replace"
 msgstr "Değiştir"
 
+#: ulng.rseditwithexternaleditor
+msgid "with external editor"
+msgstr ""
+
+#: ulng.rseditwithinternaleditor
+msgid "with internal editor"
+msgstr ""
+
+#: ulng.rsexecuteviashell
+msgid "Execute via shell"
+msgstr ""
+
+#: ulng.rsexecuteviaterminalclose
+msgid "Execute via terminal and close"
+msgstr ""
+
+#: ulng.rsexecuteviaterminalstayopen
+msgid "Execute via terminal and stay open"
+msgstr ""
+
 #: ulng.rsfilenameexportedtcbarprefix
 msgid "Exported_from_DC"
 msgstr ""
@@ -8550,9 +8631,21 @@ msgstr "Maske seç"
 msgid "Input mask:"
 msgstr "Make girişi:"
 
+#: ulng.rsmenuconfigurecolumnsalreadyexists
+msgid "A columns view with that name already exists."
+msgstr ""
+
+#: ulng.rsmenuconfigurecolumnssavetochange
+msgid "To change current editing colmuns view, either SAVE, COPY or DELETE current editing one"
+msgstr ""
+
 #: ulng.rsmenuconfigurecustomcolumns
 msgid "Configure custom columns"
 msgstr "Özel sütunları yapılandır"
+
+#: ulng.rsmenuconfigureentercustomcolumnname
+msgid "Enter new custom columns name"
+msgstr ""
 
 #: ulng.rsmenuconfigurethiscustomcolumn
 msgid "Configure this custom columns view"
@@ -8584,6 +8677,12 @@ msgstr "Yeni"
 #: ulng.rsmnunomedia
 msgid "No media available"
 msgstr "Kullanılabilir ortam yok"
+
+#: ulng.rsmnuopen
+#, fuzzy
+msgctxt "ulng.rsmnuopen"
+msgid "Open"
+msgstr "Açık"
 
 #: ulng.rsmnuopenwith
 #, fuzzy
@@ -8647,9 +8746,20 @@ msgstr "Tüm etkin olmayan sekmeler kaldırılsın mı?"
 msgid "This tab (%s) is locked! Close anyway?"
 msgstr "Bu sekme (%s) kilitli! Yine de kapatılsın mı?"
 
+#: ulng.rsmsgcolumnsmodifiedwanttosave
+msgid ""
+"Options regarding columns view have been modified.\n"
+"\n"
+"Do you want to save them before to exit?\n"
+msgstr ""
+
 #: ulng.rsmsgconfirmquit
 msgid "Are you sure you want to quit?"
 msgstr "Çıkmak istediğinizden emin misiniz?"
+
+#: ulng.rsmsgcouldnotcopybackward
+msgid "Could not copy backward - do you want to keep the changed file?"
+msgstr ""
 
 #: ulng.rsmsgcpfldr
 msgid "Copy %d selected files/directories?"
@@ -8659,8 +8769,16 @@ msgstr "Seçilen %d dosyalar/dizinleri kopyala?"
 msgid "Copy selected \"%s\"?"
 msgstr "Kopyalanacakları\"%s\"seç?"
 
+#: ulng.rsmsgcreateanewfiletype
+msgid "< Create a new file type \"%s files\" >"
+msgstr ""
+
 #: ulng.rsmsgdctoolbarwheretosave
 msgid "Enter location and filename where to save a DC Toolbar file"
+msgstr ""
+
+#: ulng.rsmsgdefaultcustomactionname
+msgid "Custom action"
 msgstr ""
 
 #: ulng.rsmsgdeletepartiallycopied
@@ -8697,6 +8815,10 @@ msgstr "Sürücü kullanılamıyo"
 msgid "Options regarding mouse drag && drop have been modified. Do you want to save before to exit?"
 msgstr ""
 
+#: ulng.rsmsgentercustomaction
+msgid "Enter custom action name:"
+msgstr ""
+
 #: ulng.rsmsgenterfileext
 msgid "Enter file extension:"
 msgstr "Dosya uzantısını girin:"
@@ -8704,6 +8826,10 @@ msgstr "Dosya uzantısını girin:"
 #: ulng.rsmsgentername
 msgid "Enter name:"
 msgstr "Adını girin:"
+
+#: ulng.rsmsgenternewfiletypename
+msgid "Enter name of new file type to create for extension \"%s\""
+msgstr ""
 
 #: ulng.rsmsgerrbadarchive
 msgid "CRC error in archive data"
@@ -8817,6 +8943,10 @@ msgstr "Tarih/saat ayarlanabilir değil \"%s\""
 msgid "Can not set owner/group for \"%s\""
 msgstr ""
 
+#: ulng.rsmsgerrsetpermissions
+msgid "Can not set permissions for \"%s\""
+msgstr ""
+
 #: ulng.rsmsgerrsmallbuf
 msgid "Buffer too small"
 msgstr "Arabellek çok küçük"
@@ -8828,6 +8958,20 @@ msgstr "Sıkıştırma için dosya miktarı çok fazla "
 #: ulng.rsmsgerrunknownformat
 msgid "Archive format unknown"
 msgstr "Arşiv biçimi bilinmiyor"
+
+#: ulng.rsmsgfileassociationsextramodifiedwanttosave
+msgid ""
+"File extension associations extra options have been modified.\n"
+"\n"
+"Do you want to save before to exit?\n"
+msgstr ""
+
+#: ulng.rsmsgfileassociationsmodifiedwanttosave
+msgid ""
+"File extension associations have been modified.\n"
+"\n"
+"Do you want to save before to exit?\n"
+msgstr ""
 
 #: ulng.rsmsgfilechangedsave
 msgid "File %s changed, save?"
@@ -8863,6 +9007,13 @@ msgstr "Bazı dosya işlemleri henüz bitmiş değil .Double Commander´ın kapa
 
 #: ulng.rsmsgfileoperationsmodifiedwanttosave
 msgid "Options regarding file operations have been modified. Do you want to save before to exit?"
+msgstr ""
+
+#: ulng.rsmsgfilepanelcolormodifiedwanttosave
+msgid ""
+"Options regarding panel color have been modified.\n"
+"\n"
+"Do you want to save them before to exit?\n"
 msgstr ""
 
 #: ulng.rsmsgfilereadonly
@@ -9144,6 +9295,14 @@ msgstr "Dosya Sil %s"
 msgid "Error: "
 msgstr "Hata:"
 
+#: ulng.rsmsglogextcmdlaunch
+msgid "Launch external"
+msgstr ""
+
+#: ulng.rsmsglogextcmdresult
+msgid "Result external"
+msgstr ""
+
 #: ulng.rsmsglogextract
 msgid "Extract file %s"
 msgstr "Dosya ayıkla %s"
@@ -9163,6 +9322,13 @@ msgstr "Dizin oluştur %s"
 #: ulng.rsmsglogmove
 msgid "Move file %s"
 msgstr "Dosyayı Taşı %s"
+
+#: ulng.rsmsglogoptionsmodifiedwanttosave
+msgid ""
+"Options regarding log have been modified.\n"
+"\n"
+"Do you want to save them before to exit?\n"
+msgstr ""
 
 #: ulng.rsmsglogpack
 msgid "Pack to file %s"
@@ -9236,6 +9402,10 @@ msgstr "Dosya silinemiyor"
 msgid "Not implemented."
 msgstr "Uygulanmamış."
 
+#: ulng.rsmsgpanelpreview
+msgid "Below is a preview. You may move cursor and select files to get immediately an actual look and feel of the various settings."
+msgstr ""
+
 #: ulng.rsmsgpassword
 msgid "Password:"
 msgstr "Şifre"
@@ -9273,6 +9443,10 @@ msgstr "&Sil %s"
 msgid "Preset \"%s\" already exists. Overwrite?"
 msgstr "Ön ayar \"%s\" zaten var.Üzerine yazılsın mı?"
 
+#: ulng.rsmsgproblemexecutingcommand
+msgid "Problem executing command (%s)"
+msgstr ""
+
 #: ulng.rsmsgpromptaskingfilename
 msgid "Filename for dropped text:"
 msgstr ""
@@ -9293,8 +9467,16 @@ msgstr "Seçilenleri Taşı/Yeniden adlandır\"%s\"?"
 msgid "Please, restart Double Commander in order to apply changes"
 msgstr "Lütfen,değişiklikleri uygulamak için Double Commander´ı yeniden başlatın"
 
+#: ulng.rsmsgsekectfiletype
+msgid "Select to which file type to add extension \"%s\""
+msgstr ""
+
 #: ulng.rsmsgselectedinfo
 msgid "Selected: %s of %s, files: %d of %d, folders: %d of %d"
+msgstr ""
+
+#: ulng.rsmsgselectexecutablefile
+msgid "Select executable file for"
 msgstr ""
 
 #: ulng.rsmsgselectonlychecksumfiles
@@ -9393,7 +9575,7 @@ msgstr "Hedef yol"
 
 #: ulng.rsmsgtcconfignotfound
 msgid ""
-"Error! Cannot find the TC oncfiguration file:\n"
+"Error! Cannot find the TC configuration file:\n"
 "%s\n"
 msgstr ""
 
@@ -9419,8 +9601,19 @@ msgstr ""
 msgid "Enter location and filename where to save a TC Toolbar file"
 msgstr ""
 
+#: ulng.rsmsgterminaloptionsmodifiedwanttosave
+msgid ""
+"Options regarding terminal have been modified.\n"
+"\n"
+"Do you want to save them before to exit?\n"
+msgstr ""
+
 #: ulng.rsmsgthisisnowinclipboard
 msgid "\"%s\" is now in the clipboard"
+msgstr ""
+
+#: ulng.rsmsgtitleextnotinfiletype
+msgid "Extension of selected file is not in any recognized file types"
 msgstr ""
 
 #: ulng.rsmsgtoolbarerrornotsaved
@@ -9461,6 +9654,14 @@ msgstr ""
 msgid "URL:"
 msgstr "URL"
 
+#: ulng.rsmsguserdidnotsetextension
+msgid "<NO EXT>"
+msgstr ""
+
+#: ulng.rsmsguserdidnotsetname
+msgid "<NO NAME>"
+msgstr ""
+
 #: ulng.rsmsgusername
 msgid "User name:"
 msgstr "Kullanıcı adı:"
@@ -9484,6 +9685,10 @@ msgstr "Tam sil %d Seçilen dosya/dizinler?"
 #: ulng.rsmsgwipesel
 msgid "Wipe selected \"%s\"?"
 msgstr "Tam silme Seçili \"%s\"?"
+
+#: ulng.rsmsgwithactionwith
+msgid "with"
+msgstr ""
 
 #: ulng.rsmulrenfilenamestylelist
 msgid "No change;UPPERCASE;lowercase;First char uppercase;First Char Of Every Word Uppercase;"
@@ -9841,6 +10046,7 @@ msgid "Change shortcut"
 msgstr ""
 
 #: ulng.rsopthotkeyscommand
+msgctxt "ulng.rsopthotkeyscommand"
 msgid "Command"
 msgstr ""
 
@@ -9968,6 +10174,10 @@ msgstr ""
 
 #: ulng.rsoptionseditordriveslistbutton
 msgid "Drives list button"
+msgstr ""
+
+#: ulng.rsoptionseditorfileassicextra
+msgid "File associations extra"
 msgstr ""
 
 #: ulng.rsoptionseditorfileassoc
@@ -10245,6 +10455,41 @@ msgstr "Tüm"
 msgid "Category"
 msgstr ""
 
+#: ulng.rssimplewordcolumnsingular
+msgid "Column"
+msgstr ""
+
+#: ulng.rssimplewordcommand
+msgctxt "ulng.rssimplewordcommand"
+msgid "Command"
+msgstr ""
+
+#: ulng.rssimplewordfilename
+msgid "Filename"
+msgstr ""
+
+#: ulng.rssimplewordfiles
+msgid "files"
+msgstr ""
+
+#: ulng.rssimplewordparameter
+msgid "Param"
+msgstr ""
+
+#: ulng.rssimplewordpreview
+#, fuzzy
+msgctxt "ulng.rssimplewordpreview"
+msgid "Preview"
+msgstr "Önizleme"
+
+#: ulng.rssimplewordresult
+msgid "Result"
+msgstr ""
+
+#: ulng.rssimplewordworkdir
+msgid "WorkDir"
+msgstr ""
+
 #: ulng.rssizeunitbytes
 #, fuzzy
 #| msgid "bayt"
@@ -10383,6 +10628,146 @@ msgstr "Göster"
 msgid "Please report this error to the bug tracker with a description of what you were doing and the following file:%sPress %s to continue or %s to abort the program."
 msgstr "Bu hatayı düzeltebilmemiz için lütfen bu hatayı bildirin Ne yaptığınızın bir açıklaması ve aşağıdaki dosya: %sdevam etmek için %sbasın  %s ,iptal etmek için programı tıklayın"
 
+#: ulng.rsvarbothpanelactivetoinactive
+msgid "Both panels, from active to inactive"
+msgstr ""
+
+#: ulng.rsvarbothpanellefttoright
+msgid "Both panels, from left to right"
+msgstr ""
+
+#: ulng.rsvarcurrentpath
+msgid "Path of panel"
+msgstr ""
+
+#: ulng.rsvarencloseelement
+msgid "Enclose each name in brackets or what you want"
+msgstr ""
+
+#: ulng.rsvarfilenamenoext
+msgid "Just filename, no extension"
+msgstr ""
+
+#: ulng.rsvarfullpath
+msgid "Complete filename (path+filename)"
+msgstr ""
+
+#: ulng.rsvarhelpwith
+msgid "Help with \"%\" variables"
+msgstr ""
+
+#: ulng.rsvarinputparam
+msgid "Will request request user to enter a parameter with a default suggested value"
+msgstr ""
+
+#: ulng.rsvarleftpanel
+msgid "Left panel"
+msgstr ""
+
+#: ulng.rsvarlistfilename
+msgid "Temporary filename of list of filenames"
+msgstr ""
+
+#: ulng.rsvarlistfullfilename
+msgid "Temporary filename of list of complete filenames (path+filename)"
+msgstr ""
+
+#: ulng.rsvarlistrelativefilename
+msgid "Temporary filename of list of filenames with relative path"
+msgstr ""
+
+#: ulng.rsvaronlyextension
+msgid "Only file extension"
+msgstr ""
+
+#: ulng.rsvaronlyfilename
+msgid "Only filename"
+msgstr ""
+
+#: ulng.rsvarotherexamples
+msgid "Other example of what's possible"
+msgstr ""
+
+#: ulng.rsvarpath
+msgid "Path, with ending delimiter"
+msgstr ""
+
+#: ulng.rsvarpercentchangetopound
+msgid "From here to the end of the line, the percent-variable indicator is the \"#\" sign"
+msgstr ""
+
+#: ulng.rsvarpercentsign
+msgid "Return the percent sign"
+msgstr ""
+
+#: ulng.rsvarpoundchangetopercent
+msgid "From here to the end of the line, the percent-variable indicator is back the \"%\" sign"
+msgstr ""
+
+#: ulng.rsvarprependelement
+msgid "Prepend each name with \"-a \" or what you want"
+msgstr ""
+
+#: ulng.rsvarpromptuserforparam
+msgid "%[Prompt user for param;Default value proposed]"
+msgstr ""
+
+#: ulng.rsvarrelativepathandfilename
+msgid "Filename with relative path"
+msgstr ""
+
+#: ulng.rsvarrightpanel
+msgid "Right panel"
+msgstr ""
+
+#: ulng.rsvarsecondelementrightpanel
+msgid "Full path of second selected file in right panel"
+msgstr ""
+
+#: ulng.rsvarshowcommandprior
+msgid "Show command prior execute"
+msgstr ""
+
+#: ulng.rsvarsimplemessage
+msgid "%[Simple message]"
+msgstr ""
+
+#: ulng.rsvarsimpleshowmessage
+msgid "Will show a simple message"
+msgstr ""
+
+#: ulng.rsvarsourcepanel
+msgid "Active panel (source)"
+msgstr ""
+
+#: ulng.rsvartargetpanel
+msgid "Inactive panel (target)"
+msgstr ""
+
+#: ulng.rsvarwillbequoted
+msgid "Filenames will be quoted from here (default)"
+msgstr ""
+
+#: ulng.rsvarwilldointerminal
+msgid "Command will be done in terminal, remaining opened at the end"
+msgstr ""
+
+#: ulng.rsvarwillhaveendingdelimiter
+msgid "Paths will have ending delimiter"
+msgstr ""
+
+#: ulng.rsvarwillnotbequoted
+msgid "Filenames will not be quoted from here"
+msgstr ""
+
+#: ulng.rsvarwillnotdointerminal
+msgid "Command will be done in terminal, closed at the end"
+msgstr ""
+
+#: ulng.rsvarwillnothaveendingdelimiter
+msgid "Paths will not have ending delimiter (default)"
+msgstr ""
+
 #: ulng.rsvfsnetwork
 msgctxt "ulng.rsvfsnetwork"
 msgid "Network"
@@ -10400,6 +10785,14 @@ msgstr "Kodlama"
 #: ulng.rsviewnotfound
 msgid "%s not found!"
 msgstr "%s bulunamadı!"
+
+#: ulng.rsviewwithexternalviewer
+msgid "with external viewer"
+msgstr ""
+
+#: ulng.rsviewwithinternalviewer
+msgid "with internal viewer"
+msgstr ""
 
 #: ulng.rsxreplacements
 msgid "Number of replacement: %d"

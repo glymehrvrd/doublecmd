@@ -17,41 +17,73 @@ unit uShowForm;
 interface
 
 uses
-  Classes, uFileSource;
+  Classes, DCBasicTypes, uFileSource, uFileSourceOperation;
 
 type
 
-  { TWaitThread }
+  { TEditorWaitData }
 
-  TWaitThread = class(TThread)
+  TEditorWaitData = class
+  public
+    FileName: String;
+    TargetPath: String;
+    FileTime: TFileTime;
+    SourceFileSource: IFileSource;
+    TargetFileSource: IFileSource;
+  public
+    destructor Destroy; override;
+  protected
+    procedure OnCopyInStateChanged(Operation: TFileSourceOperation;
+                                   State: TFileSourceOperationState);
+  end;
+
+procedure EditDone(WaitData: TEditorWaitData);
+procedure RunExtDiffer(CompareList: TStringList);
+
+procedure ShowEditorByGlob(const sFileName: String);
+procedure ShowEditorByGlob(WaitData: TEditorWaitData); overload;
+
+procedure ShowDifferByGlob(const LeftName, RightName: String);
+
+procedure ShowViewerByGlob(const sFileName: String);
+procedure ShowViewerByGlobList(const FilesToView: TStringList;
+                               const aFileSource: IFileSource);
+
+implementation
+
+uses
+  SysUtils, Process, DCProcessUtf8, Dialogs,
+  uShellExecute, uGlobs, uOSUtils, fEditor, fViewer, uDCUtils,
+  uTempFileSystemFileSource, uLng, fDiffer, uDebug, DCOSUtils, uShowMsg,
+  uFile, uFileSourceCopyOperation, uFileSystemFileSource,
+  uFileSourceOperationOptions, uOperationsManager, uFileSourceOperationTypes,
+  uWcxArchiveFileSource, uWfxPluginFileSource;
+
+type
+
+  { TViewerWaitThread }
+
+  TViewerWaitThread = class(TThread)
   private
     FFileList : TStringList;
     FFileSource: IFileSource;
-
   protected
     procedure Execute; override;
-
   public
     constructor Create(const FilesToView: TStringList; const aFileSource: IFileSource);
     destructor Destroy; override;
   end;
 
+  { TEditorWaitThread }
 
-procedure RunExtDiffer(CompareList: TStringList);
-
-procedure ShowEditorByGlob(sFileName:String);
-procedure ShowViewerByGlob(sFileName:String);
-procedure ShowDifferByGlob(const LeftName, RightName: String);
-procedure ShowViewerByGlobList(const FilesToView: TStringList;
-                               const aFileSource: IFileSource);
-
-
-implementation
-
-uses
-  SysUtils, Process, UTF8Process, Dialogs,
-  uShellExecute, uGlobs, uOSUtils, fEditor, fViewer, uDCUtils,
-  uTempFileSystemFileSource, uLng, fDiffer, uDebug, DCOSUtils;
+  TEditorWaitThread = class(TThread)
+  private
+    FWaitData: TEditorWaitData;
+  protected
+    procedure Execute; override;
+  public
+    constructor Create(WaitData: TEditorWaitData);
+  end;
 
 procedure RunExtTool(const ExtTool: TExternalToolOptions; sFileName: String);
 var
@@ -92,7 +124,7 @@ begin
   end;
 end;
 
-procedure ShowEditorByGlob(sFileName:String);
+procedure ShowEditorByGlob(const sFileName: String);
 begin
   if gExternalTools[etEditor].Enabled then
   begin
@@ -109,7 +141,16 @@ begin
     ShowEditor(sFileName);
 end;
 
-procedure ShowViewerByGlob(sFileName:String);
+procedure ShowEditorByGlob(WaitData: TEditorWaitData);
+begin
+  if gExternalTools[etEditor].Enabled then
+    with TEditorWaitThread.Create(WaitData) do Start
+  else begin
+    ShowEditor(WaitData);
+  end;
+end;
+
+procedure ShowViewerByGlob(const sFileName: String);
 var
   sl:TStringList;
 begin
@@ -159,14 +200,14 @@ procedure ShowViewerByGlobList(const FilesToView : TStringList;
                                const aFileSource: IFileSource);
 var
   I : Integer;
-  WaitThread : TWaitThread;
+  WaitThread : TViewerWaitThread;
 begin
   if gExternalTools[etViewer].Enabled then
   begin
     DCDebug('ShowViewerByGlobList - Use ExtView');
     if aFileSource.IsClass(TTempFileSystemFileSource) then
       begin
-        WaitThread := TWaitThread.Create(FilesToView, aFileSource);
+        WaitThread := TViewerWaitThread.Create(FilesToView, aFileSource);
         WaitThread.Start;
       end
     else
@@ -181,9 +222,125 @@ begin
     ShowViewer(FilesToView, aFileSource);
 end;
 
-{ TWaitThread }
+procedure EditDone(WaitData: TEditorWaitData);
+var
+  Files: TFiles;
+  Operation: TFileSourceCopyOperation;
+begin
+  with WaitData do
+  try
+    // File was modified
+    if mbFileAge(FileName) <> FileTime then
+    begin
+      if (fsoCopyIn in TargetFileSource.GetOperationsTypes) and
+         ((TargetFileSource is TWcxArchiveFileSource) or (TargetFileSource is TWfxPluginFileSource)) then
+      begin
+        Files:= TFiles.Create(SourceFileSource.GetRootDir);
+        Files.Add(TFileSystemFileSource.CreateFileFromFile(FileName));
+        Operation:= TargetFileSource.CreateCopyInOperation(SourceFileSource, Files, TargetPath) as TFileSourceCopyOperation;
+        // Copy file back
+        if Assigned(Operation) then
+        begin
+          Operation.AddStateChangedListener([fsosStopped], @OnCopyInStateChanged);
+          Operation.FileExistsOption:= fsoofeOverwrite;
+          OperationsManager.AddOperation(Operation);
+          WaitData:= nil; // Will be free in operation
+        end;
+      end
+      else if msgYesNo(rsMsgCouldNotCopyBackward + LineEnding + FileName) then
+      begin
+        (SourceFileSource as ITempFileSystemFileSource).DeleteOnDestroy:= False;
+      end;
+    end;
+  finally
+    WaitData.Free;
+  end;
+end;
 
-constructor TWaitThread.Create(const FilesToView: TStringList; const aFileSource: IFileSource);
+{ TEditorWaitData }
+
+destructor TEditorWaitData.Destroy;
+begin
+  inherited Destroy;
+  SourceFileSource:= nil;
+  TargetFileSource:= nil;
+end;
+
+procedure TEditorWaitData.OnCopyInStateChanged(Operation: TFileSourceOperation;
+                                               State: TFileSourceOperationState);
+var
+  aFileSource: ITempFileSystemFileSource;
+  aCopyOperation: TFileSourceCopyOperation;
+begin
+  if (State = fsosStopped) then
+  begin
+    aCopyOperation := Operation as TFileSourceCopyOperation;
+    aFileSource := aCopyOperation.SourceFileSource as ITempFileSystemFileSource;
+    with aCopyOperation.RetrieveStatistics do
+    begin
+      if DoneFiles <> TotalFiles then
+      begin
+        if msgYesNo(Operation.Thread, rsMsgCouldNotCopyBackward + LineEnding + aCopyOperation.SourceFiles[0].FullPath) then
+        begin
+          aFileSource.DeleteOnDestroy:= False;
+        end;
+      end;
+    end;
+    Free;
+  end;
+end;
+
+{ TEditorWaitThread }
+
+procedure TEditorWaitThread.Execute;
+var
+  Process : TProcessUTF8;
+  sCmd, sSecureEmptyStr: String;
+begin
+  Process := TProcessUTF8.Create(nil);
+
+  with gExternalTools[etEditor] do
+  begin
+    sCmd := ReplaceEnvVars(Path);
+    // TProcess arguments must be enclosed with double quotes and not escaped.
+    if RunInTerminal then
+    begin
+      sCmd := QuoteStr(sCmd);
+      if Parameters <> EmptyStr then
+        sCmd := sCmd + ' ' + Parameters;
+      sCmd := sCmd + ' ' + QuoteStr(FWaitData.FileName);
+      sSecureEmptyStr := EmptyStr; // Let's play safe and don't let EmptyStr being passed as "VAR" parameter of "FormatTerminal"
+      FormatTerminal(sCmd, sSecureEmptyStr, False);
+    end
+    else
+    begin
+      sCmd := '"' + sCmd + '"';
+      if Parameters <> EmptyStr then
+        sCmd := sCmd + ' ' + Parameters;
+      sCmd := sCmd + ' "' + FWaitData.FileName + '"';
+    end;
+  end;
+
+  Process.CommandLine := sCmd;
+  Process.Options := [poWaitOnExit];
+  Process.Execute;
+  Process.Free;
+
+  EditDone(FWaitData);
+end;
+
+constructor TEditorWaitThread.Create(WaitData: TEditorWaitData);
+begin
+  inherited Create(True);
+
+  FreeOnTerminate := True;
+
+  FWaitData := WaitData;
+end;
+
+{ TViewerWaitThread }
+
+constructor TViewerWaitThread.Create(const FilesToView: TStringList; const aFileSource: IFileSource);
 begin
   inherited Create(True);
 
@@ -195,7 +352,7 @@ begin
   FFileSource := aFileSource;
 end;
 
-destructor TWaitThread.Destroy;
+destructor TViewerWaitThread.Destroy;
 begin
   if Assigned(FFileList) then
     FreeAndNil(FFileList);
@@ -206,7 +363,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TWaitThread.Execute;
+procedure TViewerWaitThread.Execute;
 var
   I : Integer;
   Process : TProcessUTF8;
@@ -240,13 +397,6 @@ begin
   Process.Options := [poWaitOnExit];
   Process.Execute;
   Process.Free;
-
-  if not FFileSource.IsClass(TTempFileSystemFileSource) then
-  begin
-    (* Delete temp files after view *)
-    for I := 0 to FFileList.Count - 1 do
-      mbDeleteFile(FFileList.Strings[I]);
-  end;
 end;
 
 end.

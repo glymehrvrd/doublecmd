@@ -3,7 +3,7 @@
    -------------------------------------------------------------------------
    File operations options page
 
-   Copyright (C) 2006-2011  Koblov Alexander (Alexx2000@mail.ru)
+   Copyright (C) 2006-2015 Alexander Koblov (alexx2000@mail.ru)
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ unit fOptionsFileOperations;
 interface
 
 uses
-  Classes, SysUtils, StdCtrls, Spin, ExtCtrls, DividerBevel,
+  Classes, SysUtils, StdCtrls, Spin, ExtCtrls, KASComboBox, DividerBevel,
   fOptionsFrame;
 
 type
@@ -43,17 +43,20 @@ type
     cbRenameSelOnlyName: TCheckBox;
     cbShowCopyTabSelectPanel: TCheckBox;
     cbSkipFileOpError: TCheckBox;
-    cbProgressKind: TComboBox;
+    cbProgressKind: TComboBoxAutoWidth;
     cbCopyConfirmation: TCheckBox;
     cbMoveConfirmation: TCheckBox;
     cbDeleteConfirmation: TCheckBox;
     cbDeleteToTrashConfirmation: TCheckBox;
-    bvlTypeOfDuplicatedRename: TDividerBevel;
-    cmbTypeOfDuplicatedRename: TComboBox;
+    cbSearchDefaultTemplate: TComboBoxAutoWidth;
+    cmbTypeOfDuplicatedRename: TComboBoxAutoWidth;
+    dbTextSearch: TDividerBevel;
     edtBufferSize: TEdit;
     gbUserInterface: TGroupBox;
     gbFileSearch: TGroupBox;
     gbExecutingOperations: TGroupBox;
+    lblTypeOfDuplicatedRename: TLabel;
+    lblSearchDefaultTemplate: TLabel;
     lblBufferSize: TLabel;
     lblProgressKind: TLabel;
     lblWipePassNumber: TLabel;
@@ -61,10 +64,10 @@ type
     rbUseStreamInSearch: TRadioButton;
     seWipePassNumber: TSpinEdit;
     procedure cbDeleteToTrashChange(Sender: TObject);
-    procedure GenericSomethingChanged(Sender: TObject);
   private
     FLoading: Boolean;
-    FModificationTookPlace: Boolean;
+    FLastLoadedOptionSignature: dword;
+    procedure FillTemplatesList(ListItems: TStrings);
   protected
     procedure Init; override;
     procedure Load; override;
@@ -81,7 +84,8 @@ implementation
 {$R *.lfm}
 
 uses
-  fOptions, uShowMsg, DCStrUtils, uGlobs, uLng, fOptionsHotkeys;
+  uComponentsSignature, fOptions, uShowMsg, DCStrUtils, uGlobs, uLng,
+  fOptionsHotkeys;
 
 { TfrmOptionsFileOperations }
 
@@ -97,6 +101,7 @@ end;
 
 procedure TfrmOptionsFileOperations.Init;
 begin
+  FillTemplatesList(cbSearchDefaultTemplate.Items);
   ParseLineToList(rsOptFileOperationsProgressKind, cbProgressKind.Items);
   ParseLineToList(rsOptTypeOfDuplicatedRename, cmbTypeOfDuplicatedRename.Items);
 end;
@@ -110,8 +115,13 @@ begin
     HotkeysEditor := OptionsDialog.GetEditor(TfrmOptionsHotkeys);
     if Assigned(HotkeysEditor) then
       (HotkeysEditor as TfrmOptionsHotkeys).AddDeleteWithShiftHotkey(cbDeleteToTrash.Checked);
-    GenericSomethingChanged(Sender);
   end;
+end;
+
+procedure TfrmOptionsFileOperations.FillTemplatesList(ListItems: TStrings);
+begin
+  gSearchTemplateList.LoadToStringList(ListItems);
+  ListItems.Insert(0, rsOptHotkeysNoHotkey);
 end;
 
 procedure TfrmOptionsFileOperations.Load;
@@ -141,8 +151,11 @@ begin
   cbDeleteToTrashConfirmation.Checked := focDeleteToTrash in gFileOperationsConfirmations;
   cmbTypeOfDuplicatedRename.ItemIndex := Integer(gTypeOfDuplicatedRename);
 
+  cbSearchDefaultTemplate.ItemIndex   := cbSearchDefaultTemplate.Items.IndexOf(gSearchDefaultTemplate);
+  if cbSearchDefaultTemplate.ItemIndex < 0 then cbSearchDefaultTemplate.ItemIndex := 0;
+
   FLoading := False;
-  FModificationTookPlace := False;
+  FLastLoadedOptionSignature := ComputeSignatureBasedOnComponent(Self, $00000000);
 end;
 
 function TfrmOptionsFileOperations.Save: TOptionsEditorSaveFlags;
@@ -176,7 +189,14 @@ begin
   if cbDeleteToTrashConfirmation.Checked then
     Include(gFileOperationsConfirmations, focDeleteToTrash);
   gTypeOfDuplicatedRename := tDuplicatedRename(cmbTypeOfDuplicatedRename.ItemIndex);
-  FModificationTookPlace := False;
+
+  if cbSearchDefaultTemplate.ItemIndex > 0 then
+    gSearchDefaultTemplate:= cbSearchDefaultTemplate.Text
+  else begin
+    gSearchDefaultTemplate:= EmptyStr;
+  end;
+
+  FLastLoadedOptionSignature := ComputeSignatureBasedOnComponent(Self, $00000000);
 end;
 
 constructor TfrmOptionsFileOperations.Create(TheOwner: TComponent);
@@ -185,16 +205,11 @@ begin
   FLoading := False;
 end;
 
-procedure TfrmOptionsFileOperations.GenericSomethingChanged(Sender: TObject);
-begin
-  FModificationTookPlace := True;
-end;
-
 function TfrmOptionsFileOperations.CanWeClose(var WillNeedUpdateWindowView: boolean): boolean;
 var
   Answer: TMyMsgResult;
 begin
-  Result := not FModificationTookPlace;
+  Result := (FLastLoadedOptionSignature = ComputeSignatureBasedOnComponent(Self, $00000000));
 
   if not Result then
   begin
