@@ -45,6 +45,8 @@ type
    function CommandsFilter(Command: String): Boolean;
    procedure OnCopyOutStateChanged(Operation: TFileSourceOperation;
                                    State: TFileSourceOperationState);
+   procedure OnEditCopyOutStateChanged(Operation: TFileSourceOperation;
+                                       State: TFileSourceOperationState);
    procedure OnCalcStatisticsStateChanged(Operation: TFileSourceOperation;
                                           State: TFileSourceOperationState);
    procedure OnCalcChecksumStateChanged(Operation: TFileSourceOperation;
@@ -370,14 +372,14 @@ var
   aFile: TFile;
   aFileList: TStringList;
   aFileSource: ITempFileSystemFileSource;
-  aCopyOutOperation: TFileSourceCopyOutOperation;
+  aCopyOutOperation: TFileSourceCopyOperation;
   sCmd, sParams, sStartPath: string;
 begin
   if (State = fsosStopped) and (Operation.Result = fsorFinished) then
   begin
     aFileList := TStringList.Create;
     try
-      aCopyOutOperation := Operation as TFileSourceCopyOutOperation;
+      aCopyOutOperation := Operation as TFileSourceCopyOperation;
       aFileSource := aCopyOutOperation.TargetFileSource as ITempFileSystemFileSource;
       ChangeFileListRoot(aFileSource.FileSystemRoot, aCopyOutOperation.SourceFiles);
 
@@ -415,6 +417,47 @@ begin
 
     finally
       FreeAndNil(aFileList);
+    end;
+  end;
+end;
+
+procedure TMainCommands.OnEditCopyOutStateChanged(Operation: TFileSourceOperation;
+                                                  State: TFileSourceOperationState);
+var
+  aFile: TFile;
+  WaitData: TEditorWaitData;
+  aFileSource: ITempFileSystemFileSource;
+  aCopyOutOperation: TFileSourceCopyOperation;
+begin
+  if (State = fsosStopped) and (Operation.Result = fsorFinished) then
+  begin
+    aCopyOutOperation := Operation as TFileSourceCopyOperation;
+    aFileSource := aCopyOutOperation.TargetFileSource as ITempFileSystemFileSource;
+
+    try
+      aFile := aCopyOutOperation.SourceFiles[0];
+
+      WaitData:= TEditorWaitData.Create;
+
+      try
+        WaitData.TargetPath:= aCopyOutOperation.SourceFiles.Path;
+
+        ChangeFileListRoot(aFileSource.FileSystemRoot, aCopyOutOperation.SourceFiles);
+
+        WaitData.FileName:= aFile.FullPath;
+        WaitData.SourceFileSource:= aFileSource;
+        WaitData.FileTime:= mbFileAge(WaitData.FileName);
+        WaitData.TargetFileSource:= aCopyOutOperation.FileSource as IFileSource;
+
+        ShowEditorByGlob(WaitData);
+      except
+        WaitData.Free;
+      end;
+    except
+      on e: EInvalidCommandLine do
+        MessageDlg(rsToolErrorOpeningEditor,
+          rsMsgInvalidCommandLine + ' (' + rsToolEditor + '):' + LineEnding + e.Message,
+          mtError, [mbOK], 0);
     end;
   end;
 end;
@@ -1657,15 +1700,18 @@ procedure TMainCommands.cm_Edit(const Params: array of string);
 var
   i: Integer;
   aFile: TFile;
+  TempFiles: TFiles;
   SelectedFiles: TFiles = nil;
+  Operation: TFileSourceOperation;
   sCmd, sParams, sStartPath: string;
+  TempFileSource: ITempFileSystemFileSource = nil;
 begin
   with frmMain do
   try
+    SelectedFiles := ActiveFrame.CloneSelectedOrActiveFiles;
     // If files are links to local files
     if (fspLinksToLocalFiles in ActiveFrame.FileSource.Properties) then
       begin
-        SelectedFiles := ActiveFrame.CloneSelectedOrActiveFiles;
         for I := 0 to SelectedFiles.Count - 1 do
           begin
             aFile := SelectedFiles[I];
@@ -1674,14 +1720,33 @@ begin
       end
     // If files not directly accessible copy them to temp file source.
     else if not (fspDirectAccess in ActiveFrame.FileSource.Properties) then
+    begin
+      if not (fsoCopyOut in ActiveFrame.FileSource.GetOperationsTypes) then
       begin
-        msgWarning(rsMsgNotImplemented);
+        msgWarning(rsMsgErrNotSupported);
         Exit;
-      end
-    else
-      begin
-        SelectedFiles := ActiveFrame.CloneSelectedOrActiveFiles;
       end;
+
+      TempFiles := SelectedFiles.Clone;
+
+      TempFileSource := TTempFileSystemFileSource.GetFileSource;
+
+      Operation := ActiveFrame.FileSource.CreateCopyOutOperation(
+                       TempFileSource,
+                       TempFiles,
+                       TempFileSource.FileSystemRoot);
+
+      if Assigned(Operation) then
+      begin
+        Operation.AddStateChangedListener([fsosStopped], @OnEditCopyOutStateChanged);
+        OperationsManager.AddOperation(Operation);
+      end
+      else
+      begin
+        msgWarning(rsMsgErrNotSupported);
+      end;
+      Exit;
+    end;
 
     try
       for i := 0 to SelectedFiles.Count - 1 do
@@ -1965,11 +2030,12 @@ end;
 procedure TMainCommands.cm_CheckSumCalc(const Params: array of string);
 var
   I: Integer;
-  bSeparateFile, bOpenFileAfterJobCompleted: Boolean;
-  HashAlgorithm: THashAlgorithm;
   sFileName: UTF8String;
   SelectedFiles: TFiles;
+  HashAlgorithm: THashAlgorithm;
+  QueueId: TOperationsManagerQueueIdentifier;
   Operation: TFileSourceCalcChecksumOperation;
+  bSeparateFile, bOpenFileAfterJobCompleted: Boolean;
 begin
   // This will work only for filesystem.
   // For other file sources use temp file system when it's done.
@@ -2007,7 +2073,7 @@ begin
       else
         sFileName:= ActiveFrame.CurrentPath + SelectedFiles[0].Name;
 
-      if ShowCalcCheckSum(sFileName, bSeparateFile, HashAlgorithm, bOpenFileAfterJobCompleted) then
+      if ShowCalcCheckSum(sFileName, bSeparateFile, HashAlgorithm, bOpenFileAfterJobCompleted, QueueId) then
       begin
         Operation := ActiveFrame.FileSource.CreateCalcChecksumOperation(
                        SelectedFiles, ActiveFrame.CurrentPath, sFileName) as TFileSourceCalcChecksumOperation;
@@ -2020,7 +2086,7 @@ begin
           Operation.Algorithm := HashAlgorithm;
 
           // Start operation.
-          OperationsManager.AddOperation(Operation);
+          OperationsManager.AddOperation(Operation, QueueId, False);
         end
         else
         begin
@@ -2530,8 +2596,15 @@ begin
 end;
 
 procedure TMainCommands.cm_Search(const Params: array of string);
+var
+  TemplateName: String;
 begin
-  ShowFindDlg(frmMain.ActiveFrame);
+  if Length(Params) > 0 then
+    TemplateName:= Params[0]
+  else begin
+    TemplateName:= gSearchDefaultTemplate;
+  end;
+  ShowFindDlg(frmMain.ActiveFrame, TemplateName);
 end;
 
 procedure TMainCommands.cm_SyncDirs(const Params: array of string);
@@ -3641,8 +3714,8 @@ begin
     end;
   finally
     SourceList.Free;
-    ActiveFrame.UpdateView;
-    NotActiveFrame.UpdateView;
+    ActiveFrame.Repaint;
+    NotActiveFrame.Repaint;
   end;
 end;
 

@@ -3938,7 +3938,7 @@ begin
   I:= 0;
   sIndex:= '0';
   // create one tab in any way
-  sCurrentDir:= mbGetCurrentDir; // default path
+  sCurrentDir:= gpExePath; // default path
   sPath:= gIni.ReadString(TabsSection, sIndex + '_path', sCurrentDir);
   while True do
     begin
@@ -4061,7 +4061,7 @@ begin
       AFileViewFlags := [fvfDelayLoadingFiles]
     else
       AFileViewFlags := [];
-    AFileView := TColumnsFileView.Create(Page, aFileSource, mbGetCurrentDir, AFileViewFlags);
+    AFileView := TColumnsFileView.Create(Page, aFileSource, gpExePath, AFileViewFlags);
     AssignEvents(AFileView);
   end
   else if Assigned(RootNode) then
@@ -4695,6 +4695,7 @@ function TfrmMain.ExecuteCommandFromEdit(sCmd: String; bRunInTerm: Boolean): Boo
 var
   iIndex: Integer;
   sDir, sParams: String;
+  sFilename: String = '';
   Operation: TFileSourceExecuteOperation = nil;
   aFile: TFile = nil;
 begin
@@ -4719,12 +4720,19 @@ begin
             begin
               sDir:= RemoveQuotation(Copy(sCmd, iIndex + 3, Length(sCmd)));
               sDir:= NormalizePathDelimiters(Trim(sDir));
-              sDir:= ReplaceTilde(IncludeTrailingBackslash(sDir));
+              sDir:= ReplaceTilde(sDir);
               sDir:= GetAbsoluteFileName(ActiveFrame.CurrentPath, sDir);
+              if mbFileExists(sDir) then //if user entered an existing file, let's switch to the parent folder AND select that file
+              begin
+                sFilename:= ExtractFileName(sDir);
+                sDir:= ExtractFileDir(sDir);
+              end;
             end;
 
           // Choose FileSource by path
           ChooseFileSource(ActiveFrame, sDir);
+          if sFilename <> '' then
+            ActiveFrame.SetActiveFile(sFilename);
 
           if SameText(ExcludeBackPathDelimiter(ActiveFrame.CurrentPath), sDir) then
             begin

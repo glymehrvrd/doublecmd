@@ -34,8 +34,6 @@ type
     FReserveSpace,
     FCheckFreeSpace: Boolean;
     FSkipAllBigFiles: Boolean;
-    FFileExistsOption: TFileSourceOperationOptionFileExists;
-    FDirExistsOption: TFileSourceOperationOptionDirectoryExists;
     FCorrectSymlinks: Boolean;
     procedure SetSearchTemplate(AValue: TSearchTemplate);
 
@@ -59,8 +57,6 @@ type
     property CopyAttributesOptions: TCopyAttributesOptions read FCopyAttributesOptions write FCopyAttributesOptions;
     property SkipAllBigFiles: Boolean read FSkipAllBigFiles write FSkipAllBigFiles;
     property CorrectSymLinks: Boolean read FCorrectSymLinks write FCorrectSymLinks;
-    property FileExistsOption: TFileSourceOperationOptionFileExists read FFileExistsOption write FFileExistsOption;
-    property DirExistsOption: TFileSourceOperationOptionDirectoryExists read FDirExistsOption write FDirExistsOption;
     property SetPropertyError: TFileSourceOperationOptionSetPropertyError read FSetPropertyError write FSetPropertyError;
     property ExcludeEmptyTemplateDirectories: Boolean read FExcludeEmptyTemplateDirectories write FExcludeEmptyTemplateDirectories;
     {en
