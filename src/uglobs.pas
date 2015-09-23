@@ -212,6 +212,7 @@ var
 
   gAutoFillColumns: Boolean;
   gAutoSizeColumn: Integer;
+  gColumnsAutoSaveWidth: Boolean;
   gColumnsTitleStyle: TTitleStyle;
   gCustomColumnsChangeAllColumns: Boolean;
   
@@ -309,6 +310,7 @@ var
 
   { File operations page }
   gCopyBlockSize : Integer;
+  gHashBlockSize : Integer;
   gUseMmapInSearch : Boolean;
   gPartialNameSearch: Boolean;
   gSkipFileOpError: Boolean;
@@ -1128,6 +1130,7 @@ begin
   gWheelScrollLines:= Mouse.WheelScrollLines;
   gAutoFillColumns := False;
   gAutoSizeColumn := 1;
+  gColumnsAutoSaveWidth := True;
   gColumnsTitleStyle := {$IFDEF LCLWIN32}tsNative{$ELSE}tsStandard{$ENDIF};
   gCustomColumnsChangeAllColumns := False;
   gDateTimeFormat := DefaultDateTimeFormat;
@@ -1238,6 +1241,7 @@ begin
 
   { File operations page }
   gCopyBlockSize := 524288;
+  gHashBlockSize := 8388608;
   gUseMmapInSearch := False;
   gPartialNameSearch := True;
   gWipePassNumber := 1;
@@ -2226,7 +2230,11 @@ begin
         gUpdatedFilesPosition := TUpdatedFilesPosition(GetValue(SubNode, 'UpdatedFilesPosition', Integer(gUpdatedFilesPosition)));
       end;
       SubNode := FindNode(Node, 'ColumnsView');
-      gColumnsTitleStyle := TTitleStyle(GetValue(SubNode, 'TitleStyle', Integer(gColumnsTitleStyle)));
+      if Assigned(SubNode) then
+      begin
+        gColumnsAutoSaveWidth := GetValue(SubNode, 'AutoSaveWidth', gColumnsAutoSaveWidth);
+        gColumnsTitleStyle := TTitleStyle(GetValue(SubNode, 'TitleStyle', Integer(gColumnsTitleStyle)));
+      end;
       SubNode := Node.FindNode('BriefView');
       if Assigned(SubNode) then
       begin
@@ -2259,6 +2267,7 @@ begin
     if Assigned(Node) then
     begin
       gCopyBlockSize := GetValue(Node, 'BufferSize', gCopyBlockSize);
+      gHashBlockSize := GetValue(Node, 'HashBufferSize', gHashBlockSize);
       gUseMmapInSearch := GetValue(Node, 'UseMmapInSearch', gUseMmapInSearch);
       gPartialNameSearch := GetValue(Node, 'PartialNameSearch', gPartialNameSearch);
       gWipePassNumber := GetValue(Node, 'WipePassNumber', gWipePassNumber);
@@ -2675,6 +2684,7 @@ begin
     SetValue(SubNode, 'NewFilesPosition', Integer(gNewFilesPosition));
     SetValue(SubNode, 'UpdatedFilesPosition', Integer(gUpdatedFilesPosition));
     SubNode := FindNode(Node, 'ColumnsView', True);
+    SetValue(SubNode, 'AutoSaveWidth', gColumnsAutoSaveWidth);
     SetValue(SubNode, 'TitleStyle', Integer(gColumnsTitleStyle));
     SubNode := FindNode(Node, 'BriefView', True);
     SetValue(SubNode, 'FileExtAligned', gBriefViewFileExtAligned);
@@ -2693,6 +2703,7 @@ begin
     { File operations page }
     Node := FindNode(Root, 'FileOperations', True);
     SetValue(Node, 'BufferSize', gCopyBlockSize);
+    SetValue(Node, 'HashBufferSize', gHashBlockSize);
     SetValue(Node, 'UseMmapInSearch', gUseMmapInSearch);
     SetValue(Node, 'PartialNameSearch', gPartialNameSearch);
     SetValue(Node, 'WipePassNumber', gWipePassNumber);

@@ -70,6 +70,7 @@ type
     class procedure RemoveWatch(aWatchPath: UTF8String;
                                 aWatcherEvent: TFSWatcherEvent);
     class procedure RemoveWatch(aWatcherEvent: TFSWatcherEvent);
+    class function CanWatch(const WatchPaths: array of String): Boolean;
   end;
 
 implementation
@@ -77,7 +78,7 @@ implementation
 uses
   LCLProc, uDebug, uExceptions, syncobjs, fgl
   {$IF DEFINED(MSWINDOWS)}
-  ,Windows, JwaWinNT, JwaWinBase, DCStrUtils, uGlobs, uOSUtils
+  ,Windows, JwaWinNT, JwaWinBase, DCWindows, DCStrUtils, uGlobs, uOSUtils
   {$ELSEIF DEFINED(LINUX)}
   ,inotify, BaseUnix, FileUtil
   {$ELSEIF DEFINED(BSD)}
@@ -270,6 +271,25 @@ begin
       DestroyFileSystemWatcher;
   end;
 end;
+
+class function TFileSystemWatcher.CanWatch(const WatchPaths: array of String): Boolean;
+{$IF DEFINED(MSWINDOWS)}
+var
+  Index: Integer;
+  DrivePath: UnicodeString;
+begin
+  for Index:= Low(WatchPaths) to High(WatchPaths) do
+  begin
+    DrivePath:= UnicodeString(Copy(WatchPaths[Index], 1, 3));
+    if GetDriveTypeW(PWideChar(DrivePath)) = DRIVE_REMOTE then Exit(False)
+  end;
+  Result:= True;
+end;
+{$ELSE}
+begin
+  Result:= True;
+end;
+{$ENDIF}
 
 // ----------------------------------------------------------------------------
 
@@ -1259,7 +1279,7 @@ end;
 procedure TOSWatch.CreateHandle;
 {$IF DEFINED(MSWINDOWS)}
 begin
-  FHandle := CreateFileW(PWideChar(UTF8Decode('\\?\' + FWatchPath)),
+  FHandle := CreateFileW(PWideChar(UnicodeLongName(FWatchPath)),
                FILE_LIST_DIRECTORY,
                CREATEFILEW_SHAREMODE,
                nil,
