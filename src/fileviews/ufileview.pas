@@ -937,7 +937,7 @@ begin
         begin
           if IsActiveItemValid then
           begin
-            ProcessExtCommandFork(CurrentPath + GetActiveDisplayFile.FSFile.Name,'',CurrentPath,nil,True);
+            ProcessExtCommandFork(CurrentPath + GetActiveDisplayFile.FSFile.Name, '', CurrentPath, nil, True, True);
             Key := 0;
           end;
         end;
@@ -1563,6 +1563,7 @@ var
 begin
   Result := CloneSelectedFiles;
 
+  Result.Flat := FFlatView;
   // If no files are selected, add currently active file if it is valid.
   if (Result.Count = 0) then
   begin
@@ -3108,11 +3109,16 @@ procedure TFileView.ReloadEvent(const aFileSource: IFileSource; const ReloadedPa
 var
   NoWatcher: Boolean;
 begin
-  // Reload file view but only if the file source is
-  // currently viewed and FileSystemWatcher is not being used.
-  NoWatcher:= not (TFileSystemFileSource.ClassNameIs(FileSource.ClassName) and WatcherActive);
-  if (NoWatcher or FlatView) and aFileSource.Equals(FileSource) then
-    Reload(ReloadedPaths);
+  if aFileSource.Equals(FileSource) then
+  begin
+    // Reload file view but only if the file source is
+    // currently viewed and FileSystemWatcher is not being used.
+    NoWatcher:= not (WatcherActive and
+                     TFileSystemWatcher.CanWatch(ReloadedPaths) and
+                     TFileSystemFileSource.ClassNameIs(FileSource.ClassName)
+                     );
+    if (NoWatcher or FlatView) then Reload(ReloadedPaths);
+  end;
 end;
 
 procedure TFileView.ReloadTimerEvent(Sender: TObject);
