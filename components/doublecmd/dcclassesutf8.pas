@@ -3,7 +3,7 @@
    -------------------------------------------------------------------------
    This module contains classes with UTF8 file names support.
 
-   Copyright (C) 2008-2014  Koblov Alexander (Alexx2000@mail.ru)
+   Copyright (C) 2008-2015 Alexander Koblov (alexx2000@mail.ru)
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,12 +30,6 @@ interface
 uses
   Classes, RtlConsts, SysUtils, IniFiles;
 
-{$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
-const
-  { TFileStream create mode }
-  fmCreate        = $FF00;
-{$ENDIF}
-
 type
   { TFileStreamEx class }
 
@@ -46,10 +40,6 @@ type
   public
     constructor Create(const AFileName: String; Mode: Word);
     destructor Destroy; override;
-    {$IF (FPC_VERSION <= 2) and (FPC_RELEASE <= 4) and (FPC_PATCH <= 0)}
-    function ReadQWord: QWord;
-    procedure WriteQWord(q: QWord);
-    {$ENDIF}
     function Read(var Buffer; Count: LongInt): LongInt; override;
     property FileName: String read FFileName;
   end; 
@@ -62,31 +52,17 @@ type
     procedure LoadFromFile(const FileName: String); override;
     procedure SaveToFile(const FileName: String); override;
   end;   
-  
-  { THackIniFile }
-
-  THackIniFile = class
-  private
-    FFileName: String;
-    FSectionList: TIniFileSectionList;
-  end;
 
   { TIniFileEx }
 
-  TIniFileEx = class(TIniFile)
+  TIniFileEx = class(TMemIniFile)
   private
-    FIniFileStream: TFileStreamEx;
     FReadOnly: Boolean;
-    function GetFileName: String;
-    procedure SetFileName(const AValue: String);
   public
     constructor Create(const AFileName: String; Mode: Word); virtual;
-    constructor Create(const AFileName: string; AEscapeLineFeeds : Boolean = False); override;
-    destructor Destroy; override;
+    constructor Create(const AFileName: String; AEscapeLineFeeds : Boolean = False); override;
     procedure UpdateFile; override;
   public
-    procedure Clear;
-    property FileName: String read GetFileName write SetFileName;
     property ReadOnly: Boolean read FReadOnly;
   end;
 
@@ -131,21 +107,6 @@ begin
   if Result = -1 then
     raise EReadError.Create(mbSysErrorMessage(GetLastOSError));
 end;
-
-{$IF (FPC_VERSION <= 2) and (FPC_RELEASE <= 4) and (FPC_PATCH <= 0)}
-function TFileStreamEx.ReadQWord: QWord;
-var
-  q: QWord;
-begin
-  ReadBuffer(q, SizeOf(QWord));
-  ReadQWord:= q;
-end;
-
-procedure TFileStreamEx.WriteQWord(q: QWord);
-begin
-  WriteBuffer(q, SizeOf(QWord));
-end;
-{$ENDIF}
 
 { TStringListEx }
 
@@ -201,67 +162,59 @@ end;
 
 { TIniFileEx }
 
-function TIniFileEx.GetFileName: String;
-begin
-  Result:= THackIniFile(Self).FFileName;
-end;
-
-procedure TIniFileEx.SetFileName(const AValue: String);
-begin
-  THackIniFile(Self).FFileName:= AValue;
-end;
-
 constructor TIniFileEx.Create(const AFileName: String; Mode: Word);
+var
+  slLines : TStringListEx;
 begin
   FReadOnly := ((Mode and $03) = fmOpenRead);
 
-  if mbFileExists(AFileName) then
-  begin
-    if ((Mode and $03) = fmOpenWrite) then
-      Mode := fmCreate or (Mode and $F0);
-    if (Mode and $F0) = 0 then
-      Mode := Mode or fmShareDenyWrite;
-  end
-  else
-  begin
-    Mode := fmCreate;
-  end;
+  inherited Create(EmptyStr);
 
-  FIniFileStream:= TFileStreamEx.Create(AFileName, Mode);
-  inherited Create(FIniFileStream);
-  FileName:= AFileName;
+  if ((Mode and $03) <> fmOpenWrite) then
+  begin
+    if mbFileExists(AFileName) then
+    begin
+      slLines := TStringListEx.Create;
+      try
+        slLines.LoadFromFile(AFileName);
+        SetStrings(slLines);
+      finally
+        slLines.Free;
+      end;
+    end;
+  end;
+  Rename(AFileName, False);
 end;
 
-constructor TIniFileEx.Create(const AFileName: string; AEscapeLineFeeds: Boolean);
+constructor TIniFileEx.Create(const AFileName: String; AEscapeLineFeeds: Boolean);
+var
+  Mode: Word;
 begin
-  if mbFileAccess(AFileName, fmOpenReadWrite or fmShareDenyWrite) then
-    Create(AFileName, fmOpenReadWrite or fmShareDenyWrite)
-  else
-    Create(AFileName, fmOpenRead or fmShareDenyNone);
+  if not mbFileExists(AFileName) then
+    Mode := fmOpenWrite or fmShareDenyWrite
+  else if mbFileAccess(AFileName, fmOpenReadWrite or fmShareDenyWrite) then
+    Mode := fmOpenReadWrite or fmShareDenyWrite
+  else begin
+    Mode := fmOpenRead or fmShareDenyNone;
+  end;
+  Create(AFileName, Mode);
 end;
 
 procedure TIniFileEx.UpdateFile;
+var
+  slLines: TStringListEx;
 begin
-  if not ReadOnly then
+  if not FReadOnly then
   begin
-    Stream.Position:=0;
-    Stream.Size:= 0;
-    FileName:= EmptyStr;
-    inherited UpdateFile;
-    FileName:= FIniFileStream.FileName;
+    slLines := TStringListEx.Create;
+    try
+      GetStrings(slLines);
+      slLines.SaveToFile(FileName);
+      PBoolean(@Dirty)^:= False;
+    finally
+      slLines.Free;
+    end;
   end;
-end;
-
-procedure TIniFileEx.Clear;
-begin
-  THackIniFile(Self).FSectionList.Clear;
-end;
-
-destructor TIniFileEx.Destroy;
-begin
-  inherited Destroy;
-  // Destroy stream after destroying the base object, because it may use the stream in Destroy.
-  FreeAndNil(FIniFileStream);
 end;
 
 end.

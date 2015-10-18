@@ -113,8 +113,11 @@ begin
     Result:= E_EWRITE
   else if E is ESevenZipAbort then
     Result:= E_EABORTED
-  else
+  else if Pos(HexStr(E_OUTOFMEMORY, 8), E.Message) > 0 then
+    Result:= E_NO_MEMORY
+  else begin
     Result:= E_UNKNOWN_FORMAT;
+  end;
 end;
 
 function WinToDosTime(const WinTime: TFILETIME; var DosTime: Cardinal): LongBool;
@@ -243,7 +246,7 @@ begin
     if OpenMode = PK_OM_EXTRACT then
     begin
       Start;
-      Result:= Update;
+      Update;
     end;
     FArchive.Free;
     Free;
@@ -271,9 +274,11 @@ function PackFilesW(PackedFile: PWideChar; SubPath: PWideChar;
 var
   I: Integer;
   Encrypt: Boolean;
+  AMessage: String;
   Password: WideString;
   FilePath: WideString;
   FileName: WideString;
+  SfxModule: String = '';
   FileNameUTF8: UTF8String;
   AProgress: TSevenZipUpdate;
   Archive: TJclCompressArchive;
@@ -282,11 +287,28 @@ begin
   if (Flags and PK_PACK_MOVE_FILES) <> 0 then Exit(E_NOT_SUPPORTED);
   FileNameUTF8 := UTF8Encode(WideString(PackedFile));
 
-  // If create new archive
-  if (GetFileAttributesW(PackedFile) = INVALID_FILE_ATTRIBUTES) then
-    AFormats := FindCompressFormats(FileNameUTF8)
-  else
-    AFormats := TJclCompressArchiveClassArray(FindUpdateFormats(FileNameUTF8));
+  // If update existing archive
+  if (GetFileAttributesW(PackedFile) <> INVALID_FILE_ATTRIBUTES) then
+    AFormats := TJclCompressArchiveClassArray(FindUpdateFormats(FileNameUTF8))
+  else begin
+    if not SameText(ExtractFileExt(FileNameUTF8), '.exe') then
+      AFormats := FindCompressFormats(FileNameUTF8)
+    else begin
+      // Only 7-Zip supports self-extract
+      SfxModule := ExtractFilePath(SevenzipLibraryName) + '7z.sfx';
+      if FileExistsUTF8(SfxModule) then
+      begin
+        SetLength(AFormats, 1);
+        AFormats[0] := TJcl7zCompressArchive;
+      end
+      else begin
+        AMessage := SysErrorMessage(GetLastError) + LineEnding;
+        AMessage += rsSevenZipSfxNotFound + LineEnding + SfxModule;
+        MessageBox(0, PAnsiChar(AMessage), nil, MB_OK or MB_ICONERROR);
+        Exit(E_NO_FILES);
+      end;
+    end;
+  end;
 
   for I := Low(AFormats) to High(AFormats) do
   begin
@@ -316,6 +338,11 @@ begin
       end;
 
       SetArchiveOptions(Archive);
+
+      if Archive is TJcl7zCompressArchive then
+      begin
+        TJcl7zCompressArchive(Archive).SfxModule := SfxModule;
+      end;
 
       if Assigned(SubPath) then
       begin
@@ -536,7 +563,10 @@ begin
     ReturnValue:= E_SUCCESS;
   except
     on E: Exception do
+    begin
       ReturnValue:= GetArchiveError(E);
+      MessageBox(0, PAnsiChar(E.Message), nil, MB_OK or MB_ICONERROR);
+    end;
   end;
   Terminate;
   FProgress.SetEvent;
