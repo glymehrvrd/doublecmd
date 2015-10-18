@@ -49,17 +49,18 @@ begin
     ArchiveType := ExtractOnlyFileExt(ArchiveFileName);
   end;
 
-  // Check if there is a registered WCX plugin for possible archive.
-  Result := FileSourceManager.Find(TWcxArchiveFileSource, ArchiveFileName) as IArchiveFileSource;
-  if not Assigned(Result) then
-  begin
-    if ArchiveSign then
-      Result := TWcxArchiveFileSource.CreateByArchiveSign(SourceFileSource, ArchiveFileName)
-    else
-      Result := TWcxArchiveFileSource.CreateByArchiveType(SourceFileSource, ArchiveFileName, ArchiveType);
-  end;
-  // Check if there is a registered MultiArc addon for possible archive.
-  if not Assigned(Result) then
+  try
+    // Check if there is a registered WCX plugin for possible archive.
+    Result := FileSourceManager.Find(TWcxArchiveFileSource, ArchiveFileName) as IArchiveFileSource;
+    if not Assigned(Result) then
+    begin
+      if ArchiveSign then
+        Result := TWcxArchiveFileSource.CreateByArchiveSign(SourceFileSource, ArchiveFileName)
+      else
+        Result := TWcxArchiveFileSource.CreateByArchiveType(SourceFileSource, ArchiveFileName, ArchiveType);
+    end;
+    // Check if there is a registered MultiArc addon for possible archive.
+    if not Assigned(Result) then
     begin
       Result := FileSourceManager.Find(TMultiArchiveFileSource, ArchiveFileName) as IArchiveFileSource;
       if not Assigned(Result) then
@@ -70,6 +71,13 @@ begin
           Result := TMultiArchiveFileSource.CreateByArchiveType(SourceFileSource, ArchiveFileName, ArchiveType);
       end;
     end;
+  except
+    on E: Exception do
+    begin
+      Result:= nil;
+      msgError(nil, E.Message + LineEnding + ArchiveFileName);
+    end;
+  end;
 end;
 
 function GetArchiveFileSource(SourceFileSource: IFileSource;
@@ -193,7 +201,7 @@ begin
       if aFileView.FileSource.IsClass(TFileSystemFileSource) then
         begin
           for I := 0 to aFiles.Count - 1 do // test all selected archives
-            begin
+            try
               // Check if there is a ArchiveFileSource for possible archive.
               ArchiveFileSource := GetArchiveFileSource(aFileView.FileSource, aFiles[i]);
 
@@ -228,6 +236,8 @@ begin
               end;
               // Short pause, so that all operations are not spawned at once.
               Sleep(100);
+            except
+              on E: Exception do msgError(E.Message + LineEnding + aFiles[i].FullPath);
             end; // for
         end
       else

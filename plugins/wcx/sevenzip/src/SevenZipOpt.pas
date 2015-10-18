@@ -62,7 +62,7 @@ const
    cKilo * 900
   );
 
-  LZMADict: array[0..12] of PtrInt =
+  LZMADict: array[0..21] of PtrInt =
   (
    cKilo * 64,
    cMega,
@@ -76,10 +76,19 @@ const
    cMega * 24,
    cMega * 32,
    cMega * 48,
-   cMega * 64
+   cMega * 64,
+   cMega * 96,
+   cMega * 128,
+   cMega * 192,
+   cMega * 256,
+   cMega * 384,
+   cMega * 512,
+   cMega * 768,
+   cMega * 1024,
+   cMega * 1536
   );
 
-  PPMdDict: array[0..17] of PtrInt =
+  PPMdDict: array[0..19] of PtrInt =
   (
    cMega,
    cMega * 2,
@@ -98,7 +107,9 @@ const
    cMega * 192,
    cMega * 256,
    cMega * 384,
-   cMega * 512
+   cMega * 512,
+   cMega * 768,
+   cMega * 1024
   );
 
   DeflateWordSize: array[0..11] of PtrInt =
@@ -140,8 +151,17 @@ const
 
 type
 
+  TCompressionLevel =
+  (
+    clStore    = 0,
+    clFastest  = 1,
+    clFast     = 3,
+    clNormal   = 5,
+    clMaximum  = 7,
+    clUltra    = 9
+  );
+
   TArchiveFormat = (afSevenZip, afBzip2, afGzip, afTar, afWim, afXz, afZip);
-  TCompressionLevel = (clStore, clFastest, clFast, clNormal, clMaximum, clUltra);
 
   PPasswordData = ^TPasswordData;
   TPasswordData = record
@@ -161,7 +181,7 @@ type
   end;
 
 function GetNumberOfProcessors: LongWord;
-function FormatFileSize(ASize: Int64): UTF8String;
+function FormatFileSize(ASize: Int64; AGiga: Boolean = True): UTF8String;
 
 procedure SetArchiveOptions(AJclArchive: IInterface);
 
@@ -187,7 +207,7 @@ const
 const
   DefaultConfig: array[TArchiveFormat] of TFormatOptions =
   (
-   (Level: PtrInt(clNormal); Method: PtrInt(cmLZMA); Dictionary: cMega * 16; WordSize: 32; SolidSize: cMega * 2; ThreadCount: 2; ArchiveCLSID: @CLSID_CFormat7z; Parameters: '';),
+   (Level: PtrInt(clNormal); Method: PtrInt(cmLZMA2); Dictionary: cMega * 16; WordSize: 32; SolidSize: cMega * 2; ThreadCount: 2; ArchiveCLSID: @CLSID_CFormat7z; Parameters: '';),
    (Level: PtrInt(clNormal); Method: PtrInt(cmBZip2); Dictionary: cKilo * 900; WordSize: 0; SolidSize: 0; ThreadCount: 2; ArchiveCLSID: @CLSID_CFormatBZ2; Parameters: '';),
    (Level: PtrInt(clNormal); Method: PtrInt(cmDeflate); Dictionary: cKilo * 32; WordSize: 32; SolidSize: 0; ThreadCount: 1; ArchiveCLSID: @CLSID_CFormatGZip; Parameters: '';),
    (Level: PtrInt(clStore); Method: 0; Dictionary: 0; WordSize: 0; SolidSize: 0; ThreadCount: 1; ArchiveCLSID: @CLSID_CFormatTar; Parameters: '';),
@@ -212,16 +232,16 @@ begin
   Result:= SystemInfo.dwNumberOfProcessors;
 end;
 
-function FormatFileSize(ASize: Int64): UTF8String;
+function FormatFileSize(ASize: Int64; AGiga: Boolean): UTF8String;
 begin
-  if (ASize div cGiga) > 0 then
-    Result:= IntToStr(ASize div cGiga) + 'Gb'
+  if ((ASize div cGiga) > 0) and AGiga then
+    Result:= IntToStr(ASize div cGiga) + ' GB'
   else
   if (ASize div cMega) >0 then
-    Result:= IntToStr(ASize div cMega) + 'Mb'
+    Result:= IntToStr(ASize div cMega) + ' MB'
   else
   if (ASize div cKilo) > 0 then
-    Result:= IntToStr(ASize div cKilo) + 'Kb'
+    Result:= IntToStr(ASize div cKilo) + ' KB'
   else
     Result:= IntToStr(ASize);
 end;
@@ -265,13 +285,26 @@ var
 
   procedure AddOption(Finish: Integer);
   var
+    C: WideChar;
+    PropValue: TPropVariant;
     Option, Value: WideString;
   begin
     Option:= Copy(Parameters, Start, Finish - Start);
     Start:= Pos('=', Option);
     if Start = 0 then
     begin
-      AddProperty(Option, TPropVariant(NULL));
+      PropValue.vt:= VT_EMPTY;
+      C:= Option[Length(Option)];
+      if C = '+' then
+        Variant(PropValue):= True
+      else if C = '-' then begin
+        Variant(PropValue):= False;
+      end;
+      if (PropValue.vt <> VT_EMPTY) then
+      begin
+        Delete(Option, Length(Option), 1);
+      end;
+      AddProperty(Option, PropValue);
     end
     else begin
       Value:= Copy(Option, Start + 1, MaxInt);

@@ -22,6 +22,7 @@ uses
   {$ENDIF}
   Interfaces,
   LCLProc,
+  Classes,
   SysUtils,
   Forms,
   LCLVersion,
@@ -92,6 +93,10 @@ begin
   uMyWindows.FixCommandLineToUTF8;
   {$ENDIF}
 
+  // Fix default BidiMode
+  // see http://bugs.freepascal.org/view.php?id=22044
+  Application.BidiMode:= bdLeftToRight;
+
   Application.Title:= 'Double Commander';
   Application.Initialize;
   uDCVersion.InitializeVersionInfo;
@@ -128,7 +133,7 @@ begin
   if WSVersion <> EmptyStr then
     DCDebug('Widgetset library: ' + WSVersion);
   DCDebug('This program is free software released under terms of GNU GPL 2');
-  DCDebug('(C)opyright 2006-2014 Koblov Alexander (Alexx2000@mail.ru)');
+  DCDebug('(C)opyright 2006-2015 Alexander Koblov (alexx2000@mail.ru)');
   DCDebug('   and contributors (see about dialog)');
 
   Application.ShowMainForm:= False;

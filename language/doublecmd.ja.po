@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Double Commander 0.5.5 alpha\n"
+"Project-Id-Version: Double Commander 0.7.0 alpha\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-01-17 23:08+0300\n"
-"PO-Revision-Date: 2015-09-20 16:32+0900\n"
+"PO-Revision-Date: 2015-10-10 07:09+0900\n"
 "Last-Translator: Kazunari Sekigawa <kazunari.sekigawa@gmail.com>\n"
 "Language-Team: Language <email@address>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Native-Language: 日本語\n"
 "Language: ja\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.5\n"
 
 #: fsyncdirsdlg.rscomparingpercent
 msgid "Comparing... %d%% (ESC to cancel)"
@@ -19,7 +19,7 @@ msgstr "比較しています…  %d (ESCでキャンセル)"
 
 #: fsyncdirsdlg.rsdeleteright
 msgid "Right: Delete %d file(s)"
-msgstr ""
+msgstr "右：%d 個のファイルを削除"
 
 #: fsyncdirsdlg.rsfilesfound
 msgid "Files found: %d  (Identical: %d, Different: %d, Unique left: %d, Unique right: %d)"
@@ -136,10 +136,12 @@ msgid "BackGround:"
 msgstr "背景："
 
 #: tfcolumnssetconf.cbcursorborder.caption
+msgctxt "tfcolumnssetconf.cbcursorborder.caption"
 msgid "Cursor border"
 msgstr "カーソルの境界"
 
 #: tfcolumnssetconf.cbovercolor.caption
+msgctxt "tfcolumnssetconf.cbovercolor.caption"
 msgid "Allow Overcolor"
 msgstr "強調を許可"
 
@@ -153,6 +155,7 @@ msgid "Text Color:"
 msgstr "テキストの色："
 
 #: tfcolumnssetconf.label3.caption
+msgctxt "tfcolumnssetconf.label3.caption"
 msgid "Font:"
 msgstr "フォント："
 
@@ -196,10 +199,9 @@ msgid "0"
 msgstr "0"
 
 #: tfcolumnssetconf.miaddcolumn.caption
+msgctxt "tfcolumnssetconf.miaddcolumn.caption"
 msgid "Add column"
-msgstr ""
-"カラム\n"
-"を追加\n"
+msgstr "カラムを追加"
 
 #: tfcolumnssetconf.pnlcusthead.caption
 msgid "Customize column:"
@@ -263,7 +265,7 @@ msgstr "所有権をコピー(&w)"
 
 #: tfilesystemcopymoveoperationoptionsui.cbcopypermissions.caption
 msgid "Copy &permissions"
-msgstr ""
+msgstr "ファイル権限をコピー(&p)"
 
 #: tfilesystemcopymoveoperationoptionsui.cbcopytime.caption
 msgid "Copy d&ate/time"
@@ -492,16 +494,6 @@ msgctxt "TFRMATTRIBUTESEDIT.LBLWRITE.CAPTION"
 msgid "Write"
 msgstr "書き込み"
 
-#: tfrmchecksumcalc.btncancel.caption
-msgctxt "TFRMCHECKSUMCALC.BTNCANCEL.CAPTION"
-msgid "&Cancel"
-msgstr "キャンセル(&C)"
-
-#: tfrmchecksumcalc.btnok.caption
-msgctxt "TFRMCHECKSUMCALC.BTNOK.CAPTION"
-msgid "&OK"
-msgstr "OK(&O)"
-
 #: tfrmchecksumcalc.caption
 msgctxt "TFRMCHECKSUMCALC.CAPTION"
 msgid "Calculate checksum..."
@@ -526,7 +518,7 @@ msgstr "閉じる(&C)"
 
 #: tfrmchecksumverify.caption
 msgctxt "TFRMCHECKSUMVERIFY.CAPTION"
-msgid "Verify check sum..."
+msgid "Verify checksum..."
 msgstr "チェックサムを確認…"
 
 #: tfrmconnectionmanager.btnadd.caption
@@ -584,37 +576,31 @@ msgid "Copy file(s)"
 msgstr "ファイルのコピー"
 
 #: tfrmcopydlg.mnunewqueue.caption
-#, fuzzy
 msgctxt "tfrmcopydlg.mnunewqueue.caption"
 msgid "New queue"
 msgstr "新しいキュー"
 
 #: tfrmcopydlg.mnuqueue1.caption
-#, fuzzy
 msgctxt "tfrmcopydlg.mnuqueue1.caption"
 msgid "Queue 1"
 msgstr "キュー1"
 
 #: tfrmcopydlg.mnuqueue2.caption
-#, fuzzy
 msgctxt "tfrmcopydlg.mnuqueue2.caption"
 msgid "Queue 2"
 msgstr "キュー2"
 
 #: tfrmcopydlg.mnuqueue3.caption
-#, fuzzy
 msgctxt "tfrmcopydlg.mnuqueue3.caption"
 msgid "Queue 3"
 msgstr "キュー3"
 
 #: tfrmcopydlg.mnuqueue4.caption
-#, fuzzy
 msgctxt "tfrmcopydlg.mnuqueue4.caption"
 msgid "Queue 4"
 msgstr "キュー4"
 
 #: tfrmcopydlg.mnuqueue5.caption
-#, fuzzy
 msgctxt "tfrmcopydlg.mnuqueue5.caption"
 msgid "Queue 5"
 msgstr "キュー5"
@@ -1266,6 +1252,7 @@ msgid "Open as"
 msgstr "名前を付けて開く"
 
 #: tfrmeditor.miencodingout.caption
+msgctxt "tfrmeditor.miencodingout.caption"
 msgid "Save as"
 msgstr "名前を付けて保存"
 
@@ -2143,16 +2130,6 @@ msgstr "サブメニューをクリックすると、全体メニューを選択
 msgid "Hold CTRL and click entries to select multiple ones"
 msgstr "複数のものを選択するには、Ctrlキーを押したままエントリーをクリックします"
 
-#: tfrmlinker.btnexit.caption
-msgctxt "TFRMLINKER.BTNEXIT.CAPTION"
-msgid "&Cancel"
-msgstr "キャンセル(&C)"
-
-#: tfrmlinker.btnok.caption
-msgctxt "TFRMLINKER.BTNOK.CAPTION"
-msgid "&OK"
-msgstr "OK(&O)"
-
 #: tfrmlinker.btnsave.caption
 msgctxt "TFRMLINKER.BTNSAVE.CAPTION"
 msgid "..."
@@ -2176,16 +2153,6 @@ msgctxt "TFRMLINKER.LBLFILENAME.CAPTION"
 msgid "&File name"
 msgstr "ファイル名(&F)"
 
-#: tfrmlinker.spbtndel.caption
-msgctxt "TFRMLINKER.SPBTNDEL.CAPTION"
-msgid "&Delete"
-msgstr "削除(&D)"
-
-#: tfrmlinker.spbtndel.hint
-msgctxt "TFRMLINKER.SPBTNDEL.HINT"
-msgid "Delete"
-msgstr "削除"
-
 #: tfrmlinker.spbtndown.caption
 msgctxt "TFRMLINKER.SPBTNDOWN.CAPTION"
 msgid "Do&wn"
@@ -2195,6 +2162,16 @@ msgstr "下へ(&w)"
 msgctxt "TFRMLINKER.SPBTNDOWN.HINT"
 msgid "Down"
 msgstr "下へ"
+
+#: tfrmlinker.spbtnrem.caption
+msgctxt "tfrmlinker.spbtnrem.caption"
+msgid "&Remove"
+msgstr "削除(&R)"
+
+#: tfrmlinker.spbtnrem.hint
+msgctxt "tfrmlinker.spbtnrem.hint"
+msgid "Delete"
+msgstr "削除"
 
 #: tfrmlinker.spbtnup.caption
 msgctxt "TFRMLINKER.SPBTNUP.CAPTION"
@@ -2225,8 +2202,8 @@ msgstr "コマンドラインにパスをコピー"
 
 #: tfrmmain.actbriefview.caption
 msgctxt "tfrmmain.actbriefview.caption"
-msgid "Brief"
-msgstr "概要"
+msgid "Brief view"
+msgstr "概要表示"
 
 #: tfrmmain.actbriefview.hint
 msgid "Brief View"
@@ -2318,6 +2295,15 @@ msgctxt "TFRMMAIN.ACTCOMPAREDIRECTORIES.HINT"
 msgid "Compare Directories"
 msgstr "ディレクトリを比較"
 
+#: tfrmmain.actconfigdirhotlist.caption
+msgctxt "tfrmmain.actconfigdirhotlist.caption"
+msgid "Configuration of Directory Hotlist"
+msgstr "「ディレクトリ・ホットリスト」の構成"
+
+#: tfrmmain.actconfigtoolbars.caption
+msgid "Configure toolbar"
+msgstr "ツールバーを構成"
+
 #: tfrmmain.actcontextmenu.caption
 msgid "Show context menu"
 msgstr "コンテキストメニューを表示"
@@ -2343,6 +2329,14 @@ msgstr "ファイル名（複数可）をクリップボードにコピー(&F)"
 msgid "Copy files without asking for confirmation"
 msgstr "確認を求めずにファイルをコピー"
 
+#: tfrmmain.actcopypathnosepoffilestoclip.caption
+msgid "Copy Full Path of selected file(s) with no ending dir separator"
+msgstr "選択したファイル（複数可）のフルパスを末尾のディレクトリ・セパレータなしでコピー"
+
+#: tfrmmain.actcopypathoffilestoclip.caption
+msgid "Copy Full Path of selected file(s)"
+msgstr "選択したファイル（複数可）のフルパスをコピー"
+
 #: tfrmmain.actcopysamepanel.caption
 msgid "Copy to same panel"
 msgstr "同じパネルにコピー"
@@ -2359,6 +2353,10 @@ msgstr "占有スペースを表示(&w)"
 msgid "Cu&t"
 msgstr "切り取り(&t)"
 
+#: tfrmmain.actdebugshowcommandparameters.caption
+msgid "Show Command Parameters"
+msgstr "コマンドのパラメータを表示"
+
 #: tfrmmain.actdelete.caption
 msgctxt "TFRMMAIN.ACTDELETE.CAPTION"
 msgid "Delete"
@@ -2372,6 +2370,10 @@ msgstr "ディレクトリ履歴"
 #: tfrmmain.actdirhotlist.caption
 msgid "Directory &Hotlist"
 msgstr "ディレクトリ・ホットリスト(&H)"
+
+#: tfrmmain.actdoanycmcommand.caption
+msgid "Select any command and execute it"
+msgstr "任意のコマンドを選択し、それを実行します"
 
 #: tfrmmain.actedit.caption
 msgctxt "tfrmmain.actedit.caption"
@@ -2453,13 +2455,53 @@ msgstr "水平パネル モード(&H)"
 msgid "&Keyboard"
 msgstr "キーボード(&K)"
 
+#: tfrmmain.actleftbriefview.caption
+msgid "Brief view on left panel"
+msgstr "左側パネルの簡易表示"
+
+#: tfrmmain.actleftcolumnsview.caption
+msgid "Columns view on left panel"
+msgstr "左側パネルのカラム表示"
+
 #: tfrmmain.actleftequalright.caption
 msgid "Left &= Right"
 msgstr "左 <= 右"
 
+#: tfrmmain.actleftflatview.caption
+msgid "&Flat view on left panel"
+msgstr "左側パネルのフラット表示(&F)"
+
 #: tfrmmain.actleftopendrives.caption
 msgid "Open left drive list"
 msgstr "左側のドライブリストを開く"
+
+#: tfrmmain.actleftreverseorder.caption
+msgid "Re&verse order on left panel"
+msgstr "左側パネルの表示を逆転(&v)"
+
+#: tfrmmain.actleftsortbyattr.caption
+msgid "Sort left panel by &Attributes"
+msgstr "左側パネルを属性でソート(&A)"
+
+#: tfrmmain.actleftsortbydate.caption
+msgid "Sort left panel by &Date"
+msgstr "左側パネルを日付でソート(&D)"
+
+#: tfrmmain.actleftsortbyext.caption
+msgid "Sort left panel by &Extension"
+msgstr "左側パネルを拡張子でソート(&E)"
+
+#: tfrmmain.actleftsortbyname.caption
+msgid "Sort left panel by &Name"
+msgstr "左側パネルをファイル名でソート(&N)"
+
+#: tfrmmain.actleftsortbysize.caption
+msgid "Sort left panel by &Size"
+msgstr "左側パネルをサイズでソート(&S)"
+
+#: tfrmmain.actleftthumbview.caption
+msgid "Thumbnails view on left panel"
+msgstr "左側パネルのサムネール表示"
 
 #: tfrmmain.actloadselectionfromclip.caption
 msgid "Load Selection from Clip&board"
@@ -2618,17 +2660,57 @@ msgstr "選択を元に戻す(&R)"
 msgid "Re&verse Order"
 msgstr "順序を逆転(&v)"
 
+#: tfrmmain.actrightbriefview.caption
+msgid "Brief view on right panel"
+msgstr "右側パネルの簡易表示"
+
+#: tfrmmain.actrightcolumnsview.caption
+msgid "Columns view on right panel"
+msgstr "右側パネルのカラム表示"
+
 #: tfrmmain.actrightequalleft.caption
 msgid "Right &= Left"
 msgstr "左 => 右"
+
+#: tfrmmain.actrightflatview.caption
+msgid "&Flat view on right panel"
+msgstr "右側パネルのフラット表示(&F)"
 
 #: tfrmmain.actrightopendrives.caption
 msgid "Open right drive list"
 msgstr "右側のドライブリストを開く"
 
+#: tfrmmain.actrightreverseorder.caption
+msgid "Re&verse order on right panel"
+msgstr "右側パネルの表示を逆転(&v)"
+
+#: tfrmmain.actrightsortbyattr.caption
+msgid "Sort right panel by &Attributes"
+msgstr "右側パネルを属性でソート(&A)"
+
+#: tfrmmain.actrightsortbydate.caption
+msgid "Sort right panel by &Date"
+msgstr "右側パネルを日付でソート(&D)"
+
+#: tfrmmain.actrightsortbyext.caption
+msgid "Sort right panel by &Extension"
+msgstr "右側パネルを拡張子でソート(&E)"
+
+#: tfrmmain.actrightsortbyname.caption
+msgid "Sort right panel by &Name"
+msgstr "右側パネルをファイル名でソート(&N)"
+
+#: tfrmmain.actrightsortbysize.caption
+msgid "Sort right panel by &Size"
+msgstr "右側パネルをサイズでソート(&S)"
+
+#: tfrmmain.actrightthumbview.caption
+msgid "Thumbnails view on right panel"
+msgstr "右側パネルのサムネール表示"
+
 #: tfrmmain.actrunterm.caption
 msgid "Run &Terminal"
-msgstr "端末をここで実行(&T)"
+msgstr "端末をこのディレクトリで実行(&T)"
 
 #: tfrmmain.actsaveselection.caption
 msgid "Sa&ve Selection"
@@ -2715,6 +2797,10 @@ msgstr "名前でソート(&N)"
 msgid "Sort by &Size"
 msgstr "サイズでソート(&S)"
 
+#: tfrmmain.actsrcopendrives.caption
+msgid "Open drive list"
+msgstr "ドライブリストを開く"
+
 #: tfrmmain.actswitchignorelist.caption
 msgid "Enable/disable ignore list file to not show file names"
 msgstr "ファイル名を表示しないための「ファイル無視リスト」の有効化/無効化"
@@ -2747,7 +2833,7 @@ msgstr "サムネイル表示"
 
 #: tfrmmain.acttogglefullscreenconsole.caption
 msgid "Toggle fullscreen mode console"
-msgstr ""
+msgstr "フルスクリーンモード・コンソールをトグル"
 
 #: tfrmmain.acttransferleft.caption
 msgid "Transfer dir under cursor to left window"
@@ -2756,6 +2842,10 @@ msgstr "左のウィンドウにカーソルの下のディレクトリを転送
 #: tfrmmain.acttransferright.caption
 msgid "Transfer dir under cursor to right window"
 msgstr "右のウィンドウにカーソルの下のディレクトリを転送"
+
+#: tfrmmain.actuniversalsingledirectsort.caption
+msgid "Sort according to parameters"
+msgstr "パラメータに従ってソート"
 
 #: tfrmmain.actunmarkcurrentextension.caption
 msgid "Unselect All with the Same Ex&tension"
@@ -2778,6 +2868,10 @@ msgstr "履歴内の次のエントリへ移動"
 msgid "Go to previous entry in history"
 msgstr "履歴内の前のエントリへ移動"
 
+#: tfrmmain.actviewlogfile.caption
+msgid "View log file"
+msgstr "ログファイルの表示"
+
 #: tfrmmain.actvisithomepage.caption
 msgid "&Visit Double Commander Website"
 msgstr "ダブル・コマンダーのウェブサイトを訪問"
@@ -2785,6 +2879,10 @@ msgstr "ダブル・コマンダーのウェブサイトを訪問"
 #: tfrmmain.actwipe.caption
 msgid "Wipe"
 msgstr "完全削除（抹殺）"
+
+#: tfrmmain.actworkwithdirectoryhotlist.caption
+msgid "Work with Directory Hotlist and paramters"
+msgstr "ディレクトリ・ホットリストとパラメータを使用"
 
 #: tfrmmain.btnf10.caption
 msgctxt "tfrmmain.btnf10.caption"
@@ -2813,7 +2911,7 @@ msgstr "*"
 
 #: tfrmmain.btnleftdirectoryhotlist.hint
 msgctxt "TFRMMAIN.BTNLEFTDIRECTORYHOTLIST.HINT"
-msgid "Directory hotlist"
+msgid "Directory Hotlist"
 msgstr "ディレクトリ・ホットリスト"
 
 #: tfrmmain.btnleftequalright.caption
@@ -2859,6 +2957,11 @@ msgstr "親ディレクトリに移動"
 msgctxt "TFRMMAIN.BTNRIGHTDIRECTORYHOTLIST.CAPTION"
 msgid "*"
 msgstr "*"
+
+#: tfrmmain.btnrightdirectoryhotlist.hint
+msgctxt "tfrmmain.btnrightdirectoryhotlist.hint"
+msgid "Directory Hotlist"
+msgstr "ディレクトリ・ホットリスト"
 
 #: tfrmmain.btnrightequalleft.caption
 msgctxt "tfrmmain.btnrightequalleft.caption"
@@ -3135,6 +3238,11 @@ msgstr "キャンセル"
 msgid "&Commands"
 msgstr "コマンド(&C)"
 
+#: tfrmmain.mnucmdconfigdirhotlist.caption
+msgctxt "tfrmmain.mnucmdconfigdirhotlist.caption"
+msgid "Directory Hotlist"
+msgstr "ディレクトリ・ホットリスト"
+
 #: tfrmmain.mnuconfig.caption
 msgid "C&onfiguration"
 msgstr "構成設定(&o)"
@@ -3213,6 +3321,81 @@ msgstr "貼り付け"
 msgctxt "TFRMMAIN.TBSEPARATOR.CAPTION"
 msgid "-"
 msgstr "-"
+
+#: tfrmmaincommandsdlg.btncancel.caption
+msgctxt "tfrmmaincommandsdlg.btncancel.caption"
+msgid "&Cancel"
+msgstr "キャンセル(&C)"
+
+#: tfrmmaincommandsdlg.btnok.caption
+msgctxt "tfrmmaincommandsdlg.btnok.caption"
+msgid "&OK"
+msgstr "OK(&O)"
+
+#: tfrmmaincommandsdlg.caption
+msgid "Select your internal command"
+msgstr "内部コマンドを選択"
+
+#: tfrmmaincommandsdlg.cbcategorysortornot.text
+msgctxt "tfrmmaincommandsdlg.cbcategorysortornot.text"
+msgid "Legacy sorted"
+msgstr "レガシーソート"
+
+#: tfrmmaincommandsdlg.cbcommandssortornot.text
+msgctxt "tfrmmaincommandsdlg.cbcommandssortornot.text"
+msgid "Legacy sorted"
+msgstr "レガシーソート"
+
+#: tfrmmaincommandsdlg.cbselectallcategorydefault.caption
+msgid "Select all categories by default"
+msgstr "デフォルトではすべてのカテゴリを選択"
+
+#: tfrmmaincommandsdlg.gbselection.caption
+msgid "Selection:"
+msgstr "選択："
+
+#: tfrmmaincommandsdlg.lblcategory.caption
+msgid "&Categories:"
+msgstr "カテゴリー(&C)："
+
+#: tfrmmaincommandsdlg.lblcommandname.caption
+msgid "Command &name:"
+msgstr "コマンド名(&n)："
+
+#: tfrmmaincommandsdlg.lbledtfilter.editlabel.caption
+msgid "&Filter:"
+msgstr "フィルター(&F)："
+
+#: tfrmmaincommandsdlg.lblhint.caption
+msgid "Hint:"
+msgstr "ヒント："
+
+#: tfrmmaincommandsdlg.lblhotkey.caption
+msgid "Hotkey:"
+msgstr "ホットキー："
+
+#: tfrmmaincommandsdlg.lblselectedcommand.caption
+msgid "cm_name"
+msgstr "cm_name"
+
+#: tfrmmaincommandsdlg.lblselectedcommandcategory.caption
+msgctxt "tfrmmaincommandsdlg.lblselectedcommandcategory.caption"
+msgid "Category"
+msgstr "カテゴリ"
+
+#: tfrmmaincommandsdlg.lblselectedcommandhelp.caption
+msgctxt "tfrmmaincommandsdlg.lblselectedcommandhelp.caption"
+msgid "Help"
+msgstr "ヘルプ"
+
+#: tfrmmaincommandsdlg.lblselectedcommandhint.caption
+msgid "Hint"
+msgstr "ヒント"
+
+#: tfrmmaincommandsdlg.lblselectedcommandhotkey.caption
+msgctxt "tfrmmaincommandsdlg.lblselectedcommandhotkey.caption"
+msgid "Hotkey"
+msgstr "ホットキー"
 
 #: tfrmmaskinputdlg.btncancel.caption
 msgctxt "TFRMMASKINPUTDLG.BTNCANCEL.CAPTION"
@@ -3722,6 +3905,11 @@ msgctxt "TFRMOPTIONSARCHIVERS.BTNMULTIARCRENAME.CAPTION"
 msgid "&Rename"
 msgstr "名前の変更(&R)"
 
+#: tfrmoptionsarchivers.btnrelativearchiver.hint
+msgctxt "tfrmoptionsarchivers.btnrelativearchiver.hint"
+msgid "Some functions to select appropriate path"
+msgstr "適切なパスを選択するいくつかの機能"
+
 #: tfrmoptionsarchivers.chkmultiarcdebug.caption
 msgctxt "TFRMOPTIONSARCHIVERS.CHKMULTIARCDEBUG.CAPTION"
 msgid "De&bug mode"
@@ -3856,7 +4044,7 @@ msgstr "ドライブのブラックリスト(&b)"
 
 #: tfrmoptionsbriefview.gbcolumns.caption
 msgid "Columns size"
-msgstr ""
+msgstr "カラムサイズ"
 
 #: tfrmoptionsbriefview.gbshowfileext.caption
 msgid "Show file extensions"
@@ -3872,15 +4060,15 @@ msgstr "ファイル名の直後に(&d)"
 
 #: tfrmoptionsbriefview.rbuseautosize.caption
 msgid "Auto"
-msgstr ""
+msgstr "自動"
 
 #: tfrmoptionsbriefview.rbusefixedcount.caption
 msgid "Fixed columns count"
-msgstr ""
+msgstr "カラム数を固定"
 
 #: tfrmoptionsbriefview.rbusefixedwidth.caption
 msgid "Fixed columns width"
-msgstr ""
+msgstr "カラムの幅を固定"
 
 #: tfrmoptionscolumnsview.cbcuttexttocolwidth.caption
 msgid "Cut &text to column width"
@@ -3965,34 +4153,464 @@ msgstr "プログラムディレクトリ (ポータブル版)(&r)"
 msgid "&User home directory"
 msgstr "ユーザのホームディレクトリ(&U)"
 
-#: tfrmoptionscustomcolumns.btncopycolumnsset.caption
-msgctxt "TFRMOPTIONSCUSTOMCOLUMNS.BTNCOPYCOLUMNSSET.CAPTION"
-msgid "C&opy"
-msgstr "コピー(&p)"
+#: tfrmoptionscustomcolumns.btnallallowovercolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnallallowovercolor.caption"
+msgid "All"
+msgstr "全て"
 
-#: tfrmoptionscustomcolumns.btndelcolumnsset.caption
-msgctxt "TFRMOPTIONSCUSTOMCOLUMNS.BTNDELCOLUMNSSET.CAPTION"
+#: tfrmoptionscustomcolumns.btnallallowovercolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnallallowovercolor.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnallbackcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnallbackcolor.caption"
+msgid "All"
+msgstr "全て"
+
+#: tfrmoptionscustomcolumns.btnallbackcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnallbackcolor.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnallbackcolor2.caption
+msgctxt "tfrmoptionscustomcolumns.btnallbackcolor2.caption"
+msgid "All"
+msgstr "全て"
+
+#: tfrmoptionscustomcolumns.btnallbackcolor2.hint
+msgctxt "tfrmoptionscustomcolumns.btnallbackcolor2.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnallcursorcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnallcursorcolor.caption"
+msgid "All"
+msgstr "全て"
+
+#: tfrmoptionscustomcolumns.btnallcursorcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnallcursorcolor.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnallcursortext.caption
+msgctxt "tfrmoptionscustomcolumns.btnallcursortext.caption"
+msgid "All"
+msgstr "全て"
+
+#: tfrmoptionscustomcolumns.btnallcursortext.hint
+msgctxt "tfrmoptionscustomcolumns.btnallcursortext.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnallfont.caption
+msgctxt "tfrmoptionscustomcolumns.btnallfont.caption"
+msgid "All"
+msgstr "全て"
+
+#: tfrmoptionscustomcolumns.btnallfont.hint
+msgctxt "tfrmoptionscustomcolumns.btnallfont.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnallforecolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnallforecolor.caption"
+msgid "All"
+msgstr "全て"
+
+#: tfrmoptionscustomcolumns.btnallforecolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnallforecolor.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnallinactivecursorcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnallinactivecursorcolor.caption"
+msgid "All"
+msgstr "全て"
+
+#: tfrmoptionscustomcolumns.btnallinactivecursorcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnallinactivecursorcolor.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnallinactivemarkcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnallinactivemarkcolor.caption"
+msgid "All"
+msgstr "全て"
+
+#: tfrmoptionscustomcolumns.btnallinactivemarkcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnallinactivemarkcolor.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnallmarkcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnallmarkcolor.caption"
+msgid "All"
+msgstr "全て"
+
+#: tfrmoptionscustomcolumns.btnallmarkcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnallmarkcolor.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnalluseinactiveselcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnalluseinactiveselcolor.caption"
+msgid "All"
+msgstr "全て"
+
+#: tfrmoptionscustomcolumns.btnalluseinactiveselcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnalluseinactiveselcolor.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnalluseinvertedselection.caption
+msgctxt "tfrmoptionscustomcolumns.btnalluseinvertedselection.caption"
+msgid "All"
+msgstr "全て"
+
+#: tfrmoptionscustomcolumns.btnalluseinvertedselection.hint
+msgctxt "tfrmoptionscustomcolumns.btnalluseinvertedselection.hint"
+msgid "Apply modification to all columns"
+msgstr "すべてのカラムに変更を適用"
+
+#: tfrmoptionscustomcolumns.btnbackcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnbackcolor.caption"
+msgid ">>"
+msgstr ">>"
+
+#: tfrmoptionscustomcolumns.btnbackcolor2.caption
+msgctxt "tfrmoptionscustomcolumns.btnbackcolor2.caption"
+msgid ">>"
+msgstr ">>"
+
+#: tfrmoptionscustomcolumns.btncursorbordercolor.caption
+msgctxt "tfrmoptionscustomcolumns.btncursorbordercolor.caption"
+msgid ">>"
+msgstr ">>"
+
+#: tfrmoptionscustomcolumns.btncursorcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btncursorcolor.caption"
+msgid ">>"
+msgstr ">>"
+
+#: tfrmoptionscustomcolumns.btncursortext.caption
+msgctxt "tfrmoptionscustomcolumns.btncursortext.caption"
+msgid ">>"
+msgstr ">>"
+
+#: tfrmoptionscustomcolumns.btndeleteconfigcolumns.caption
+msgctxt "tfrmoptionscustomcolumns.btndeleteconfigcolumns.caption"
 msgid "&Delete"
 msgstr "削除(&D)"
 
-#: tfrmoptionscustomcolumns.btneditcolumnsset.caption
-msgctxt "TFRMOPTIONSCUSTOMCOLUMNS.BTNEDITCOLUMNSSET.CAPTION"
-msgid "&Edit"
-msgstr "編集(&E)"
+#: tfrmoptionscustomcolumns.btnfont.caption
+msgctxt "tfrmoptionscustomcolumns.btnfont.caption"
+msgid "..."
+msgstr "…"
 
-#: tfrmoptionscustomcolumns.btnnewcolumnsset.caption
-msgctxt "TFRMOPTIONSCUSTOMCOLUMNS.BTNNEWCOLUMNSSET.CAPTION"
-msgid "&New"
-msgstr "新規(&N)"
+#: tfrmoptionscustomcolumns.btnforecolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnforecolor.caption"
+msgid ">>"
+msgstr ">>"
 
-#: tfrmoptionscustomcolumns.cbbfilesystem.text
-msgctxt "TFRMOPTIONSCUSTOMCOLUMNS.CBBFILESYSTEM.TEXT"
+#: tfrmoptionscustomcolumns.btngotosetdefault.caption
+msgid "Go to set default"
+msgstr "デフォルトの設定に進みます"
+
+#: tfrmoptionscustomcolumns.btngotosetdefault.hint
+msgctxt "tfrmoptionscustomcolumns.btngotosetdefault.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btninactivecursorcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btninactivecursorcolor.caption"
+msgid ">>"
+msgstr ">>"
+
+#: tfrmoptionscustomcolumns.btninactivemarkcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btninactivemarkcolor.caption"
+msgid ">>"
+msgstr ">>"
+
+#: tfrmoptionscustomcolumns.btnmarkcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnmarkcolor.caption"
+msgid ">>"
+msgstr ">>"
+
+#: tfrmoptionscustomcolumns.btnnewconfig.caption
+msgctxt "tfrmoptionscustomcolumns.btnnewconfig.caption"
+msgid "New"
+msgstr "新規"
+
+#: tfrmoptionscustomcolumns.btnnext.caption
+msgid "Next"
+msgstr "次へ"
+
+#: tfrmoptionscustomcolumns.btnprev.caption
+msgid "Previous"
+msgstr "前へ"
+
+#: tfrmoptionscustomcolumns.btnrenameconfigcolumns.caption
+msgctxt "tfrmoptionscustomcolumns.btnrenameconfigcolumns.caption"
+msgid "Rename"
+msgstr "名前の変更"
+
+#: tfrmoptionscustomcolumns.btnresetallowovercolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetallowovercolor.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetallowovercolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetallowovercolor.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetbackcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetbackcolor.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetbackcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetbackcolor.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetbackcolor2.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetbackcolor2.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetbackcolor2.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetbackcolor2.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetcursorborder.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetcursorborder.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetcursorborder.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetcursorborder.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetcursorcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetcursorcolor.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetcursorcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetcursorcolor.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetcursortext.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetcursortext.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetcursortext.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetcursortext.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetfont.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetfont.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetfont.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetfont.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetforecolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetforecolor.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetforecolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetforecolor.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetframecursor.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetframecursor.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetframecursor.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetframecursor.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetinactivecursorcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetinactivecursorcolor.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetinactivecursorcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetinactivecursorcolor.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetinactivemarkcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetinactivemarkcolor.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetinactivemarkcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetinactivemarkcolor.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetmarkcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetmarkcolor.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetmarkcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetmarkcolor.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetuseinactiveselcolor.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetuseinactiveselcolor.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetuseinactiveselcolor.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetuseinactiveselcolor.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnresetuseinvertedselection.caption
+msgctxt "tfrmoptionscustomcolumns.btnresetuseinvertedselection.caption"
+msgid "R"
+msgstr "右"
+
+#: tfrmoptionscustomcolumns.btnresetuseinvertedselection.hint
+msgctxt "tfrmoptionscustomcolumns.btnresetuseinvertedselection.hint"
+msgid "Reset to default"
+msgstr "デフォルトにリセット"
+
+#: tfrmoptionscustomcolumns.btnsaveasconfigcolumns.caption
+msgctxt "tfrmoptionscustomcolumns.btnsaveasconfigcolumns.caption"
+msgid "Save as"
+msgstr "名前を付けて保存"
+
+#: tfrmoptionscustomcolumns.btnsaveconfigcolumns.caption
+msgctxt "tfrmoptionscustomcolumns.btnsaveconfigcolumns.caption"
+msgid "Save"
+msgstr "保存"
+
+#: tfrmoptionscustomcolumns.cballowovercolor.caption
+msgctxt "tfrmoptionscustomcolumns.cballowovercolor.caption"
+msgid "Allow Overcolor"
+msgstr "強調を許可"
+
+#: tfrmoptionscustomcolumns.cbapplychangeforallcolumns.caption
+msgid "When clicking to change something, change for all columns"
+msgstr "何かを変更するにはクリックすると、すべてのカラムを変更"
+
+#: tfrmoptionscustomcolumns.cbconfigcolumns.text
+msgctxt "tfrmoptionscustomcolumns.cbconfigcolumns.text"
 msgid "General"
 msgstr "一般"
 
+#: tfrmoptionscustomcolumns.cbcursorborder.caption
+msgctxt "tfrmoptionscustomcolumns.cbcursorborder.caption"
+msgid "Cursor border"
+msgstr "カーソルの境界"
+
+#: tfrmoptionscustomcolumns.cbuseframecursor.caption
+msgid "Use Frame Cursor"
+msgstr "枠型カーソルを使用"
+
+#: tfrmoptionscustomcolumns.cbuseinactiveselcolor.caption
+msgid "Use Inactive Selection Color"
+msgstr "非アクティブの選択色を使用"
+
+#: tfrmoptionscustomcolumns.cbuseinvertedselection.caption
+msgid "Use Inverted Selection"
+msgstr "反転選択を使用"
+
+#: tfrmoptionscustomcolumns.chkusecustomview.caption
+msgid "Use custom font and color for this view"
+msgstr "このビューにはカスタム・フォントと色を使用"
+
+#: tfrmoptionscustomcolumns.lblbackcolor.caption
+msgctxt "tfrmoptionscustomcolumns.lblbackcolor.caption"
+msgid "BackGround:"
+msgstr "背景："
+
+#: tfrmoptionscustomcolumns.lblbackcolor2.caption
+msgctxt "tfrmoptionscustomcolumns.lblbackcolor2.caption"
+msgid "Background 2:"
+msgstr "背景2："
+
 #: tfrmoptionscustomcolumns.lblconfigcolumns.caption
-msgid "Con&figure columns for file system:"
+msgid "Con&figure columns view:"
 msgstr "ファイルシステムのカラムを構成(&f)："
+
+#: tfrmoptionscustomcolumns.lblcurrentcolumn.caption
+msgid "[Current Column Name]"
+msgstr "[現在のカラム名]"
+
+#: tfrmoptionscustomcolumns.lblcursorcolor.caption
+msgctxt "tfrmoptionscustomcolumns.lblcursorcolor.caption"
+msgid "Cursor Color:"
+msgstr "カーソルの色："
+
+#: tfrmoptionscustomcolumns.lblcursortext.caption
+msgctxt "tfrmoptionscustomcolumns.lblcursortext.caption"
+msgid "Cursor Text:"
+msgstr "カーソルの文字："
+
+#: tfrmoptionscustomcolumns.lblfontname.caption
+msgctxt "tfrmoptionscustomcolumns.lblfontname.caption"
+msgid "Font:"
+msgstr "フォント："
+
+#: tfrmoptionscustomcolumns.lblfontsize.caption
+msgctxt "tfrmoptionscustomcolumns.lblfontsize.caption"
+msgid "Size:"
+msgstr "サイズ："
+
+#: tfrmoptionscustomcolumns.lblforecolor.caption
+msgctxt "tfrmoptionscustomcolumns.lblforecolor.caption"
+msgid "Text Color:"
+msgstr "テキストの色："
+
+#: tfrmoptionscustomcolumns.lblinactivecursorcolor.caption
+msgctxt "tfrmoptionscustomcolumns.lblinactivecursorcolor.caption"
+msgid "Inactive Cursor Color:"
+msgstr "非アクティブカーソルの色："
+
+#: tfrmoptionscustomcolumns.lblinactivemarkcolor.caption
+msgctxt "tfrmoptionscustomcolumns.lblinactivemarkcolor.caption"
+msgid "Inactive Mark Color:"
+msgstr "非アクティブマークの色"
+
+#: tfrmoptionscustomcolumns.lblmarkcolor.caption
+msgctxt "tfrmoptionscustomcolumns.lblmarkcolor.caption"
+msgid "Mark Color:"
+msgstr "マークした項目の色："
+
+#: tfrmoptionscustomcolumns.lblpreviewtop.caption
+msgctxt "tfrmoptionscustomcolumns.lblpreviewtop.caption"
+msgid "Below is a preview. You may move cursor and select files to get immediately an actual look and feel of the various settings."
+msgstr "下に示すのはプレビューです。カーソルを動かしファイルを選択すれば、様々な設定のルック＆フィールが直ちに分かります。"
+
+#: tfrmoptionscustomcolumns.lblworkingcolumn.caption
+msgid "Settings for column:"
+msgstr "カラムの設定："
+
+#: tfrmoptionscustomcolumns.miaddcolumn.caption
+msgctxt "tfrmoptionscustomcolumns.miaddcolumn.caption"
+msgid "Add column"
+msgstr "カラムを追加"
 
 #: tfrmoptionsdiffer.rgresultingframepositionaftercompare.caption
 msgid "Position of frame panel after the comparison:"
@@ -4260,19 +4878,19 @@ msgstr "現在の「ディレクトリ・ホットリスト」のバックアッ
 #: tfrmoptionsdirectoryhotlist.misearchandreplace.caption
 msgctxt "tfrmoptionsdirectoryhotlist.misearchandreplace.caption"
 msgid "Search and replace..."
-msgstr ""
+msgstr "検索と置換…"
 
 #: tfrmoptionsdirectoryhotlist.misearchandreplaceinpath.caption
 msgid "in path..."
-msgstr ""
+msgstr "パス…"
 
 #: tfrmoptionsdirectoryhotlist.misearchandreplaceintargetpath.caption
 msgid "in target path..."
-msgstr ""
+msgstr "ターゲットパス…"
 
 #: tfrmoptionsdirectoryhotlist.misearchinreplaceinbothpaths.caption
 msgid "in path and target path..."
-msgstr ""
+msgstr "パスとターゲットパス…"
 
 #: tfrmoptionsdirectoryhotlist.miseparator1.caption
 msgctxt "TFRMOPTIONSDIRECTORYHOTLIST.MISEPARATOR1.CAPTION"
@@ -4290,13 +4908,11 @@ msgid "-"
 msgstr "-"
 
 #: tfrmoptionsdirectoryhotlist.miseparator12.caption
-#, fuzzy
 msgctxt "tfrmoptionsdirectoryhotlist.miseparator12.caption"
 msgid "-"
 msgstr "-"
 
 #: tfrmoptionsdirectoryhotlist.miseparator13.caption
-#, fuzzy
 msgctxt "tfrmoptionsdirectoryhotlist.miseparator13.caption"
 msgid "-"
 msgstr "-"
@@ -4568,10 +5184,29 @@ msgctxt "TFRMOPTIONSFILEASSOC.BTNADDNEWTYPE.CAPTION"
 msgid "A&dd"
 msgstr "追加(&d)"
 
+#: tfrmoptionsfileassoc.btncloneact.caption
+msgid "Clone"
+msgstr "複製"
+
 #: tfrmoptionsfileassoc.btndownact.caption
 msgctxt "TFRMOPTIONSFILEASSOC.BTNDOWNACT.CAPTION"
 msgid "&Down"
 msgstr "下へ(&D)"
+
+#: tfrmoptionsfileassoc.btneditext.caption
+msgctxt "tfrmoptionsfileassoc.btneditext.caption"
+msgid "Edit"
+msgstr "編集"
+
+#: tfrmoptionsfileassoc.btninsertact.caption
+msgctxt "tfrmoptionsfileassoc.btninsertact.caption"
+msgid "Insert"
+msgstr "挿入"
+
+#: tfrmoptionsfileassoc.btninsertext.caption
+msgctxt "tfrmoptionsfileassoc.btninsertext.caption"
+msgid "Insert"
+msgstr "挿入"
 
 #: tfrmoptionsfileassoc.btnremoveact.caption
 msgctxt "TFRMOPTIONSFILEASSOC.BTNREMOVEACT.CAPTION"
@@ -4582,11 +5217,6 @@ msgstr "削除(&v)"
 msgctxt "TFRMOPTIONSFILEASSOC.BTNREMOVEEXT.CAPTION"
 msgid "Re&move"
 msgstr "削除(&m)"
-
-#: tfrmoptionsfileassoc.btnremoveicon.caption
-msgctxt "TFRMOPTIONSFILEASSOC.BTNREMOVEICON.CAPTION"
-msgid "X"
-msgstr "X"
 
 #: tfrmoptionsfileassoc.btnremovetype.caption
 msgctxt "TFRMOPTIONSFILEASSOC.BTNREMOVETYPE.CAPTION"
@@ -4603,6 +5233,26 @@ msgctxt "TFRMOPTIONSFILEASSOC.BTNUPACT.CAPTION"
 msgid "&Up"
 msgstr "上へ(&U)"
 
+#: tfrmoptionsfileassoc.destartpath.hint
+msgid "Starting path of the command. Never quote this string."
+msgstr "コマンドの開始パス（この文字列は引用符で囲まない）"
+
+#: tfrmoptionsfileassoc.edbactionname.hint
+msgid "Name of the action. It is never passed to the system, it's just a mnemonic name chosen by you, for you"
+msgstr "アクションの名称（これはシステムに渡されるものではなく、あなたのための記憶を助けるためのものです）"
+
+#: tfrmoptionsfileassoc.edtparams.hint
+msgid "Parameter to pass to the command. Long filename with spaces should be quoted."
+msgstr "コマンドに渡すパラメータ（スペースを含む長いファイル名は引用符で囲むこと）"
+
+#: tfrmoptionsfileassoc.fnecommand.hint
+msgid "Command to execute. Long filename with space should be quoted."
+msgstr "実行するコマンド（スペースを含む長いファイル名は引用符で囲むこと）"
+
+#: tfrmoptionsfileassoc.gbactiondescription.caption
+msgid "Action description:"
+msgstr "アクションの説明："
+
 #: tfrmoptionsfileassoc.gbactions.caption
 msgctxt "TFRMOPTIONSFILEASSOC.GBACTIONS.CAPTION"
 msgid "Actions"
@@ -4612,6 +5262,10 @@ msgstr "アクション"
 msgctxt "TFRMOPTIONSFILEASSOC.GBEXTS.CAPTION"
 msgid "Extensions"
 msgstr "拡張子"
+
+#: tfrmoptionsfileassoc.gbexts.hint
+msgid "Can be sorted by drag & drop"
+msgstr "ドラッグ＆ドロップでソート可能"
 
 #: tfrmoptionsfileassoc.gbfiletypes.caption
 msgctxt "TFRMOPTIONSFILEASSOC.GBFILETYPES.CAPTION"
@@ -4623,15 +5277,54 @@ msgctxt "TFRMOPTIONSFILEASSOC.GBICON.CAPTION"
 msgid "Icon"
 msgstr "アイコン"
 
+#: tfrmoptionsfileassoc.lbactions.hint
+msgid "Actions may be sorted by drag & drop"
+msgstr "アクションはドラッグ＆ドロップでソート可能"
+
+#: tfrmoptionsfileassoc.lbexts.hint
+msgid "Extensions may be sorted by drag & drop"
+msgstr "拡張子はドラッグ＆ドロップでソート可能"
+
+#: tfrmoptionsfileassoc.lbfiletypes.hint
+msgid "File types may be sorted by drag & drop"
+msgstr "ファイルの種類はドラッグ＆ドロップでソート可能"
+
 #: tfrmoptionsfileassoc.lblaction.caption
 msgctxt "TFRMOPTIONSFILEASSOC.LBLACTION.CAPTION"
-msgid "Action:"
-msgstr "アクション："
+msgid "Action name:"
+msgstr "アクションの名称："
 
 #: tfrmoptionsfileassoc.lblcommand.caption
 msgctxt "TFRMOPTIONSFILEASSOC.LBLCOMMAND.CAPTION"
 msgid "&Command:"
 msgstr "コマンド(&C)："
+
+#: tfrmoptionsfileassoc.lblexternalparameters.caption
+msgctxt "tfrmoptionsfileassoc.lblexternalparameters.caption"
+msgid "Parameter&s:"
+msgstr "パラメータ(&s)："
+
+#: tfrmoptionsfileassoc.lblexternalparameters1.caption
+msgid "Start path:"
+msgstr "開始パス："
+
+#: tfrmoptionsfileassoc.lblstartpath.caption
+msgctxt "tfrmoptionsfileassoc.lblstartpath.caption"
+msgid "Start pat&h:"
+msgstr "開始パス(&h)"
+
+#: tfrmoptionsfileassoc.menuitem1.caption
+msgctxt "tfrmoptionsfileassoc.menuitem1.caption"
+msgid "-"
+msgstr "-"
+
+#: tfrmoptionsfileassoc.menuitem3.caption
+msgid "Custom with..."
+msgstr "カスタム…"
+
+#: tfrmoptionsfileassoc.micustom.caption
+msgid "Custom"
+msgstr "カスタム"
 
 #: tfrmoptionsfileassoc.miedit.caption
 msgctxt "TFRMOPTIONSFILEASSOC.MIEDIT.CAPTION"
@@ -4643,40 +5336,41 @@ msgctxt "TFRMOPTIONSFILEASSOC.MIEDITOR.CAPTION"
 msgid "Open in Editor"
 msgstr "エディタで開く"
 
-#: tfrmoptionsfileassoc.mifilename.caption
-msgctxt "TFRMOPTIONSFILEASSOC.MIFILENAME.CAPTION"
-msgid "File name"
-msgstr "ファイル名"
-
-#: tfrmoptionsfileassoc.mifilepath.caption
-msgctxt "TFRMOPTIONSFILEASSOC.MIFILEPATH.CAPTION"
-msgid "File path"
-msgstr "ファイルのパス"
-
-#: tfrmoptionsfileassoc.mifullpath.caption
-msgctxt "TFRMOPTIONSFILEASSOC.MIFULLPATH.CAPTION"
-msgid "Full path"
-msgstr "フルパス"
+#: tfrmoptionsfileassoc.mieditwith.caption
+msgid "Edit with..."
+msgstr "編集…"
 
 #: tfrmoptionsfileassoc.migetoutputfromcommand.caption
 msgctxt "TFRMOPTIONSFILEASSOC.MIGETOUTPUTFROMCOMMAND.CAPTION"
 msgid "Get output from command"
 msgstr "コマンドの出力を取得"
 
+#: tfrmoptionsfileassoc.miinternaleditor.caption
+msgid "Open in Internal Editor"
+msgstr "内部エディタで開く"
+
+#: tfrmoptionsfileassoc.miinternalviewer.caption
+msgid "Open in Internal Viewer"
+msgstr "内部ビューアで開く"
+
 #: tfrmoptionsfileassoc.miopen.caption
 msgctxt "TFRMOPTIONSFILEASSOC.MIOPEN.CAPTION"
 msgid "Open"
 msgstr "開く"
 
+#: tfrmoptionsfileassoc.miopenwith.caption
+msgid "Open with..."
+msgstr "開く…"
+
+#: tfrmoptionsfileassoc.miseparator.caption
+msgctxt "tfrmoptionsfileassoc.miseparator.caption"
+msgid "-"
+msgstr "-"
+
 #: tfrmoptionsfileassoc.mishell.caption
 msgctxt "TFRMOPTIONSFILEASSOC.MISHELL.CAPTION"
 msgid "Run in terminal"
 msgstr "端末内で実行"
-
-#: tfrmoptionsfileassoc.mivfs.caption
-msgctxt "TFRMOPTIONSFILEASSOC.MIVFS.CAPTION"
-msgid "Open in VFS"
-msgstr "仮想ファイルシステム（VFS）で開く"
 
 #: tfrmoptionsfileassoc.miview.caption
 msgctxt "TFRMOPTIONSFILEASSOC.MIVIEW.CAPTION"
@@ -4688,8 +5382,56 @@ msgctxt "TFRMOPTIONSFILEASSOC.MIVIEWER.CAPTION"
 msgid "Open in Viewer"
 msgstr "ビューアで開く"
 
+#: tfrmoptionsfileassoc.miviewwith.caption
+msgid "View with..."
+msgstr "表示する…"
+
+#: tfrmoptionsfileassoc.sbtnicon.hint
+msgid "Click me to change icon!"
+msgstr "クリックしてアイコンを変更！"
+
+#: tfrmoptionsfileassocextra.cbexecuteviashell.caption
+msgctxt "tfrmoptionsfileassocextra.cbexecuteviashell.caption"
+msgid "Execute via shell"
+msgstr "シェル経由で実行"
+
+#: tfrmoptionsfileassocextra.cbextendedcontextmenu.caption
+msgid "Extended context menu"
+msgstr "拡張コンテキストメニュー"
+
+#: tfrmoptionsfileassocextra.cbextendedcontextmenu.hint
+msgctxt "tfrmoptionsfileassocextra.cbextendedcontextmenu.hint"
+msgid "When accessing file association, offer to add current selected file if not already included in a configured file type"
+msgstr "ファイルの関連付けにアクセスする場合、もしどの設定済みのファイルタイプに属していないなら、現在選択されているファイルを追加することを提案する"
+
+#: tfrmoptionsfileassocextra.cbincludeconfigfileassoc.caption
+msgid "File association configuration"
+msgstr "ファイルの関連付けの設定"
+
+#: tfrmoptionsfileassocextra.cboffertoaddtofileassociations.caption
+msgid "Offer to add selection to file association when not included already"
+msgstr "選択した項目をファイルの関連づけに追加することを提案する（未登録の場合）"
+
+#: tfrmoptionsfileassocextra.cboffertoaddtofileassociations.hint
+msgctxt "tfrmoptionsfileassocextra.cboffertoaddtofileassociations.hint"
+msgid "When accessing file association, offer to add current selected file if not already included in a configured file type"
+msgstr "ファイルの関連付けにアクセスする場合、もしどの設定済みのファイルタイプに属していないなら、現在選択されているファイルを追加することを提案する"
+
+#: tfrmoptionsfileassocextra.cbopensystemwithterminalclose.caption
+msgctxt "tfrmoptionsfileassocextra.cbopensystemwithterminalclose.caption"
+msgid "Execute via terminal and close"
+msgstr "端末内で実行した後クローズ"
+
+#: tfrmoptionsfileassocextra.cbopensystemwithterminalstayopen.caption
+msgctxt "tfrmoptionsfileassocextra.cbopensystemwithterminalstayopen.caption"
+msgid "Execute via terminal and stay open"
+msgstr "端末内で実行した後開いたままにする"
+
+#: tfrmoptionsfileassocextra.gbextendedcontextmenuoptions.caption
+msgid "Extended options items:"
+msgstr "拡張オプション項目："
+
 #: tfrmoptionsfileoperations.bvlconfirmations.caption
-#, fuzzy
 msgctxt "tfrmoptionsfileoperations.bvlconfirmations.caption"
 msgid "Show confirmation window for:"
 msgstr "確認ウィンドウの表示："
@@ -4741,7 +5483,7 @@ msgstr "ファイル操作エラーはスキップして、そのエラーをロ
 
 #: tfrmoptionsfileoperations.dbtextsearch.caption
 msgid "Text search in files"
-msgstr ""
+msgstr "ファイル中の文字列検索"
 
 #: tfrmoptionsfileoperations.gbexecutingoperations.caption
 msgid "Executing operations"
@@ -4760,16 +5502,19 @@ msgstr "ユーザインタフェース"
 msgid "&Buffer size for file operations (in KB):"
 msgstr "ファイル操作用のバッファー サイズ（KB単位）(&B)："
 
+#: tfrmoptionsfileoperations.lblhashbuffersize.caption
+msgid "Buffer size for &hash calculation (in KB):"
+msgstr "ハッシュ値の計算のためのバッファサイズ（KB単位）(&h)："
+
 #: tfrmoptionsfileoperations.lblprogresskind.caption
 msgid "Show operations progress &initially in"
 msgstr "操作の進行状況を最初ここに表示(&i)："
 
 #: tfrmoptionsfileoperations.lblsearchdefaulttemplate.caption
 msgid "Default search template:"
-msgstr ""
+msgstr "デフォルトの検索テンプレート："
 
 #: tfrmoptionsfileoperations.lbltypeofduplicatedrename.caption
-#, fuzzy
 msgctxt "tfrmoptionsfileoperations.lbltypeofduplicatedrename.caption"
 msgid "Duplicated name auto-rename style:"
 msgstr "重複した名前を自動的に変更するスタイル："
@@ -4796,6 +5541,11 @@ msgctxt "TFRMOPTIONSFILEPANELSCOLORS.BTNBACKCOLOR2.CAPTION"
 msgid ">>"
 msgstr ">>"
 
+#: tfrmoptionsfilepanelscolors.btncursorbordercolor.caption
+msgctxt "tfrmoptionsfilepanelscolors.btncursorbordercolor.caption"
+msgid ">>"
+msgstr ">>"
+
 #: tfrmoptionsfilepanelscolors.btncursorcolor.caption
 msgctxt "TFRMOPTIONSFILEPANELSCOLORS.BTNCURSORCOLOR.CAPTION"
 msgid ">>"
@@ -4808,6 +5558,16 @@ msgstr ">>"
 
 #: tfrmoptionsfilepanelscolors.btnforecolor.caption
 msgctxt "TFRMOPTIONSFILEPANELSCOLORS.BTNFORECOLOR.CAPTION"
+msgid ">>"
+msgstr ">>"
+
+#: tfrmoptionsfilepanelscolors.btninactivecursorcolor.caption
+msgctxt "tfrmoptionsfilepanelscolors.btninactivecursorcolor.caption"
+msgid ">>"
+msgstr ">>"
+
+#: tfrmoptionsfilepanelscolors.btninactivemarkcolor.caption
+msgctxt "tfrmoptionsfilepanelscolors.btninactivemarkcolor.caption"
 msgid ">>"
 msgstr ">>"
 
@@ -4826,27 +5586,40 @@ msgctxt "TFRMOPTIONSFILEPANELSCOLORS.BTNMARKCOLOR.CAPTION"
 msgid ">>"
 msgstr ">>"
 
+#: tfrmoptionsfilepanelscolors.btnresettodcdefault.caption
+msgid "Reset to DC default"
+msgstr "DCのデフォルトにリセット"
+
+#: tfrmoptionsfilepanelscolors.cballowovercolor.caption
+msgctxt "tfrmoptionsfilepanelscolors.cballowovercolor.caption"
+msgid "Allow Overcolor"
+msgstr "強調を許可"
+
 #: tfrmoptionsfilepanelscolors.cbbuseframecursor.caption
 msgid "Use &Frame Cursor"
-msgstr "フレーム型カーソルを使用(&F)"
+msgstr "枠型カーソル(&F)"
 
 #: tfrmoptionsfilepanelscolors.cbbusegradientind.caption
 msgid "Use &Gradient Indicator"
 msgstr "グラデーション インジケータを使用(&G)"
 
+#: tfrmoptionsfilepanelscolors.cbbuseinactiveselcolor.caption
+msgid "Use Inactive Sel Color"
+msgstr "非アクティブの選択色を使用"
+
 #: tfrmoptionsfilepanelscolors.cbbuseinvertedselection.caption
 msgid "U&se Inverted Selection"
 msgstr "反転選択を使用(&s)"
+
+#: tfrmoptionsfilepanelscolors.cbusecursorborder.caption
+msgctxt "tfrmoptionsfilepanelscolors.cbusecursorborder.caption"
+msgid "Cursor border"
+msgstr "カーソルの境界"
 
 #: tfrmoptionsfilepanelscolors.dbfreespaceindicator.caption
 msgctxt "TFRMOPTIONSFILEPANELSCOLORS.DBFREESPACEINDICATOR.CAPTION"
 msgid "Drive Free Space Indicator"
 msgstr "ドライブの空き容量インジケータ"
-
-#: tfrmoptionsfilepanelscolors.gbexample.caption
-msgctxt "TFRMOPTIONSFILEPANELSCOLORS.GBEXAMPLE.CAPTION"
-msgid "Example"
-msgstr "例"
 
 #: tfrmoptionsfilepanelscolors.lblbackgroundcolor.caption
 msgid "Bac&kground:"
@@ -4867,6 +5640,16 @@ msgctxt "TFRMOPTIONSFILEPANELSCOLORS.LBLCURSORTEXT.CAPTION"
 msgid "Cursor Te&xt:"
 msgstr "カーソルのテキスト(&x)："
 
+#: tfrmoptionsfilepanelscolors.lblinactivecursorcolor.caption
+msgctxt "tfrmoptionsfilepanelscolors.lblinactivecursorcolor.caption"
+msgid "Inactive Cursor Color:"
+msgstr "非アクティブカーソルの色："
+
+#: tfrmoptionsfilepanelscolors.lblinactivemarkcolor.caption
+msgctxt "tfrmoptionsfilepanelscolors.lblinactivemarkcolor.caption"
+msgid "Inactive Mark Color:"
+msgstr "非アクティブマークの色："
+
 #: tfrmoptionsfilepanelscolors.lblinactivepanelbrightness.caption
 msgid "&Brightness level of inactive panel"
 msgstr "アクティブでないパネルの明るさのレベル(&B)"
@@ -4883,6 +5666,10 @@ msgstr "前景色のインジケータ(&I)："
 msgctxt "TFRMOPTIONSFILEPANELSCOLORS.LBLMARKCOLOR.CAPTION"
 msgid "&Mark Color:"
 msgstr "マーカーの色(&M)："
+
+#: tfrmoptionsfilepanelscolors.lblpreview.caption
+msgid "Below is a preview. You may move cursor, select file and get immediately an actual look and feel of the various settings."
+msgstr "プレビューが下に表示されます。カーソルを動かしたりファイルを選択したりすると、実際のルック＆フィールが直ちに分かります。"
 
 #: tfrmoptionsfilepanelscolors.lbltextcolor.caption
 msgctxt "TFRMOPTIONSFILEPANELSCOLORS.LBLTEXTCOLOR.CAPTION"
@@ -5012,7 +5799,6 @@ msgid "Category &name:"
 msgstr "カテゴリーの名前(&n)："
 
 #: tfrmoptionsfonts.btnselconsolefnt.caption
-#, fuzzy
 msgctxt "tfrmoptionsfonts.btnselconsolefnt.caption"
 msgid "..."
 msgstr "…"
@@ -5044,7 +5830,7 @@ msgstr "…"
 
 #: tfrmoptionsfonts.lblconsolefont.caption
 msgid "&Console font"
-msgstr ""
+msgstr "コンソール・フォント(&C)"
 
 #: tfrmoptionsfonts.lbleditorfont.caption
 msgctxt "TFRMOPTIONSFONTS.LBLEDITORFONT.CAPTION"
@@ -5103,6 +5889,21 @@ msgstr "コマンド(&m)："
 msgctxt "TFRMOPTIONSHOTKEYS.LBLSCFILES.CAPTION"
 msgid "&Shortcut files:"
 msgstr "ショートカットファイル(&S)："
+
+#: tfrmoptionshotkeys.stgcommands.columns[0].title.caption
+msgctxt "tfrmoptionshotkeys.stgcommands.columns[0].title.caption"
+msgid "Command"
+msgstr "コマンド"
+
+#: tfrmoptionshotkeys.stgcommands.columns[1].title.caption
+msgctxt "tfrmoptionshotkeys.stgcommands.columns[1].title.caption"
+msgid "Hotkeys"
+msgstr "ホットキー"
+
+#: tfrmoptionshotkeys.stgcommands.columns[2].title.caption
+msgctxt "tfrmoptionshotkeys.stgcommands.columns[2].title.caption"
+msgid "Description"
+msgstr "説明"
 
 #: tfrmoptionshotkeys.stghotkeys.columns[0].title.caption
 msgctxt "TFRMOPTIONSHOTKEYS.STGHOTKEYS.COLUMNS[0].TITLE.CAPTION"
@@ -5190,6 +5991,11 @@ msgstr "選択した名前を追加(&d)"
 msgctxt "TFRMOPTIONSIGNORELIST.BTNADDSELWITHPATH.CAPTION"
 msgid "Add selected names with &full path"
 msgstr "選択した名前をフルパスで追加(&f)"
+
+#: tfrmoptionsignorelist.btnrelativesavein.hint
+msgctxt "tfrmoptionsignorelist.btnrelativesavein.hint"
+msgid "Some functions to select appropriate path"
+msgstr "適切なパスを選択するいくつかの機能"
 
 #: tfrmoptionsignorelist.chkignoreenable.caption
 msgctxt "TFRMOPTIONSIGNORELIST.CHKIGNOREENABLE.CAPTION"
@@ -5350,6 +6156,10 @@ msgstr "ログファイル名に日付を含める"
 msgctxt "TFRMOPTIONSLOG.CBLOGARCOP.CAPTION"
 msgid "&Pack/Unpack"
 msgstr "圧縮/展開(&P)"
+
+#: tfrmoptionslog.cblogcommandlineexecution.caption
+msgid "External command line execution"
+msgstr "外部コマンドラインの実行"
 
 #: tfrmoptionslog.cblogcpmvln.caption
 msgctxt "TFRMOPTIONSLOG.CBLOGCPMVLN.CAPTION"
@@ -5695,6 +6505,18 @@ msgctxt "TFRMOPTIONSTABS.LBLTABSPOSITION.CAPTION"
 msgid "Ta&bs position"
 msgstr "タブの位置(&b)"
 
+#: tfrmoptionsterminal.gbjustrunterminal.caption
+msgid "Command for just running terminal:"
+msgstr "端末を実行するだけのコマンド："
+
+#: tfrmoptionsterminal.gbruninterminalclose.caption
+msgid "Command for running a command in terminal and close after:"
+msgstr "端末でコマンドを実行し、実行後は端末を閉じるためのコマンド："
+
+#: tfrmoptionsterminal.gbruninterminalstayopen.caption
+msgid "Command for running a command in terminal and stay open:"
+msgstr "端末でコマンドを実行し、実行後も端末を開いたままにするコマンド："
+
 #: tfrmoptionsterminal.lblruninterm.caption
 msgid "Run in &terminal:"
 msgstr "端末内で実行(&t)："
@@ -5702,6 +6524,53 @@ msgstr "端末内で実行(&t)："
 #: tfrmoptionsterminal.lblrunterm.caption
 msgid "Run t&erminal:"
 msgstr "実行する端末(&e)："
+
+#: tfrmoptionsterminal.ledtrunintermclosecmd.editlabel.caption
+msgctxt "tfrmoptionsterminal.ledtrunintermclosecmd.editlabel.caption"
+msgid "Command:"
+msgstr "コマンド："
+
+#: tfrmoptionsterminal.ledtrunintermcloseparams.editlabel.caption
+msgctxt "tfrmoptionsterminal.ledtrunintermcloseparams.editlabel.caption"
+msgid "Parameters:"
+msgstr "パラメータ："
+
+# “releft” looks wrong.
+# reflect?
+#: tfrmoptionsterminal.ledtrunintermcloseparams.hint
+msgctxt "tfrmoptionsterminal.ledtrunintermcloseparams.hint"
+msgid "{command} should normally present here to releft the command to be run in terminal"
+msgstr "端末中で実行されるコマンドを反映するため、通常 {command} がこの位置になくてはなりません"
+
+#: tfrmoptionsterminal.ledtrunintermstayopencmd.editlabel.caption
+msgctxt "tfrmoptionsterminal.ledtrunintermstayopencmd.editlabel.caption"
+msgid "Command:"
+msgstr "コマンド："
+
+#: tfrmoptionsterminal.ledtrunintermstayopenparams.editlabel.caption
+msgctxt "tfrmoptionsterminal.ledtrunintermstayopenparams.editlabel.caption"
+msgid "Parameters:"
+msgstr "パラメータ："
+
+#: tfrmoptionsterminal.ledtrunintermstayopenparams.hint
+msgctxt "tfrmoptionsterminal.ledtrunintermstayopenparams.hint"
+msgid "{command} should normally present here to releft the command to be run in terminal"
+msgstr "端末中で実行されるコマンドを反映するため、通常 {command} がこの位置になくてはなりません"
+
+#: tfrmoptionsterminal.ledtruntermcmd.editlabel.caption
+msgctxt "tfrmoptionsterminal.ledtruntermcmd.editlabel.caption"
+msgid "Command:"
+msgstr "コマンド："
+
+#: tfrmoptionsterminal.ledtruntermparams.editlabel.caption
+msgctxt "tfrmoptionsterminal.ledtruntermparams.editlabel.caption"
+msgid "Parameters:"
+msgstr "パラメータ："
+
+#: tfrmoptionsterminal.ledtruntermparams.hint
+msgctxt "tfrmoptionsterminal.ledtruntermparams.hint"
+msgid "{command} should normally present here to releft the command to be run in terminal"
+msgstr "端末中で実行されるコマンドを反映するため、通常 {command} がこの位置になくてはなりません"
 
 #: tfrmoptionstoolbar.btnclonebutton.caption
 msgid "C&lone button"
@@ -5724,7 +6593,7 @@ msgstr "新しいボタンを挿入(&I)"
 
 #: tfrmoptionstoolbar.btnopencmddlg.caption
 msgid "Select"
-msgstr ""
+msgstr "選択"
 
 #: tfrmoptionstoolbar.btnopenfile.caption
 msgctxt "TFRMOPTIONSTOOLBAR.BTNOPENFILE.CAPTION"
@@ -5737,7 +6606,6 @@ msgid ">>"
 msgstr ">>"
 
 #: tfrmoptionstoolbar.btnother.caption
-#, fuzzy
 msgctxt "tfrmoptionstoolbar.btnother.caption"
 msgid "Other..."
 msgstr "その他…"
@@ -5754,11 +6622,11 @@ msgstr ">>"
 
 #: tfrmoptionstoolbar.btnsuggestiontooltip.caption
 msgid "Suggest"
-msgstr ""
+msgstr "提案"
 
 #: tfrmoptionstoolbar.btnsuggestiontooltip.hint
 msgid "Have DC suggest the tooltip based on button type, command and parameters"
-msgstr ""
+msgstr "ボタンの種類、コマンド、パラメータに基づいてDCにツールチップを提案させる"
 
 #: tfrmoptionstoolbar.cbflatbuttons.caption
 msgctxt "tfrmoptionstoolbar.cbflatbuttons.caption"
@@ -5792,7 +6660,6 @@ msgid "Parameter&s:"
 msgstr "パラメータ(&s)："
 
 #: tfrmoptionstoolbar.lblhelponinternalcommand.caption
-#, fuzzy
 msgctxt "tfrmoptionstoolbar.lblhelponinternalcommand.caption"
 msgid "Help"
 msgstr "ヘルプ"
@@ -5820,6 +6687,7 @@ msgid "&Parameters:"
 msgstr "パラメータ(&P)"
 
 #: tfrmoptionstoolbar.lblstartpath.caption
+msgctxt "tfrmoptionstoolbar.lblstartpath.caption"
 msgid "Start pat&h:"
 msgstr "開始パス(&h)"
 
@@ -5829,7 +6697,7 @@ msgstr "ツールのヒント(&T)："
 
 #: tfrmoptionstoolbar.miaddallcmds.caption
 msgid "Add toolbar with ALL DC commands"
-msgstr ""
+msgstr "全てのDCコマンドを含むツールバーを追加する"
 
 #: tfrmoptionstoolbar.miaddexternalcommandsubmenu.caption
 msgid "for an external command"
@@ -5848,13 +6716,11 @@ msgid "for a sub-tool bar"
 msgstr "サブツールバーを"
 
 #: tfrmoptionstoolbar.mibackup.caption
-#, fuzzy
 msgctxt "tfrmoptionstoolbar.mibackup.caption"
 msgid "Backup..."
 msgstr "バックアップ…"
 
 #: tfrmoptionstoolbar.miexport.caption
-#, fuzzy
 msgctxt "tfrmoptionstoolbar.miexport.caption"
 msgid "Export..."
 msgstr "エクスポート…"
@@ -5962,7 +6828,6 @@ msgid "just prior current selection"
 msgstr "現在の選択の直前に"
 
 #: tfrmoptionstoolbar.miimport.caption
-#, fuzzy
 msgctxt "tfrmoptionstoolbar.miimport.caption"
 msgid "Import..."
 msgstr "インポート…"
@@ -5978,7 +6843,7 @@ msgstr "現在のツールバーに追加"
 
 #: tfrmoptionstoolbar.miimportbackupaddmenucurrent.caption
 msgctxt "TFRMOPTIONSTOOLBAR.MIIMPORTBACKUPADDMENUCURRENT.CAPTION"
-msgid "to add to a new toobar to current toolbar"
+msgid "to add to a new toolbar to current toolbar"
 msgstr "現在のツールバーに新しいツールバーを追加"
 
 #: tfrmoptionstoolbar.miimportbackupaddmenutop.caption
@@ -6041,7 +6906,7 @@ msgstr "現在のツールバーに追加"
 
 #: tfrmoptionstoolbar.miimporttcbaraddmenucurrent.caption
 msgctxt "TFRMOPTIONSTOOLBAR.MIIMPORTTCBARADDMENUCURRENT.CAPTION"
-msgid "to add to a new toobar to current toolbar"
+msgid "to add to a new toolbar to current toolbar"
 msgstr "現在のツールバーに新しいツールバーを追加"
 
 #: tfrmoptionstoolbar.miimporttcbaraddmenutop.caption
@@ -6055,7 +6920,6 @@ msgid "to add to top toolbar"
 msgstr "トップツールバーに追加"
 
 #: tfrmoptionstoolbar.miimporttcbarreplacetop.caption
-#, fuzzy
 msgctxt "tfrmoptionstoolbar.miimporttcbarreplacetop.caption"
 msgid "to replace top toolbar"
 msgstr "トップツールバーを入れ替え"
@@ -6071,7 +6935,7 @@ msgstr "現在のツールバーに追加"
 
 #: tfrmoptionstoolbar.miimporttciniaddmenucurrent.caption
 msgctxt "TFRMOPTIONSTOOLBAR.MIIMPORTTCINIADDMENUCURRENT.CAPTION"
-msgid "to add to a new toobar to current toolbar"
+msgid "to add to a new toolbar to current toolbar"
 msgstr "現在のツールバーに新しいツールバーを追加"
 
 #: tfrmoptionstoolbar.miimporttciniaddmenutop.caption
@@ -6112,10 +6976,9 @@ msgstr "現在の選択の直前に"
 #: tfrmoptionstoolbar.misearchandreplace.caption
 msgctxt "tfrmoptionstoolbar.misearchandreplace.caption"
 msgid "Search and replace..."
-msgstr ""
+msgstr "検索と置換…"
 
 #: tfrmoptionstoolbar.miseparator1.caption
-#, fuzzy
 msgctxt "tfrmoptionstoolbar.miseparator1.caption"
 msgid "-"
 msgstr "-"
@@ -6141,7 +7004,6 @@ msgid "-"
 msgstr "-"
 
 #: tfrmoptionstoolbar.miseparator2.caption
-#, fuzzy
 msgctxt "tfrmoptionstoolbar.miseparator2.caption"
 msgid "-"
 msgstr "-"
@@ -6188,29 +7050,28 @@ msgstr "現在の選択の直前に"
 
 #: tfrmoptionstoolbar.misrcrplallofall.caption
 msgid "in all of all the above..."
-msgstr ""
+msgstr "上にある全ての項目の全てで…"
 
 #: tfrmoptionstoolbar.misrcrplclickseparator.caption
-#, fuzzy
 msgctxt "tfrmoptionstoolbar.misrcrplclickseparator.caption"
 msgid "-"
 msgstr "-"
 
 #: tfrmoptionstoolbar.misrcrplcommands.caption
 msgid "in all commands..."
-msgstr ""
+msgstr "全てのコマンドで…"
 
 #: tfrmoptionstoolbar.misrcrpliconnames.caption
 msgid "in all icon names..."
-msgstr ""
+msgstr "全てのアイコン名で…"
 
 #: tfrmoptionstoolbar.misrcrplparameters.caption
 msgid "in all parameters..."
-msgstr ""
+msgstr "全てのパラメータで…"
 
 #: tfrmoptionstoolbar.misrcrplstartpath.caption
 msgid "in all start path..."
-msgstr ""
+msgstr "全ての開始パスで…"
 
 #: tfrmoptionstoolbar.misubtoolbaraftercurrent.caption
 msgctxt "TFRMOPTIONSTOOLBAR.MISUBTOOLBARAFTERCURRENT.CAPTION"
@@ -6235,6 +7096,11 @@ msgstr "現在の選択の直前に"
 #: tfrmoptionstoolbar.rgtoolitemtype.caption
 msgid "Button type"
 msgstr "ボタンタイプ"
+
+#: tfrmoptionstoolbase.btnrelativetoolpath.hint
+msgctxt "tfrmoptionstoolbase.btnrelativetoolpath.hint"
+msgid "Some functions to select appropriate path"
+msgstr "適切なパスを選択するいくつかの機能"
 
 #: tfrmoptionstoolbase.cbtoolskeepterminalopen.caption
 msgid "&Keep terminal window open after executing program"
@@ -6689,6 +7555,7 @@ msgid "Group"
 msgstr "グループ"
 
 #: tfrmsetfileproperties.lblattrinfo.caption
+msgctxt "tfrmsetfileproperties.lblattrinfo.caption"
 msgid "(gray field means unchanged value)"
 msgstr "（値に変更がない場合、フィールドは灰色で表示）"
 
@@ -6716,6 +7583,11 @@ msgstr "テキスト"
 msgctxt "TFRMSETFILEPROPERTIES.LBLEXEC.CAPTION"
 msgid "Execute"
 msgstr "実行権"
+
+#: tfrmsetfileproperties.lblmodeinfo.caption
+msgctxt "tfrmsetfileproperties.lblmodeinfo.caption"
+msgid "(gray field means unchanged value)"
+msgstr "（値に変更がない場合、フィールドは灰色で表示）"
 
 #: tfrmsetfileproperties.lbloctal.caption
 msgctxt "TFRMSETFILEPROPERTIES.LBLOCTAL.CAPTION"
@@ -7778,11 +8650,11 @@ msgstr "クリップボードには、有効なツールバーのデータが含
 
 #: ulng.rscmdcategorylistinorder
 msgid "All;Active Panel;Left Panel;Right Panel;File Operations;Configuration;Network;Miscellaneous;Parallel Port;Print;Mark;Security;Clipboard;FTP;Navigation;Help;Window;Command Line;Tools;View;User;Tabs;Sorting;Log"
-msgstr ""
+msgstr "全て;アクティブパネル;左パネル;右パネル;ファイル操作;設定;ネットワーク;その他;パラレル・ポート;印刷;マーク;セキュリティ;クリップボード;FTP;ナビゲーション;ヘルプ;ウィンドウ;コマンドライン;ツール;ユーザ;タブ;ソーティング;ログ"
 
 #: ulng.rscmdkindofsort
 msgid "Legacy sorted;A-Z sorted"
-msgstr ""
+msgstr "レガシーな順のソート;A-Z順のソート"
 
 #: ulng.rscolattr
 msgid "Attr"
@@ -7844,16 +8716,15 @@ msgstr "カラムをカスタマイズ"
 
 #: ulng.rsconfigurationfileassociation
 msgid "Configure file association"
-msgstr ""
+msgstr "ファイルの関連づけを設定"
 
 #: ulng.rsconfirmexecution
 msgid "Confirming command line and parameters"
-msgstr ""
+msgstr "コマンドラインとパラメータを確認中"
 
 #: ulng.rscopynametemplate
-#, fuzzy,badformat
 msgid "Copy (%d) %s"
-msgstr "コピー（％d）％s"
+msgstr "コピー(%d) %s"
 
 #: ulng.rsdefaultimporteddctoolbarhint
 msgid "Imported DC toolbar"
@@ -7903,7 +8774,7 @@ msgstr "削除："
 
 #: ulng.rsdifffilesidentical
 msgid "The two files are identical!"
-msgstr ""
+msgstr "2つのファイルは同じものです"
 
 #: ulng.rsdiffmatches
 msgid " Matches: "
@@ -8137,23 +9008,26 @@ msgstr "置換"
 
 #: ulng.rseditwithexternaleditor
 msgid "with external editor"
-msgstr ""
+msgstr "外部エディタを使用"
 
 #: ulng.rseditwithinternaleditor
 msgid "with internal editor"
-msgstr ""
+msgstr "内部エディタを使用"
 
 #: ulng.rsexecuteviashell
+msgctxt "ulng.rsexecuteviashell"
 msgid "Execute via shell"
-msgstr ""
+msgstr "シェル内で実行"
 
 #: ulng.rsexecuteviaterminalclose
+msgctxt "ulng.rsexecuteviaterminalclose"
 msgid "Execute via terminal and close"
-msgstr ""
+msgstr "端末内で実行した後クローズ"
 
 #: ulng.rsexecuteviaterminalstayopen
+msgctxt "ulng.rsexecuteviaterminalstayopen"
 msgid "Execute via terminal and stay open"
-msgstr ""
+msgstr "端末内で実行した後開いたままにする"
 
 #: ulng.rsfilenameexportedtcbarprefix
 msgid "Exported_from_DC"
@@ -8269,6 +9143,10 @@ msgctxt "ulng.rsfuncgroup"
 msgid "Group"
 msgstr "グループ"
 
+#: ulng.rsfunchtime
+msgid "Change date/time"
+msgstr "日付/時間を変更"
+
 #: ulng.rsfunclinkto
 msgid "Link to"
 msgstr "リンク先"
@@ -8367,11 +9245,11 @@ msgstr "入力マスク："
 
 #: ulng.rsmenuconfigurecolumnsalreadyexists
 msgid "A columns view with that name already exists."
-msgstr ""
+msgstr "その名前のカラムビューは既に存在します。"
 
 #: ulng.rsmenuconfigurecolumnssavetochange
 msgid "To change current editing colmuns view, either SAVE, COPY or DELETE current editing one"
-msgstr ""
+msgstr "現在編集中のカラムビューを変更するためには、保存、コピーまたは削除します"
 
 #: ulng.rsmenuconfigurecustomcolumns
 msgid "Configure custom columns"
@@ -8379,7 +9257,7 @@ msgstr "カスタム列の構成"
 
 #: ulng.rsmenuconfigureentercustomcolumnname
 msgid "Enter new custom columns name"
-msgstr ""
+msgstr "新しいカスタムカラム名を入力"
 
 #: ulng.rsmenuconfigurethiscustomcolumn
 msgid "Configure this custom columns view"
@@ -8413,7 +9291,6 @@ msgid "No media available"
 msgstr "利用可能なメディアがありません"
 
 #: ulng.rsmnuopen
-#, fuzzy
 msgctxt "ulng.rsmnuopen"
 msgid "Open"
 msgstr "開く"
@@ -8486,6 +9363,9 @@ msgid ""
 "\n"
 "Do you want to save them before to exit?\n"
 msgstr ""
+"カラムビューに関するオプションが変更済みです。\n"
+"\n"
+"終了前に保存しますか？\n"
 
 #: ulng.rsmsgconfirmquit
 msgid "Are you sure you want to quit?"
@@ -8493,7 +9373,7 @@ msgstr "終了してもよろしいですか?"
 
 #: ulng.rsmsgcouldnotcopybackward
 msgid "Could not copy backward - do you want to keep the changed file?"
-msgstr ""
+msgstr "過去へのコピーができませんでした。変更したファイルを維持しますか？"
 
 #: ulng.rsmsgcpfldr
 msgid "Copy %d selected files/directories?"
@@ -8505,7 +9385,7 @@ msgstr "選択した＜%s＞をコピーしますか？"
 
 #: ulng.rsmsgcreateanewfiletype
 msgid "< Create a new file type \"%s files\" >"
-msgstr ""
+msgstr "＜新しいファイルタイプ ”%s ファイル”＞"
 
 #: ulng.rsmsgdctoolbarwheretosave
 msgid "Enter location and filename where to save a DC Toolbar file"
@@ -8513,7 +9393,7 @@ msgstr "DC ツールバー ファイルを保存する場所とファイル名�
 
 #: ulng.rsmsgdefaultcustomactionname
 msgid "Custom action"
-msgstr ""
+msgstr "カスタムアクション"
 
 #: ulng.rsmsgdeletepartiallycopied
 msgid "Delete the partially copied file ?"
@@ -8549,7 +9429,7 @@ msgstr "マウスのドラッグ&&ロップに関するオプションが変更�
 
 #: ulng.rsmsgentercustomaction
 msgid "Enter custom action name:"
-msgstr ""
+msgstr "カスタムアクション名を入力："
 
 #: ulng.rsmsgenterfileext
 msgid "Enter file extension:"
@@ -8561,7 +9441,7 @@ msgstr "ファイルの種類名を入力："
 
 #: ulng.rsmsgenternewfiletypename
 msgid "Enter name of new file type to create for extension \"%s\""
-msgstr ""
+msgstr "拡張子＜%s＞のための新しいファイルタイプ名を入力"
 
 #: ulng.rsmsgerrbadarchive
 msgid "CRC error in archive data"
@@ -8677,7 +9557,7 @@ msgstr "＜%s＞の所有者/グループを設定出来ません。"
 
 #: ulng.rsmsgerrsetpermissions
 msgid "Can not set permissions for \"%s\""
-msgstr ""
+msgstr "＜%s＞のファイル権限が設定できません"
 
 #: ulng.rsmsgerrsmallbuf
 msgid "Buffer too small"
@@ -8697,6 +9577,9 @@ msgid ""
 "\n"
 "Do you want to save before to exit?\n"
 msgstr ""
+"ファイルの拡張子の関連づけの追加オプションが変更されています。\n"
+"\n"
+"終了前に保存しますか？\n"
 
 #: ulng.rsmsgfileassociationsmodifiedwanttosave
 msgid ""
@@ -8704,6 +9587,9 @@ msgid ""
 "\n"
 "Do you want to save before to exit?\n"
 msgstr ""
+"ファイルの拡張子の関連づけが変更されています。\n"
+"\n"
+"終了前に保存しますか？\n"
 
 #: ulng.rsmsgfilechangedsave
 msgid "File %s changed, save?"
@@ -8747,6 +9633,9 @@ msgid ""
 "\n"
 "Do you want to save them before to exit?\n"
 msgstr ""
+"パネルの色に関するオプションが変更されています。\n"
+"\n"
+"終了前に保存しますか？\n"
 
 #: ulng.rsmsgfilereadonly
 msgid "File %s is marked as read-only. Delete it?"
@@ -8789,6 +9678,7 @@ msgid "cm_somthing"
 msgstr "cm_somthing"
 
 #: ulng.rsmsghotdirconfighotlist
+msgctxt "ulng.rsmsghotdirconfighotlist"
 msgid "Configuration of Directory Hotlist"
 msgstr "「ディレクトリ・ホットリスト」の構成"
 
@@ -8892,6 +9782,7 @@ msgid "Enter location and filename of Directory Hotlist to restore"
 msgstr "復元する「ディレクトリ・ホットリスト」の場所とファイル名を入力して下さい。"
 
 #: ulng.rsmsghotdirsimplecommand
+msgctxt "ulng.rsmsghotdirsimplecommand"
 msgid "Command:"
 msgstr "コマンド："
 
@@ -8937,18 +9828,22 @@ msgid ""
 "Total entries saved: %d\n"
 "\n"
 "Backup filename: %s\n"
-msgstr "保存された項目の合計： %d 個のバックアップ　ファイル名： %s"
+msgstr ""
+"保存された項目の合計： %d 個\n"
+"\n"
+"バックアップファイル名： %s\n"
 
 #: ulng.rsmsghotdirtotalexported
 msgid "Total entries exported: "
 msgstr "エクスポートされた項目の合計："
 
 #: ulng.rsmsghotdirwhattodelete
-#, fuzzy,badformat
 msgid ""
 "Do you want to delete all elements inside the sub-menu [%s]?\n"
 "Answering NO will delete only menu delimiters but will keep element inside sub-menu.\n"
-msgstr "サブメニュー中の全ての項目を削除しますか？"
+msgstr ""
+"サブメニュー＜%s＞中の全ての項目を削除しますか？\n"
+"答えが「いいえ」の場合、メニューの区切りだけが消され、サブメニュー中の項目はそのまま残ります。\n"
 
 #: ulng.rsmsghotdirwheretosave
 msgid "Enter location and filename where to save a Directory Hotlist file"
@@ -8959,7 +9854,6 @@ msgid "Incorrect resulting filelength for file : \"%s\""
 msgstr "結果であるファイルの長さが正しくありません： ＜%s＞"
 
 #: ulng.rsmsginsertnextdisk
-#, fuzzy,badformat
 msgid ""
 "Please insert next disk or something similar.\n"
 "\n"
@@ -8967,7 +9861,12 @@ msgid ""
 "\"%s\"\n"
 "\n"
 "Number of bytes still to write: %d\n"
-msgstr "次のディスクまたは何か同様のものを挿入して下さい。"
+msgstr ""
+"次のディスクまたは何か同様のものを挿入して下さい。\n"
+"\n"
+"次のファイルを書き込むためのものです：\n"
+"＜%s＞\n"
+"残りの書き込みサイズ：＜%d＞バイト\n"
 
 #: ulng.rsmsginvalidcommandline
 msgid "Error in command line"
@@ -9031,11 +9930,11 @@ msgstr "エラー："
 
 #: ulng.rsmsglogextcmdlaunch
 msgid "Launch external"
-msgstr ""
+msgstr "外部コマンドを起動"
 
 #: ulng.rsmsglogextcmdresult
 msgid "Result external"
-msgstr ""
+msgstr "外部コマンドの結果"
 
 #: ulng.rsmsglogextract
 msgid "Extract file %s"
@@ -9063,6 +9962,9 @@ msgid ""
 "\n"
 "Do you want to save them before to exit?\n"
 msgstr ""
+"ログに関するオプションが変更されています。\n"
+"\n"
+"終了前に保存しますか？\n"
 
 #: ulng.rsmsglogpack
 msgid "Pack to file %s"
@@ -9137,8 +10039,9 @@ msgid "Not implemented."
 msgstr "機能は提供されていません。"
 
 #: ulng.rsmsgpanelpreview
+msgctxt "ulng.rsmsgpanelpreview"
 msgid "Below is a preview. You may move cursor and select files to get immediately an actual look and feel of the various settings."
-msgstr ""
+msgstr "下に示すのはプレビューです。カーソルを動かしファイルを選択すれば、様々な設定のルック＆フィールが直ちに分かります。"
 
 #: ulng.rsmsgpassword
 msgid "Password:"
@@ -9179,7 +10082,7 @@ msgstr "プリセット＜%s＞が既に存在します。上書きしますか�
 
 #: ulng.rsmsgproblemexecutingcommand
 msgid "Problem executing command (%s)"
-msgstr ""
+msgstr "コマンド＜%s＞を実行中の問題"
 
 #: ulng.rsmsgpromptaskingfilename
 msgid "Filename for dropped text:"
@@ -9203,7 +10106,7 @@ msgstr "諸々の変更を有効にするため、ダブル・コマンダーを
 
 #: ulng.rsmsgsekectfiletype
 msgid "Select to which file type to add extension \"%s\""
-msgstr ""
+msgstr "ファイルの拡張子＜%s＞をどのファイルタイプに追加するか選択"
 
 #: ulng.rsmsgselectedinfo
 msgid "Selected: %s of %s, files: %d of %d, folders: %d of %d"
@@ -9211,7 +10114,7 @@ msgstr "選択済みファイル：%sバイト（%sバイト中）ファイル�
 
 #: ulng.rsmsgselectexecutablefile
 msgid "Select executable file for"
-msgstr ""
+msgstr "実行するファイルを選択"
 
 #: ulng.rsmsgselectonlychecksumfiles
 msgid "Please select only checksum files!"
@@ -9306,16 +10209,12 @@ msgid "Target path:"
 msgstr "ターゲットのパス："
 
 #: ulng.rsmsgtcconfignotfound
-#, fuzzy
-#| msgid ""
-#| "Error! Cannot find the TC oncfiguration file:\n"
-#| "%s\n"
 msgid ""
 "Error! Cannot find the TC configuration file:\n"
 "%s\n"
 msgstr ""
 "エラー！：TCの設定ファイルが見つかりません：\n"
-"%s\n"
+"＜%s＞\n"
 
 # どの実行ファイルのこと？
 #: ulng.rsmsgtcexecutablenotfound
@@ -9354,14 +10253,17 @@ msgid ""
 "\n"
 "Do you want to save them before to exit?\n"
 msgstr ""
+"端末にかんするオプションが変更されています。\n"
+"\n"
+"終了前に保存しますか？\n"
 
 #: ulng.rsmsgthisisnowinclipboard
 msgid "\"%s\" is now in the clipboard"
-msgstr ""
+msgstr "＜”%s”＞が現在クリップボードにあります"
 
 #: ulng.rsmsgtitleextnotinfiletype
 msgid "Extension of selected file is not in any recognized file types"
-msgstr ""
+msgstr "選択したファイルの拡張子は認識可能なファイルタイプにありません"
 
 #: ulng.rsmsgtoolbarerrornotsaved
 msgid "Error! Problem saving toolbar!"
@@ -9405,11 +10307,11 @@ msgstr "URL："
 
 #: ulng.rsmsguserdidnotsetextension
 msgid "<NO EXT>"
-msgstr ""
+msgstr "＜拡張子無し＞"
 
 #: ulng.rsmsguserdidnotsetname
 msgid "<NO NAME>"
-msgstr ""
+msgstr "＜名前無し＞"
 
 #: ulng.rsmsgusername
 msgid "User name:"
@@ -9437,7 +10339,7 @@ msgstr "選択した＜%s＞を完全削除（抹殺）しますか？"
 
 #: ulng.rsmsgwithactionwith
 msgid "with"
-msgstr ""
+msgstr "with"
 
 # 文脈不明
 #: ulng.rsmulrenfilenamestylelist
@@ -9730,14 +10632,14 @@ msgstr "プラグイン＜%s＞を右に関連づけ："
 msgid "First;Last;"
 msgstr "最初;最後;"
 
-# 「アルファベット順（言語最初）」を選んでも、言語は最後になる。恐らく、ソートのキーの間違い。日本語訳はどちらでもよいように、曖昧にしました。
+# 「アルファベット順（言語最初）」を選んでも、言語は最後になる。恐らく、ソートのキーの間違い。
 #: ulng.rsoptconfigsortorder
 msgid "Classic, legacy order;Alphabetic order (but language still first)"
-msgstr "クラッシックな順番;レガシーな順番;アルファベットの順番（表示言語は最初/最後に）"
+msgstr "クラッシックな順番;レガシーな順番;アルファベットの順番"
 
 #: ulng.rsoptdifferframeposition
 msgid "Active frame panel on left, inactive on right (legacy);Left frame panel on left, right on right"
-msgstr "アクティブパネルを左に、非アクティブパネルを右に（遺産的な仕様）;左のパネルを左に、右を右に"
+msgstr "アクティブパネルを左に、非アクティブパネルを右に（レガシーな仕様）;左のパネルを左に、右のパネルを右に"
 
 #: ulng.rsoptdisable
 msgid "Disable"
@@ -9813,6 +10715,7 @@ msgid "Shortcut %s for cm_Delete needs to have a parameter changed to match shor
 msgstr "ショートカット＜%s＞（cm_Delete用）は、ショートカット＜%s＞に一致するよう変更すべきパラメータがあります。その変更をしますか？"
 
 #: ulng.rsopthotkeysdescription
+msgctxt "ulng.rsopthotkeysdescription"
 msgid "Description"
 msgstr "説明"
 
@@ -9830,6 +10733,7 @@ msgid "Hotkey"
 msgstr "ホットキー"
 
 #: ulng.rsopthotkeyshotkeys
+msgctxt "ulng.rsopthotkeyshotkeys"
 msgid "Hotkeys"
 msgstr "ホットキー"
 
@@ -9928,7 +10832,7 @@ msgstr "ドライブリストボタン"
 
 #: ulng.rsoptionseditorfileassicextra
 msgid "File associations extra"
-msgstr ""
+msgstr "ファイルの関連づけ（追加）"
 
 #: ulng.rsoptionseditorfileassoc
 msgctxt "ulng.rsoptionseditorfileassoc"
@@ -10089,10 +10993,8 @@ msgid "&Files;Di&rectories;Files a&nd Directories"
 msgstr "ファイル;ディレクトリ;ファイルとディレクトリ(&F)"
 
 #: ulng.rsoptsearchopt
-#, fuzzy
-#| msgid "&Hide filter panel when not focused"
 msgid "&Hide filter panel when not focused;Keep saving setting modifications for next session"
-msgstr "フォーカスが外れたらフィルターパネルを隠す(&H)"
+msgstr "フォーカスが外れたらフィルターパネルを隠す(&H);次のセッションのため設定の変更を保存"
 
 #: ulng.rsoptsortcasesens
 msgid "not case sensitive;according to locale settings (aAbBcC);first upper then lower case (ABCabc)"
@@ -10182,7 +11084,7 @@ msgstr "検索結果"
 
 #: ulng.rssearchstatus
 msgid "SEARCH"
-msgstr ""
+msgstr "検索"
 
 #: ulng.rssearchtemplateunnamed
 msgid "<unnamed template>"
@@ -10197,50 +11099,48 @@ msgid "&Show help for %s"
 msgstr "＜%s＞のヘルプを表示(&S)"
 
 #: ulng.rssimplewordall
-#, fuzzy
 msgctxt "ulng.rssimplewordall"
 msgid "All"
 msgstr "全て"
 
 #: ulng.rssimplewordcategory
+msgctxt "ulng.rssimplewordcategory"
 msgid "Category"
-msgstr ""
+msgstr "カテゴリ"
 
 #: ulng.rssimplewordcolumnsingular
 msgid "Column"
-msgstr ""
+msgstr "カラム"
 
 #: ulng.rssimplewordcommand
-#, fuzzy
 msgctxt "ulng.rssimplewordcommand"
 msgid "Command"
 msgstr "コマンド"
 
 #: ulng.rssimplewordfilename
 msgid "Filename"
-msgstr ""
+msgstr "ファイル名："
 
 #: ulng.rssimplewordfiles
 msgid "files"
-msgstr ""
+msgstr "ファイル"
 
 #: ulng.rssimplewordparameter
 msgid "Param"
-msgstr ""
+msgstr "パラメータ"
 
 #: ulng.rssimplewordpreview
-#, fuzzy
 msgctxt "ulng.rssimplewordpreview"
 msgid "Preview"
 msgstr "プレビュー"
 
 #: ulng.rssimplewordresult
 msgid "Result"
-msgstr ""
+msgstr "結果"
 
 #: ulng.rssimplewordworkdir
 msgid "WorkDir"
-msgstr ""
+msgstr "作業ディレクトリ"
 
 #: ulng.rssizeunitbytes
 msgid "Bytes"
@@ -10370,149 +11270,147 @@ msgstr "ビューア"
 
 #: ulng.rsunhandledexceptionmessage
 msgid "Please report this error to the bug tracker with a description of what you were doing and the following file:%sPress %s to continue or %s to abort the program."
-msgstr ""
-"このエラーを「何をしている時に起きたかを書いて」次の＜%s＞ファイルと一緒に、バグ追跡システムに報告して下さい。\n"
-"＜%s＞を押して継続；または、＜%s＞を押してプログラムを終了。\n"
+msgstr "このエラーを「何をしている時に起きたかを書いて」次の＜%s＞ファイルと一緒に、バグ追跡システムに報告して下さい。＜%s＞を押して継続；または、＜%s＞を押してプログラムを終了。"
 
 #: ulng.rsvarbothpanelactivetoinactive
 msgid "Both panels, from active to inactive"
-msgstr ""
+msgstr "左右両パネル（アクティブから非アクティブへ）"
 
 #: ulng.rsvarbothpanellefttoright
 msgid "Both panels, from left to right"
-msgstr ""
+msgstr "左右両パネル（左から右へ）"
 
 #: ulng.rsvarcurrentpath
 msgid "Path of panel"
-msgstr ""
+msgstr "パネルのパス"
 
 #: ulng.rsvarencloseelement
 msgid "Enclose each name in brackets or what you want"
-msgstr ""
+msgstr "名前または何をしたいかを括弧で囲みます"
 
 #: ulng.rsvarfilenamenoext
 msgid "Just filename, no extension"
-msgstr ""
+msgstr "拡張子なしでファイル名のみ"
 
 #: ulng.rsvarfullpath
 msgid "Complete filename (path+filename)"
-msgstr ""
+msgstr "完全なファイル名（パス＋ファイル名）"
 
 #: ulng.rsvarhelpwith
 msgid "Help with \"%\" variables"
-msgstr ""
+msgstr "変数＜”%”＞のヘルプ"
 
 #: ulng.rsvarinputparam
 msgid "Will request request user to enter a parameter with a default suggested value"
-msgstr ""
+msgstr "デフォルトの推奨値つきでパラメータを入力するようユーザに求めます"
 
 #: ulng.rsvarleftpanel
 msgid "Left panel"
-msgstr ""
+msgstr "左パネル"
 
 #: ulng.rsvarlistfilename
 msgid "Temporary filename of list of filenames"
-msgstr ""
+msgstr "ファイル名のリストを保存する一時ファイル名"
 
 #: ulng.rsvarlistfullfilename
 msgid "Temporary filename of list of complete filenames (path+filename)"
-msgstr ""
+msgstr "完全なファイル名（パス＋ファイル名）のリストを保存する一時ファイル名"
 
 #: ulng.rsvarlistrelativefilename
 msgid "Temporary filename of list of filenames with relative path"
-msgstr ""
+msgstr "相対パスでのファイル名のリストを保存する一時ファイル名"
 
 #: ulng.rsvaronlyextension
 msgid "Only file extension"
-msgstr ""
+msgstr "ファイル拡張子のみ"
 
 #: ulng.rsvaronlyfilename
 msgid "Only filename"
-msgstr ""
+msgstr "ファイル名のみ"
 
 #: ulng.rsvarotherexamples
 msgid "Other example of what's possible"
-msgstr ""
+msgstr "何が可能かを示す他の例"
 
 #: ulng.rsvarpath
 msgid "Path, with ending delimiter"
-msgstr ""
+msgstr "パス（行末の区切り文字付き）"
 
 #: ulng.rsvarpercentchangetopound
 msgid "From here to the end of the line, the percent-variable indicator is the \"#\" sign"
-msgstr ""
+msgstr "この位置から行末まで（パーセント変数インジケータは”#”）"
 
 #: ulng.rsvarpercentsign
 msgid "Return the percent sign"
-msgstr ""
+msgstr "パーセント記号を返します"
 
 #: ulng.rsvarpoundchangetopercent
 msgid "From here to the end of the line, the percent-variable indicator is back the \"%\" sign"
-msgstr ""
+msgstr "この位置から行末まで（パーセント変数インジケータは”%”）"
 
 #: ulng.rsvarprependelement
 msgid "Prepend each name with \"-a \" or what you want"
-msgstr ""
+msgstr "名前のの前に “-a” またはしたいことを付加"
 
 #: ulng.rsvarpromptuserforparam
 msgid "%[Prompt user for param;Default value proposed]"
-msgstr ""
+msgstr "%[パラメータの入力を求める;デフォルトの値を提案する]"
 
 #: ulng.rsvarrelativepathandfilename
 msgid "Filename with relative path"
-msgstr ""
+msgstr "相対パスでのファイル名"
 
 #: ulng.rsvarrightpanel
 msgid "Right panel"
-msgstr ""
+msgstr "右パネル"
 
 #: ulng.rsvarsecondelementrightpanel
 msgid "Full path of second selected file in right panel"
-msgstr ""
+msgstr "右パネル中で2番目に選択されたファイルのフルパス"
 
 #: ulng.rsvarshowcommandprior
 msgid "Show command prior execute"
-msgstr ""
+msgstr "実行前にコマンドを表示"
 
 #: ulng.rsvarsimplemessage
 msgid "%[Simple message]"
-msgstr ""
+msgstr "%[簡単なメッセージ]"
 
 #: ulng.rsvarsimpleshowmessage
 msgid "Will show a simple message"
-msgstr ""
+msgstr "簡単なメッセージが表示されます"
 
 #: ulng.rsvarsourcepanel
 msgid "Active panel (source)"
-msgstr ""
+msgstr "アクティブパネル（ソース）"
 
 #: ulng.rsvartargetpanel
 msgid "Inactive panel (target)"
-msgstr ""
+msgstr "非アクティブパネル（ターゲット）"
 
 #: ulng.rsvarwillbequoted
 msgid "Filenames will be quoted from here (default)"
-msgstr ""
+msgstr "ファイル名はここから引用されます（デフォルト）"
 
 #: ulng.rsvarwilldointerminal
 msgid "Command will be done in terminal, remaining opened at the end"
-msgstr ""
+msgstr "コマンドは端末で実行され、終了後も端末は開いたままです"
 
 #: ulng.rsvarwillhaveendingdelimiter
 msgid "Paths will have ending delimiter"
-msgstr ""
+msgstr "パスには行末の区切り文字がつきます"
 
 #: ulng.rsvarwillnotbequoted
 msgid "Filenames will not be quoted from here"
-msgstr ""
+msgstr "ファイル名はここから引用されることはありません"
 
 #: ulng.rsvarwillnotdointerminal
 msgid "Command will be done in terminal, closed at the end"
-msgstr ""
+msgstr "コマンドは端末で実行され、終了後に端末は閉じます"
 
 #: ulng.rsvarwillnothaveendingdelimiter
 msgid "Paths will not have ending delimiter (default)"
-msgstr ""
+msgstr "パスには行末の区切り文字がつきません（デフォルト）"
 
 #: ulng.rsvfsnetwork
 msgctxt "ulng.rsvfsnetwork"
@@ -10534,17 +11432,17 @@ msgstr "＜%s＞はありません！"
 
 #: ulng.rsviewwithexternalviewer
 msgid "with external viewer"
-msgstr ""
+msgstr "外部ビューアで"
 
 #: ulng.rsviewwithinternalviewer
 msgid "with internal viewer"
-msgstr ""
+msgstr "内部ビューアで"
 
 #: ulng.rsxreplacements
 msgid "Number of replacement: %d"
-msgstr ""
+msgstr "置換の回数：%d"
 
 #: ulng.rszeroreplacement
 msgid "No replacement took place."
-msgstr ""
+msgstr "置換は起こりませんでした。"
 

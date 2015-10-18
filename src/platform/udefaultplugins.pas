@@ -85,24 +85,16 @@ begin
   // Wcx plugins
   Folder:= '%commander_path%' + PathDelim + 'plugins' + PathDelim + 'wcx' + PathDelim;
 
-  {$IF DEFINED(MSWINDOWS)}
-  I:= gWCXPlugins.IndexOfName('zip');
-  if I < 0 then
-    gWCXPlugins.Add('zip', 607, Folder + 'sevenzip' + PathDelim + 'sevenzip.wcx')
-  else begin
-    // For zip used another plugin, so update path too
-    gWCXPlugins.FileName[I]:= Folder + 'sevenzip' + PathDelim + 'sevenzip.wcx';
-  end;
-
-  I:= gWCXPlugins.IndexOfName('7z');
-  if I < 0 then
-    gWCXPlugins.Add('7z', 607, Folder + 'sevenzip' + PathDelim + 'sevenzip.wcx');
-  {$ELSE}
   I:= gWCXPlugins.IndexOfName('zip');
   if I < 0 then
     gWCXPlugins.Add('zip', 607, Folder + 'zip' + PathDelim + 'zip.wcx')
   else
     gWCXPlugins.Flags[I]:= 607;
+
+  {$IF DEFINED(MSWINDOWS)}
+  I:= gWCXPlugins.IndexOfName('7z');
+  if I < 0 then
+    gWCXPlugins.Add('7z', 607, Folder + 'sevenzip' + PathDelim + 'sevenzip.wcx');
   {$ENDIF}
 
   I:= gWCXPlugins.IndexOfName('tar');
@@ -262,10 +254,17 @@ begin
     gWCXPlugins.Flags[I]:= 4;
 
   I:= gWCXPlugins.IndexOfName('rar');
+  {$IF DEFINED(MSWINDOWS)}
+  if I < 0 then
+    gWCXPlugins.Add('rar', 607, Folder + 'unrar' + PathDelim + 'unrar.wcx')
+  else
+    gWCXPlugins.Flags[I]:= 607;
+  {$ELSE}
   if I < 0 then
     gWCXPlugins.Add('rar', 68, Folder + 'unrar' + PathDelim + 'unrar.wcx')
   else
     gWCXPlugins.Flags[I]:= 68;
+  {$ENDIF}
 
   // Wdx plugins
   Folder:= '%commander_path%' + PathDelim + 'plugins' + PathDelim + 'wdx' + PathDelim;
